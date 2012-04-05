@@ -24,7 +24,7 @@
             <artifact pattern="${maven.release.url}/[organisation]/[module]/[revision]/[artifact]-[revision](-[classifier]).[ext]"/>
         </url>
     </resolvers>
-    <credentials username="${maven.username}" passwd="${maven.password}" realm="Sonatype Nexus Repository Manager"/>
+    <credentials host="oss.sonatype.org" username="${maven.username}" passwd="${maven.password}" realm="Sonatype Nexus Repository Manager"/>
     <signers>
         <pgp name="maven-central-pgp" secring="${pgp.secring.file}" keyId="${pgp.key.id}" password="${pgp.key.password}"/>
     </signers>
