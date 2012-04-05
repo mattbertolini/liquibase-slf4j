@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2012 Matt Bertolini
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+ persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<project name="liquibase-slf4j" basedir="." default="build" xmlns:ivy="antlib:org.apache.ivy.ant"
+         xmlns:ac="antlib:net.sf.antcontrib" xmlns:emma="antlib:net.sourceforge.emma"
+         xmlns:findbugs="antlib:com.google.code.findbugs">
+    <property file="build.properties"/>
+
+    <condition property="offline" value="true" else="false">
+        <not>
+            <http url="http://www.google.com/"/>
+        </not>
+    </condition>
+
+    <!-- Private targets -->
+    <target name="check-configuration">
+        <fail message="Need Ant version 1.8.0 or later to run.">
+            <condition>
+                <not>
+                    <antversion atleast="1.8"/>
+                </not>
+            </condition>
+        </fail>
+        <echo level="info">Offline Mode: ${offline}</echo>
+    </target>
+
+    <target name="clean" depends="check-configuration" if="${param.full.build}">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${lib.compile.dir}"/>
+        <mkdir dir="${lib.test.dir}"/>
+        <mkdir dir="${lib.build.dir}"/>
+        <mkdir dir="${build.temp.dir}"/>
+        <mkdir dir="${build.classes.dir}"/>
+        <mkdir dir="${build.instrumentedclasses.dir}"/>
+        <mkdir dir="${build.test.classes.dir}"/>
+        <mkdir dir="${build.resources.dir}"/>
+        <mkdir dir="${build.test.resources.dir}"/>
+        <mkdir dir="${build.javadoc.dir}"/>
+        <mkdir dir="${build.reports.dependency.dir}"/>
+        <mkdir dir="${build.reports.coverage.dir}"/>
+        <mkdir dir="${build.reports.unittest.dir}"/>
+        <mkdir dir="${build.reports.findbugs.dir}"/>
+        <mkdir dir="${build.temp.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+    </target>
+
+    <target name="download-ivy" depends="init" unless="${offline}">
+        <get src="http://repo2.maven.org/maven2/org/apache/ivy/ivy/${project.ivy.version}/ivy-${project.ivy.version}.jar" dest="${lib.build.dir}/ivy-${project.ivy.version}.jar" usetimestamp="true"/>
+    </target>
+
+    <target name="init-ivy" depends="download-ivy">
+        <path id="ivy-classpath">
+            <fileset dir="${lib.build.dir}"/>
+        </path>
+        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy-classpath"/>
+    </target>
+
+    <target name="retrieve-dependencies" depends="init-ivy" unless="${offline}">
+        <ivy:configure file="${project.home}/ivysettings-ant.xml"/>
+        <ivy:resolve file="${project.home}/ivy.xml" haltonfailure="false"/>
+        <ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision](-[classifier]).[ext]" sync="true" haltonfailure="false"/>
+        <ivy:report todir="${build.reports.dependency.dir}"/>
+        <ivy:artifactproperty name="dependency.[conf].[artifact]" value="${lib.dir}/[conf]/[artifact]-[revision](-[classifier]).[ext]"/>
+    </target>
+
+    <target name="create-paths" depends="retrieve-dependencies">
+        <path id="build-classpath">
+            <fileset dir="${lib.build.dir}"/>
+        </path>
+
+        <path id="compile-classpath">
+            <fileset dir="${lib.compile.dir}"/>
+        </path>
+
+        <path id="test-classpath">
+            <fileset dir="${lib.test.dir}"/>
+        </path>
+
+        <path id="compile-tests-classpath">
+            <path location="${build.classes.dir}"/>
+            <path refid="test-classpath"/>
+            <path refid="compile-classpath"/>
+        </path>
+
+        <path id="run-unit-tests-classpath">
+            <path location="${build.instrumentedclasses.dir}"/>
+            <path location="${build.test.classes.dir}"/>
+            <path location="${build.test.resources.dir}"/>
+            <path refid="test-classpath"/>
+            <path refid="compile-classpath"/>
+            <path refid="build-classpath"/>
+        </path>
+    </target>
+
+    <target name="load-third-party-tasks" depends="create-paths">
+        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="build-classpath" uri="antlib:net.sf.antcontrib"/>
+        <taskdef resource="emma_ant.properties" classpathref="build-classpath" uri="antlib:net.sourceforge.emma"/>
+        <taskdef resource="edu/umd/cs/findbugs/anttask/tasks.properties" classpathref="build-classpath" uri="antlib:com.google.code.findbugs"/>
+    </target>
+
+    <target name="sync-resources" depends="init">
+        <sync todir="${build.test.resources.dir}">
+            <fileset dir="${src.test.resources.dir}"/>
+        </sync>
+    </target>
+
+    <target name="compile-source" depends="create-paths">
+        <depend srcdir="${src.main.java.dir}" destdir="${build.classes.dir}" cache="${build.temp.dir}" closure="true">
+            <include name= "**/*.java"/>
+        </depend>
+        <javac srcdir="${src.main.java.dir}" destdir="${build.classes.dir}" source="1.6" fork="true" failonerror="true" includeantruntime="false" debug="true" encoding="UTF-8">
+            <classpath refid="compile-classpath"/>
+        </javac>
+    </target>
+
+    <target name="compile-tests" depends="compile-source">
+        <depend srcdir="${src.test.java.dir}" destdir="${build.test.classes.dir}" cache="${build.temp.dir}" closure="true">
+            <include name= "**/*.java"/>
+        </depend>
+        <javac srcdir="${src.test.java.dir}" destdir="${build.test.classes.dir}" source="1.6" fork="true" failonerror="true" includeantruntime="false" debug="true" encoding="UTF-8">
+            <classpath refid="compile-tests-classpath"/>
+        </javac>
+    </target>
+
+    <target name="run-unit-tests" depends="create-paths, load-third-party-tasks, compile-tests, sync-resources">
+        <sync todir="${build.instrumentedclasses.dir}">
+            <fileset dir="${build.classes.dir}"/>
+        </sync>
+        <emma:emma enabled="true">
+            <emma:instr instrpath="${build.instrumentedclasses.dir}" destdir="${build.instrumentedclasses.dir}" mode="overwrite" metadatafile="${build.reports.coverage.dir}/metadata.emma" merge="true"/>
+        </emma:emma>
+        <junit haltonerror="false" haltonfailure="false" printsummary="true" errorproperty="test.failed" failureproperty="test.failed">
+            <classpath refid="run-unit-tests-classpath"/>
+            <formatter type="xml"/>
+            <batchtest fork="true" todir="${build.reports.unittest.dir}">
+                <fileset dir="${build.test.classes.dir}">
+                    <include name="**/*Test.class"/>
+                </fileset>
+            </batchtest>
+            <sysproperty key="emma.rt.control.port" value="${test.emma.port}"/>
+            <sysproperty key="emma.coverage.out.file" value="${build.reports.coverage.dir}/coverage.emma"/>
+            <sysproperty key="emma.coverage.out.merge" value="true"/>
+        </junit>
+        <junitreport todir="${build.reports.unittest.dir}">
+            <fileset dir="${build.reports.unittest.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${build.reports.unittest.dir}"/>
+        </junitreport>
+        <emma:emma enabled="true">
+            <emma:report sourcepath="${src.main.java.dir}">
+                <fileset dir="${build.reports.coverage.dir}">
+                    <include name="*.emma"/>
+                </fileset>
+                <emma:xml outfile="${build.reports.coverage.dir}/${project.name}-coverage.xml" encoding="UTF-8"/>
+                <emma:html outfile="${build.reports.coverage.dir}/${project.name}-coverage.html" encoding="UTF-8"/>
+            </emma:report>
+        </emma:emma>
+        <fail if="test.failed">One or more unit tests failed/errored. Check ${build.reports.unittest.dir} for details.</fail>
+    </target>
+
+    <target name="run-findbugs" depends="create-paths, load-third-party-tasks, compile-source, compile-tests">
+        <path id="aux-classpath">
+            <path refid="compile-classpath"/>
+            <path refid="test-classpath"/>
+        </path>
+        <findbugs:findbugs classpathref="build-classpath" pluginlist="" output="xml:withMessages" outputFile="${build.reports.findbugs.dir}/${project.name}-findbugs.xml" jvmargs="-Xms${findbugs.mem.initial} -Xmx${findbugs.mem.max}">
+            <findbugs:class location="${build.classes.dir}"/>
+            <findbugs:class location="${build.test.classes.dir}"/>
+            <findbugs:auxClasspath refid="aux-classpath"/>
+            <findbugs:sourcePath path="${src.main.java.dir}"/>
+            <findbugs:sourcePath path="${src.test.java.dir}"/>
+        </findbugs:findbugs>
+        <xslt in="${build.reports.findbugs.dir}/${project.name}-findbugs.xml" out="${build.reports.findbugs.dir}/${project.name}-findbugs.html">
+            <style>
+                <url url="jar:file:${dependency.build.findbugs}!/default.xsl"/>
+            </style>
+        </xslt>
+    </target>
+
+    <target name="compile-javadoc" depends="init, load-third-party-tasks">
+        <ac:outofdate>
+            <ac:sourcefiles>
+                <fileset dir="${src.main.java.dir}" includes="**/*.java"/>
+            </ac:sourcefiles>
+            <ac:mapper type="glob" dir="${src.main.java.dir}" from="*.java" to="${build.javadoc.dir}/*.html"/>
+            <ac:sequential>
+                <javadoc destdir="${build.javadoc.dir}" failonerror="true" classpathref="compile-classpath" windowtitle="Liquibase SLF4J Logger Documentation" charset="UTF-8">
+                    <packageset dir="${src.main.java.dir}" defaultexcludes="true"/>
+                    <link href="http://docs.oracle.com/javase/6/docs/api/"/>
+                    <link href="http://www.liquibase.org/api/"/>
+                    <link href="http://slf4j.org/apidocs/"/>
+                    <doctitle>Liquibase SLF4J Logger Documentation</doctitle>
+                </javadoc>
+            </ac:sequential>
+        </ac:outofdate>
+    </target>
+
+    <target name="make-jar" depends="compile-source">
+        <jar destfile="${dist.dir}/${project.name}-${project.version}.jar">
+            <fileset dir="${build.classes.dir}"/>
+        </jar>
+    </target>
+
+    <target name="make-javadoc-jar" depends="compile-javadoc">
+        <jar destfile="${dist.dir}/${project.name}-${project.version}-javadoc.jar">
+            <fileset dir="${build.javadoc.dir}"/>
+        </jar>
+    </target>
+
+    <target name="make-sources-jar">
+        <jar destfile="${dist.dir}/${project.name}-${project.version}-sources.jar">
+            <fileset dir="${src.main.java.dir}"/>
+        </jar>
+    </target>
+
+    <target name="make-pom" depends="retrieve-dependencies">
+        <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${dist.dir}/${project.name}-${project.version}.pom" artifactpackaging="jar" templatefile="pom.xml">
+            <ivy:mapping conf="compile" scope="compile"/>
+            <ivy:mapping conf="test" scope="test"/>
+            <ivy:mapping conf="build" scope="test"/>
+        </ivy:makepom>
+    </target>
+
+    <target name="make-artifacts" depends="make-jar, make-javadoc-jar, make-sources-jar, make-pom"/>
+
+    <!-- Public targets -->
+    <target name="build" description="Runs a build and makes artifacts.">
+        <antcall>
+            <param name="param.full.build" value="true"/>
+            <target name="run-unit-tests"/>
+            <target name="run-findbugs"/>
+            <target name="make-artifacts"/>
+        </antcall>
+    </target>
+</project>

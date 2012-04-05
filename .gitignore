@@ -1,0 +1,7 @@
+/.settings
+/lib
+/dist
+/build
+/bin
+*.iml
+build-publish.properties

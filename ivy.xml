@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2012 Matt Bertolini
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+ persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info organisation="com.mattbertolini" module="liquibase-slf4j" status="integration" revision="${project.version}">
+        <license name="${project.license.name}" url="${project.license.url}"/>
+        <ivyauthor name="Matt Bertolini"/>
+        <description homepage="${project.url}">${project.description}</description>
+    </info>
+    <configurations>
+        <conf name="compile"/>
+        <conf name="test"/>
+        <conf name="build"/>
+        <conf name="default" visibility="private"/>
+        <conf name="sources" visibility="private"/>
+        <conf name="javadoc" visibility="private"/>
+    </configurations>
+    <publications>
+        <artifact type="jar" ext="jar" conf="default"/>
+        <artifact type="javadoc" ext="jar" conf="javadoc" m:classifier="javadoc"/>
+        <artifact type="sources" ext="jar" conf="sources" m:classifier="sources"/>
+        <artifact type="pom" ext="pom"/>
+    </publications>
+    <dependencies defaultconfmapping="compile->default">
+        <dependency org="org.slf4j" name="slf4j-api" rev="1.6.4"/>
+        <!-- Testing Dependencies -->
+        <dependency org="org.liquibase" name="liquibase-core" rev="2.0.3"/>
+        <dependency org="junit" name="junit" rev="4.10" conf="test->default"/>
+        <dependency org="ch.qos.logback" name="logback-classic" rev="1.0.1" conf="test->default"/>
+        <!-- Build Dependencies -->
+        <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="build->default">
+            <exclude module="ant"/>
+        </dependency>
+        <dependency org="emma" name="emma" rev="2.1.5320" conf="build->default"/>
+        <dependency org="emma" name="emma_ant" rev="2.1.5320" conf="build->default"/>
+        <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.0" conf="build->default"/>
+        <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="2.0.0" conf="build->default"/>
+        <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.47" conf="build->default"/>
+        <!--<dependency org="org.bouncycastle" name="bcpg-jdk16" rev="1.46" conf="build->default"/>-->
+    </dependencies>
+</ivy-module>
