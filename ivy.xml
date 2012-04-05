@@ -39,8 +39,8 @@
     </publications>
     <dependencies defaultconfmapping="compile->default">
         <dependency org="org.slf4j" name="slf4j-api" rev="1.6.4"/>
-        <!-- Testing Dependencies -->
         <dependency org="org.liquibase" name="liquibase-core" rev="2.0.3"/>
+        <!-- Testing Dependencies -->
         <dependency org="junit" name="junit" rev="4.10" conf="test->default"/>
         <dependency org="ch.qos.logback" name="logback-classic" rev="1.0.1" conf="test->default"/>
         <!-- Build Dependencies -->
@@ -52,6 +52,5 @@
         <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.0" conf="build->default"/>
         <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="2.0.0" conf="build->default"/>
         <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.47" conf="build->default"/>
-        <!--<dependency org="org.bouncycastle" name="bcpg-jdk16" rev="1.46" conf="build->default"/>-->
     </dependencies>
 </ivy-module>
