@@ -1,18 +1,17 @@
 liquibase-slf4j
 ===============
 Version 1.0.0
-Writen by Matt Bertolini
+Written by Matt Bertolini
 
 How to Use
 ----------
 Grab the library from Maven Central and place it in your classpath.
-```xml
-<dependency>
-    <groupId>com.mattbertolini</groupId>
-    <artifactId>liquibase-slf4j</artifactId>
-    <version>1.0.0</version>
-</dependency>
-```
+
+    <dependency>
+        <groupId>com.mattbertolini</groupId>
+        <artifactId>liquibase-slf4j</artifactId>
+        <version>1.0.0</version>
+    </dependency>
 
 License
 -------
