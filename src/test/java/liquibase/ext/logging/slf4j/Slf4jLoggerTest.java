@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Matt Bertolini>
+ * Copyright (c) 2012 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -22,6 +22,8 @@ import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
 import junit.framework.Assert;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 
@@ -29,18 +31,29 @@ import org.slf4j.LoggerFactory;
  * @author Matt Bertolini
  */
 public class Slf4jLoggerTest {
+    private ListAppender<ILoggingEvent> listAppender;
+
+    @Before
+    public void setUp() {
+        Logger unitTestLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        this.listAppender = (ListAppender<ILoggingEvent>) unitTestLogger.getAppender("list");
+        this.listAppender.list.clear();
+    }
+
+    @After
+    public void tearDown() {
+        this.listAppender.list.clear();
+    }
+
     @Test
     public void testSevereWithMessage() {
         int expectedCount = 1;
         String expectedStr = "This is a severe test.";
-        Logger unitTestLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        ListAppender<ILoggingEvent> listAppender = (ListAppender<ILoggingEvent>) unitTestLogger.getAppender("list");
-        listAppender.list.clear();
         Slf4jLogger slf4jLogger = new Slf4jLogger();
         slf4jLogger.setName("unit.test");
         slf4jLogger.severe(expectedStr);
-        Assert.assertEquals(expectedCount, listAppender.list.size());
-        ILoggingEvent loggingEvent = listAppender.list.iterator().next();
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
         Assert.assertEquals(Level.ERROR, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getMessage());
     }
@@ -50,14 +63,11 @@ public class Slf4jLoggerTest {
         int expectedCount = 1;
         String expectedStr = "This is a severe test.";
         Exception expectedException = new RuntimeException("Exception");
-        Logger unitTestLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        ListAppender<ILoggingEvent> listAppender = (ListAppender<ILoggingEvent>) unitTestLogger.getAppender("list");
-        listAppender.list.clear();
         Slf4jLogger slf4jLogger = new Slf4jLogger();
         slf4jLogger.setName("unit.test");
         slf4jLogger.severe(expectedStr, expectedException);
-        Assert.assertEquals(expectedCount, listAppender.list.size());
-        ILoggingEvent loggingEvent = listAppender.list.iterator().next();
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
         Assert.assertEquals(Level.ERROR, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getMessage());
         Assert.assertEquals(expectedException.getClass().getName(), loggingEvent.getThrowableProxy().getClassName());
@@ -67,14 +77,11 @@ public class Slf4jLoggerTest {
     public void testWarningWithMessage() {
         int expectedCount = 1;
         String expectedStr = "This is a warning test.";
-        Logger unitTestLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        ListAppender<ILoggingEvent> listAppender = (ListAppender<ILoggingEvent>) unitTestLogger.getAppender("list");
-        listAppender.list.clear();
         Slf4jLogger slf4jLogger = new Slf4jLogger();
         slf4jLogger.setName("unit.test");
         slf4jLogger.warning(expectedStr);
-        Assert.assertEquals(expectedCount, listAppender.list.size());
-        ILoggingEvent loggingEvent = listAppender.list.iterator().next();
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
         Assert.assertEquals(Level.WARN, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getMessage());
     }
@@ -84,14 +91,11 @@ public class Slf4jLoggerTest {
         int expectedCount = 1;
         String expectedStr = "This is a warning test.";
         Exception expectedException = new RuntimeException("Exception");
-        Logger unitTestLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        ListAppender<ILoggingEvent> listAppender = (ListAppender<ILoggingEvent>) unitTestLogger.getAppender("list");
-        listAppender.list.clear();
         Slf4jLogger slf4jLogger = new Slf4jLogger();
         slf4jLogger.setName("unit.test");
         slf4jLogger.warning(expectedStr, expectedException);
-        Assert.assertEquals(expectedCount, listAppender.list.size());
-        ILoggingEvent loggingEvent = listAppender.list.iterator().next();
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
         Assert.assertEquals(Level.WARN, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getMessage());
         Assert.assertEquals(expectedException.getClass().getName(), loggingEvent.getThrowableProxy().getClassName());
@@ -101,14 +105,11 @@ public class Slf4jLoggerTest {
     public void testInfoWithMessage() {
         int expectedCount = 1;
         String expectedStr = "This is a info test.";
-        Logger unitTestLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        ListAppender<ILoggingEvent> listAppender = (ListAppender<ILoggingEvent>) unitTestLogger.getAppender("list");
-        listAppender.list.clear();
         Slf4jLogger slf4jLogger = new Slf4jLogger();
         slf4jLogger.setName("unit.test");
         slf4jLogger.info(expectedStr);
-        Assert.assertEquals(expectedCount, listAppender.list.size());
-        ILoggingEvent loggingEvent = listAppender.list.iterator().next();
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
         Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getMessage());
     }
@@ -118,14 +119,11 @@ public class Slf4jLoggerTest {
         int expectedCount = 1;
         String expectedStr = "This is a info test.";
         Exception expectedException = new RuntimeException("Exception");
-        Logger unitTestLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        ListAppender<ILoggingEvent> listAppender = (ListAppender<ILoggingEvent>) unitTestLogger.getAppender("list");
-        listAppender.list.clear();
         Slf4jLogger slf4jLogger = new Slf4jLogger();
         slf4jLogger.setName("unit.test");
         slf4jLogger.info(expectedStr, expectedException);
-        Assert.assertEquals(expectedCount, listAppender.list.size());
-        ILoggingEvent loggingEvent = listAppender.list.iterator().next();
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
         Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getMessage());
         Assert.assertEquals(expectedException.getClass().getName(), loggingEvent.getThrowableProxy().getClassName());
@@ -135,14 +133,11 @@ public class Slf4jLoggerTest {
     public void testDebugWithMessage() {
         int expectedCount = 1;
         String expectedStr = "This is a debug test.";
-        Logger unitTestLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        ListAppender<ILoggingEvent> listAppender = (ListAppender<ILoggingEvent>) unitTestLogger.getAppender("list");
-        listAppender.list.clear();
         Slf4jLogger slf4jLogger = new Slf4jLogger();
         slf4jLogger.setName("unit.test");
         slf4jLogger.debug(expectedStr);
-        Assert.assertEquals(expectedCount, listAppender.list.size());
-        ILoggingEvent loggingEvent = listAppender.list.iterator().next();
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
         Assert.assertEquals(Level.DEBUG, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getMessage());
     }
@@ -152,14 +147,11 @@ public class Slf4jLoggerTest {
         int expectedCount = 1;
         String expectedStr = "This is a debug test.";
         Exception expectedException = new RuntimeException("Exception");
-        Logger unitTestLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        ListAppender<ILoggingEvent> listAppender = (ListAppender<ILoggingEvent>) unitTestLogger.getAppender("list");
-        listAppender.list.clear();
         Slf4jLogger slf4jLogger = new Slf4jLogger();
         slf4jLogger.setName("unit.test");
         slf4jLogger.debug(expectedStr, expectedException);
-        Assert.assertEquals(expectedCount, listAppender.list.size());
-        ILoggingEvent loggingEvent = listAppender.list.iterator().next();
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
         Assert.assertEquals(Level.DEBUG, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getMessage());
         Assert.assertEquals(expectedException.getClass().getName(), loggingEvent.getThrowableProxy().getClassName());
