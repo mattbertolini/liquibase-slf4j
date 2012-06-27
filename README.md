@@ -7,11 +7,13 @@ How to Use
 ----------
 Grab the library from Maven Central and place it in your classpath.
 
-    <dependency>
-        <groupId>com.mattbertolini</groupId>
-        <artifactId>liquibase-slf4j</artifactId>
-        <version>1.0.0</version>
-    </dependency>
+```xml
+<dependency>
+    <groupId>com.mattbertolini</groupId>
+    <artifactId>liquibase-slf4j</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 
 License
 -------
