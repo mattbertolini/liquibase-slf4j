@@ -16,7 +16,7 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="liquibase-slf4j" basedir="." default="build" xmlns:ivy="antlib:org.apache.ivy.ant"
-         xmlns:ac="antlib:net.sf.antcontrib" xmlns:emma="antlib:net.sourceforge.emma"
+         xmlns:ac="antlib:net.sf.antcontrib" xmlns:jacoco="antlib:org.jacoco.ant"
          xmlns:findbugs="antlib:com.google.code.findbugs">
     <property file="build.properties"/>
 
@@ -76,7 +76,7 @@
     <target name="retrieve-dependencies" depends="init-ivy" unless="${offline}">
         <ivy:configure file="${project.home}/ivysettings-ant.xml"/>
         <ivy:resolve file="${project.home}/ivy.xml" haltonfailure="false"/>
-        <ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision](-[classifier]).[ext]" sync="true" haltonfailure="false"/>
+        <ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision](-[classifier]).[ext]" sync="true" haltonfailure="true"/>
         <ivy:report todir="${build.reports.dependency.dir}"/>
         <ivy:artifactproperty name="dependency.[conf].[artifact]" value="${lib.dir}/[conf]/[artifact]-[revision](-[classifier]).[ext]"/>
     </target>
@@ -112,7 +112,7 @@
 
     <target name="load-third-party-tasks" depends="create-paths">
         <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="build-classpath" uri="antlib:net.sf.antcontrib"/>
-        <taskdef resource="emma_ant.properties" classpathref="build-classpath" uri="antlib:net.sourceforge.emma"/>
+        <taskdef resource="org/jacoco/ant/antlib.xml" classpathref="build-classpath" uri="antlib:org.jacoco.ant"/>
         <taskdef resource="edu/umd/cs/findbugs/anttask/tasks.properties" classpathref="build-classpath" uri="antlib:com.google.code.findbugs"/>
     </target>
 
@@ -144,36 +144,38 @@
         <sync todir="${build.instrumentedclasses.dir}">
             <fileset dir="${build.classes.dir}"/>
         </sync>
-        <emma:emma enabled="true">
-            <emma:instr instrpath="${build.instrumentedclasses.dir}" destdir="${build.instrumentedclasses.dir}" mode="overwrite" metadatafile="${build.reports.coverage.dir}/metadata.emma" merge="true"/>
-        </emma:emma>
-        <junit haltonerror="false" haltonfailure="false" printsummary="true" errorproperty="test.failed" failureproperty="test.failed">
-            <classpath refid="run-unit-tests-classpath"/>
-            <formatter type="xml"/>
-            <batchtest fork="true" todir="${build.reports.unittest.dir}">
-                <fileset dir="${build.test.classes.dir}">
-                    <include name="**/*Test.class"/>
-                </fileset>
-            </batchtest>
-            <sysproperty key="emma.rt.control.port" value="${test.emma.port}"/>
-            <sysproperty key="emma.coverage.out.file" value="${build.reports.coverage.dir}/coverage.emma"/>
-            <sysproperty key="emma.coverage.out.merge" value="true"/>
-        </junit>
+        <jacoco:coverage destfile="${build.reports.coverage.dir}/${project.name}-coverage.exec">
+            <junit haltonerror="false" haltonfailure="false" printsummary="true" errorproperty="test.failed" failureproperty="test.failed" fork="true" forkmode="once">
+                <classpath refid="run-unit-tests-classpath"/>
+                <formatter type="xml"/>
+                <batchtest fork="true" todir="${build.reports.unittest.dir}">
+                    <fileset dir="${build.test.classes.dir}">
+                        <include name="**/*Test.class"/>
+                    </fileset>
+                </batchtest>
+            </junit>
+        </jacoco:coverage>
         <junitreport todir="${build.reports.unittest.dir}">
             <fileset dir="${build.reports.unittest.dir}">
                 <include name="TEST-*.xml"/>
             </fileset>
             <report format="frames" todir="${build.reports.unittest.dir}"/>
         </junitreport>
-        <emma:emma enabled="true">
-            <emma:report sourcepath="${src.main.java.dir}">
-                <fileset dir="${build.reports.coverage.dir}">
-                    <include name="*.emma"/>
-                </fileset>
-                <emma:xml outfile="${build.reports.coverage.dir}/${project.name}-coverage.xml" encoding="UTF-8"/>
-                <emma:html outfile="${build.reports.coverage.dir}/${project.name}-coverage.html" encoding="UTF-8"/>
-            </emma:report>
-        </emma:emma>
+        <jacoco:report>
+            <jacoco:executiondata>
+                <file file="${build.reports.coverage.dir}/${project.name}-coverage.exec"/>
+            </jacoco:executiondata>
+            <jacoco:structure name="${project.name}">
+                <jacoco:classfiles>
+                    <fileset dir="${build.instrumentedclasses.dir}"/>
+                </jacoco:classfiles>
+                <jacoco:sourcefiles encoding="UTF-8" tabwidth="4">
+                    <fileset dir="${src.main.java.dir}"/>
+                </jacoco:sourcefiles>
+            </jacoco:structure>
+            <jacoco:html destdir="${build.reports.coverage.dir}" encoding="UTF-8" locale="en_US"/>
+            <jacoco:xml destfile="${build.reports.coverage.dir}/${project.name}-coverage.xml" encoding="UTF-8"/>
+        </jacoco:report>
         <fail if="test.failed">One or more unit tests failed/errored. Check ${build.reports.unittest.dir} for details.</fail>
     </target>
 
