@@ -17,7 +17,7 @@
 -->
 <project name="liquibase-slf4j" basedir="." default="build" xmlns:ivy="antlib:org.apache.ivy.ant"
          xmlns:ac="antlib:net.sf.antcontrib" xmlns:jacoco="antlib:org.jacoco.ant"
-         xmlns:findbugs="antlib:com.google.code.findbugs">
+         xmlns:findbugs="antlib:com.google.code.findbugs" xmlns:jxr="antlib:com.mattbertolini.jxr.ant">
     <property file="build.properties"/>
 
     <condition property="offline" value="true" else="false">
@@ -58,6 +58,7 @@
         <mkdir dir="${build.reports.coverage.dir}"/>
         <mkdir dir="${build.reports.unittest.dir}"/>
         <mkdir dir="${build.reports.findbugs.dir}"/>
+        <mkdir dir="${build.reports.xref.dir}"/>
         <mkdir dir="${build.temp.dir}"/>
         <mkdir dir="${dist.dir}"/>
     </target>
@@ -114,6 +115,7 @@
         <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="build-classpath" uri="antlib:net.sf.antcontrib"/>
         <taskdef resource="org/jacoco/ant/antlib.xml" classpathref="build-classpath" uri="antlib:org.jacoco.ant"/>
         <taskdef resource="edu/umd/cs/findbugs/anttask/tasks.properties" classpathref="build-classpath" uri="antlib:com.google.code.findbugs"/>
+        <taskdef resource="com/mattbertolini/jxr/ant/antlib.xml" classpathref="build-classpath" uri="antlib:com.mattbertolini.jxr.ant"/>
     </target>
 
     <target name="sync-resources" depends="init">
@@ -126,7 +128,7 @@
         <depend srcdir="${src.main.java.dir}" destdir="${build.classes.dir}" cache="${build.temp.dir}" closure="true">
             <include name= "**/*.java"/>
         </depend>
-        <javac srcdir="${src.main.java.dir}" destdir="${build.classes.dir}" source="1.6" fork="true" failonerror="true" includeantruntime="false" debug="true" encoding="UTF-8">
+        <javac srcdir="${src.main.java.dir}" destdir="${build.classes.dir}" source="1.6" target="1.6" fork="true" failonerror="true" includeantruntime="false" debug="true" encoding="UTF-8">
             <classpath refid="compile-classpath"/>
         </javac>
     </target>
@@ -135,7 +137,7 @@
         <depend srcdir="${src.test.java.dir}" destdir="${build.test.classes.dir}" cache="${build.temp.dir}" closure="true">
             <include name= "**/*.java"/>
         </depend>
-        <javac srcdir="${src.test.java.dir}" destdir="${build.test.classes.dir}" source="1.6" fork="true" failonerror="true" includeantruntime="false" debug="true" encoding="UTF-8">
+        <javac srcdir="${src.test.java.dir}" destdir="${build.test.classes.dir}" source="1.6" target="1.6" fork="true" failonerror="true" includeantruntime="false" debug="true" encoding="UTF-8">
             <classpath refid="compile-tests-classpath"/>
         </javac>
     </target>
@@ -183,6 +185,7 @@
         <path id="aux-classpath">
             <path refid="compile-classpath"/>
             <path refid="test-classpath"/>
+            <path refid="build-classpath"/>
         </path>
         <findbugs:findbugs classpathref="build-classpath" pluginlist="" output="xml:withMessages" outputFile="${build.reports.findbugs.dir}/${project.name}-findbugs.xml" jvmargs="-Xms${findbugs.mem.initial} -Xmx${findbugs.mem.max}">
             <findbugs:class location="${build.classes.dir}"/>
@@ -214,6 +217,10 @@
                 </javadoc>
             </ac:sequential>
         </ac:outofdate>
+    </target>
+
+    <target name="compile-xref-doc" depends="init, load-third-party-tasks">
+        <jxr:jxr destdir="${build.reports.xref.dir}" sourcepath="${src.main.java.dir}" inputencoding="UTF-8" outputencoding="UTF-8"/>
     </target>
 
     <target name="make-jar" depends="compile-source">
@@ -250,6 +257,7 @@
             <param name="param.full.build" value="true"/>
             <target name="run-unit-tests"/>
             <target name="run-findbugs"/>
+            <target name="compile-xref-doc"/>
             <target name="make-artifacts"/>
         </antcall>
     </target>

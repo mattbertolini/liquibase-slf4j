@@ -52,5 +52,8 @@
         <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.0" conf="build->default"/>
         <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="2.0.0" conf="build->default"/>
         <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.47" conf="build->default"/>
+        <dependency org="com.mattbertolini" name="jxr-ant" rev="1.0.0" conf="build->default">
+            <exclude module="ant"/>
+        </dependency>
     </dependencies>
 </ivy-module>
