@@ -27,6 +27,7 @@
         <conf name="compile"/>
         <conf name="test"/>
         <conf name="build"/>
+        <conf name="findbugs"/>
         <conf name="default" visibility="private"/>
         <conf name="sources" visibility="private"/>
         <conf name="javadoc" visibility="private"/>
@@ -38,20 +39,21 @@
         <artifact type="pom" ext="pom"/>
     </publications>
     <dependencies defaultconfmapping="compile->default">
-        <dependency org="org.slf4j" name="slf4j-api" rev="1.6.4"/>
-        <dependency org="org.liquibase" name="liquibase-core" rev="2.0.3"/>
+        <dependency org="org.slf4j" name="slf4j-api" rev="1.7.5"/>
+        <dependency org="org.liquibase" name="liquibase-core" rev="3.0.2"/>
         <!-- Testing Dependencies -->
-        <dependency org="junit" name="junit" rev="4.10" conf="test->default"/>
-        <dependency org="ch.qos.logback" name="logback-classic" rev="1.0.1" conf="test->default"/>
+        <dependency org="junit" name="junit" rev="4.11" conf="test->default"/>
+        <dependency org="ch.qos.logback" name="logback-classic" rev="1.0.13" conf="test->default"/>
         <!-- Build Dependencies -->
-        <dependency org="org.apache.ivy" name="ivy" rev="2.3.0-rc1" conf="build->default"/>
+        <dependency org="org.apache.ivy" name="ivy" rev="${project.ivy.version}" conf="build->default"/>
         <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="build->default">
             <exclude module="ant"/>
         </dependency>
-        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.5.7.201204190339" conf="build->default"/>
-        <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.0" conf="build->default"/>
-        <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="2.0.0" conf="build->default"/>
-        <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.47" conf="build->default"/>
+        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.6.3.201306030806" conf="build->default"/>
+        <!-- Findbugs in it's own configuration because of incompatibilities with the asm dependency in JaCoCo. -->
+        <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.1" conf="findbugs->default"/>
+        <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="2.0.1" conf="findbugs->default"/>
+        <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.49" conf="build->default"/>
         <dependency org="com.mattbertolini" name="jxr-ant" rev="1.0.0" conf="build->default">
             <exclude module="ant"/>
         </dependency>
