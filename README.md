@@ -26,12 +26,12 @@ unit tests to verify the problem is fixed.
 
 ## Release Notes
 
-1.1.0 - 2013-08-10
+**1.1.0 - 2013-08-10**
 
 * Upgrade Liquibase version to 3.0.x.
 * Backward-compatible with previous version.
 
-1.0.0 - 2012-04-04
+**1.0.0 - 2012-04-04**
 
 * Initial release.
 * Supports Liquibase 2.0.x.
