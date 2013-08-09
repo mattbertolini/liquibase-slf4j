@@ -4,4 +4,5 @@
 /build
 /bin
 *.iml
+/.idea
 build-publish.properties
