@@ -216,7 +216,7 @@
                 <javadoc destdir="${build.javadoc.dir}" failonerror="true" classpathref="compile-classpath" windowtitle="Liquibase SLF4J Logger Documentation" charset="UTF-8">
                     <packageset dir="${src.main.java.dir}" defaultexcludes="true"/>
                     <link href="http://docs.oracle.com/javase/6/docs/api/"/>
-                    <link href="http://www.liquibase.org/api/"/>
+                    <link href="http://www.liquibase.org/javadoc/"/>
                     <link href="http://slf4j.org/apidocs/"/>
                     <doctitle>Liquibase SLF4J Logger Documentation</doctitle>
                 </javadoc>
