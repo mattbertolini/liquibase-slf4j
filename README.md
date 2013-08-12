@@ -14,7 +14,7 @@ Grab the library from Maven Central and place it in your classpath.
 ```
 
 ## License
-liquibse-slf4j is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php)
+liquibase-slf4j is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php)
 
 ## Notes
 This logger has a priority number of 5. If you have more than one Liquibase logger on your classpath the one with the
