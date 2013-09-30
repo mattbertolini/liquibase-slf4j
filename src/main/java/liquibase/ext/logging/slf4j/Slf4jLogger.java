@@ -16,7 +16,10 @@
  */
 package liquibase.ext.logging.slf4j;
 
+import liquibase.changelog.ChangeSet;
+import liquibase.changelog.DatabaseChangeLog;
 import liquibase.logging.core.AbstractLogger;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +32,8 @@ public class Slf4jLogger extends AbstractLogger {
     private static final int PRIORITY = 5;
 
     private Logger logger;
+    private String changeLogName = null;
+    private String changeSetName = null;
 
     /**
      * Takes the given logger name argument and associates it with a SLF4J logger.
@@ -58,7 +63,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void severe(String message) {
-        this.logger.error(message);
+        this.logger.error(changeLogName + ": " + changeSetName + ": " + message);
     }
 
     /**
@@ -69,7 +74,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void severe(String message, Throwable throwable) {
-        this.logger.error(message, throwable);
+        this.logger.error(changeLogName + ": " + changeSetName + ": " + message, throwable);
     }
 
     /**
@@ -79,7 +84,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void warning(String message) {
-        this.logger.warn(message);
+        this.logger.warn(changeLogName + ": " + changeSetName + ": " + message);
     }
 
     /**
@@ -90,7 +95,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void warning(String message, Throwable throwable) {
-        this.logger.warn(message, throwable);
+        this.logger.warn(changeLogName + ": " + changeSetName + ": " + message, throwable);
     }
 
     /**
@@ -100,7 +105,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void info(String message) {
-        this.logger.info(message);
+        this.logger.info(changeLogName + ": " + changeSetName + ": " + message);
     }
 
     /**
@@ -111,7 +116,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void info(String message, Throwable throwable) {
-        this.logger.info(message, throwable);
+        this.logger.info(changeLogName + ": " + changeSetName + ": " + message, throwable);
     }
 
     /**
@@ -121,7 +126,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void debug(String message) {
-        this.logger.debug(message);
+        this.logger.debug(changeLogName + ": " + changeSetName + ": " + message);
     }
 
     /**
@@ -132,7 +137,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void debug(String message, Throwable throwable) {
-        this.logger.debug(message, throwable);
+        this.logger.debug(changeLogName + ": " + changeSetName + ": " + message, throwable);
     }
 
     /**
@@ -145,5 +150,19 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public int getPriority() {
         return PRIORITY;
+    }
+
+    @Override
+    public void setChangeLog(DatabaseChangeLog databaseChangeLog) {
+        if (databaseChangeLog == null) {
+            changeLogName = null;
+        } else {
+            changeLogName = databaseChangeLog.getFilePath();
+        }
+    }
+
+    @Override
+    public void setChangeSet(ChangeSet changeSet) {
+        changeSetName = (changeSet == null ? null : changeSet.toString(false));
     }
 }
