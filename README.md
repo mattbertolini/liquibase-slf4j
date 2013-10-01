@@ -1,5 +1,5 @@
 # liquibase-slf4j
-Version 1.1.0
+Version 1.2.0
 Written by Matt Bertolini
 
 ## How to Use
@@ -9,7 +9,7 @@ Grab the library from Maven Central and place it in your classpath.
 <dependency>
     <groupId>com.mattbertolini</groupId>
     <artifactId>liquibase-slf4j</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
@@ -20,11 +20,31 @@ liquibase-slf4j is licensed under the [MIT License](http://www.opensource.org/li
 This logger has a priority number of 5. If you have more than one Liquibase logger on your classpath the one with the
 highest priority will be used.
 
+## Build and Test
+To build this project, clone the repo and run the ant command:
+```
+$ git clone https://github.com/mattbertolini/liquibase-slf4j.git
+$ cd liquibase-slf4j
+$ ant
+```
+
+The distributable jar files will be located in the ```dist``` folder. The build reports (unit test, dependency,
+coverage, etc.) will be located in the ```build/reports``` dir.
+
+To run the unit tests run the ```run-unit-tests``` task.
+```
+$ ant run-unit-tests
+```
+
 ## Bugs
 Please report any bugs in the issue tracker above. Please be as detailed as possible in your report so I can create
 unit tests to verify the problem is fixed.
 
 ## Release Notes
+
+**1.2.0 - 2013-09-30**
+
+* Upgrading to Liquibase version 3.0.5 to add new required methods.
 
 **1.1.0 - 2013-08-10**
 
