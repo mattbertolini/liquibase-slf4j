@@ -40,7 +40,7 @@
     </publications>
     <dependencies defaultconfmapping="compile->default">
         <dependency org="org.slf4j" name="slf4j-api" rev="1.7.5"/>
-        <dependency org="org.liquibase" name="liquibase-core" rev="3.0.2"/>
+        <dependency org="org.liquibase" name="liquibase-core" rev="3.0.5"/>
         <!-- Testing Dependencies -->
         <dependency org="junit" name="junit" rev="4.11" conf="test->default"/>
         <dependency org="ch.qos.logback" name="logback-classic" rev="1.0.13" conf="test->default"/>
