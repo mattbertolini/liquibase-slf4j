@@ -247,11 +247,8 @@
     </target>
 
     <target name="make-pom" depends="retrieve-dependencies">
-        <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${dist.dir}/${project.name}-${project.version}.pom" artifactpackaging="jar" templatefile="pom.xml">
+        <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${dist.dir}/${project.name}-${project.version}.pom" artifactpackaging="jar" templatefile="pom.xml" conf="compile">
             <ivy:mapping conf="compile" scope="compile"/>
-            <ivy:mapping conf="test" scope="test"/>
-            <ivy:mapping conf="build" scope="test"/>
-            <ivy:mapping conf="jacoco" scope="test"/>
         </ivy:makepom>
     </target>
 
