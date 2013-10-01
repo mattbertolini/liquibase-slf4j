@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Matt Bertolini
+ * Copyright (c) 2013 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -63,7 +63,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void severe(String message) {
-        this.logger.error(changeLogName + ": " + changeSetName + ": " + message);
+        this.logger.error("{}: {}: {}", changeLogName, changeSetName, message);
     }
 
     /**
@@ -74,7 +74,9 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void severe(String message, Throwable throwable) {
-        this.logger.error(changeLogName + ": " + changeSetName + ": " + message, throwable);
+        if(this.logger.isErrorEnabled()) {
+            this.logger.error(changeLogName + ": " + changeSetName + ": " + message, throwable);
+        }
     }
 
     /**
@@ -84,7 +86,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void warning(String message) {
-        this.logger.warn(changeLogName + ": " + changeSetName + ": " + message);
+        this.logger.warn("{}: {}: {}", changeLogName, changeSetName, message);
     }
 
     /**
@@ -95,7 +97,9 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void warning(String message, Throwable throwable) {
-        this.logger.warn(changeLogName + ": " + changeSetName + ": " + message, throwable);
+        if(this.logger.isWarnEnabled()) {
+            this.logger.warn(changeLogName + ": " + changeSetName + ": " + message, throwable);
+        }
     }
 
     /**
@@ -105,7 +109,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void info(String message) {
-        this.logger.info(changeLogName + ": " + changeSetName + ": " + message);
+        this.logger.info("{}: {}: {}", changeLogName, changeSetName, message);
     }
 
     /**
@@ -116,7 +120,9 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void info(String message, Throwable throwable) {
-        this.logger.info(changeLogName + ": " + changeSetName + ": " + message, throwable);
+        if(this.logger.isInfoEnabled()) {
+            this.logger.info(changeLogName + ": " + changeSetName + ": " + message, throwable);
+        }
     }
 
     /**
@@ -126,7 +132,7 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void debug(String message) {
-        this.logger.debug(changeLogName + ": " + changeSetName + ": " + message);
+        this.logger.debug("{}: {}: {}", changeLogName, changeSetName, message);
     }
 
     /**
@@ -137,7 +143,9 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void debug(String message, Throwable throwable) {
-        this.logger.debug(changeLogName + ": " + changeSetName + ": " + message, throwable);
+        if(this.logger.isDebugEnabled()) {
+            this.logger.debug(changeLogName + ": " + changeSetName + ": " + message, throwable);
+        }
     }
 
     /**
@@ -154,11 +162,7 @@ public class Slf4jLogger extends AbstractLogger {
 
     @Override
     public void setChangeLog(DatabaseChangeLog databaseChangeLog) {
-        if (databaseChangeLog == null) {
-            changeLogName = null;
-        } else {
-            changeLogName = databaseChangeLog.getFilePath();
-        }
+        changeLogName = (databaseChangeLog == null) ? null : databaseChangeLog.getFilePath();
     }
 
     @Override
