@@ -19,7 +19,6 @@ package liquibase.ext.logging.slf4j;
 import liquibase.changelog.ChangeSet;
 import liquibase.changelog.DatabaseChangeLog;
 import liquibase.logging.core.AbstractLogger;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +55,16 @@ public class Slf4jLogger extends AbstractLogger {
         // Do nothing
     }
 
+    @Override
+    public void setChangeLog(DatabaseChangeLog databaseChangeLog) {
+        changeLogName = (databaseChangeLog == null) ? null : databaseChangeLog.getFilePath();
+    }
+
+    @Override
+    public void setChangeSet(ChangeSet changeSet) {
+        changeSetName = (changeSet == null) ? null : changeSet.toString(false);
+    }
+
     /**
      * Logs an severe message. Calls SLF4J {@link Logger#error(String)}.
      *
@@ -63,7 +72,9 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void severe(String message) {
-        this.logger.error("{}: {}: {}", changeLogName, changeSetName, message);
+        if(this.logger.isErrorEnabled()) {
+            this.logger.error(buildMessage(message));
+        }
     }
 
     /**
@@ -75,7 +86,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void severe(String message, Throwable throwable) {
         if(this.logger.isErrorEnabled()) {
-            this.logger.error(changeLogName + ": " + changeSetName + ": " + message, throwable);
+            this.logger.error(buildMessage(message), throwable);
         }
     }
 
@@ -86,7 +97,9 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void warning(String message) {
-        this.logger.warn("{}: {}: {}", changeLogName, changeSetName, message);
+        if(this.logger.isWarnEnabled()) {
+            this.logger.warn(buildMessage(message));
+        }
     }
 
     /**
@@ -98,7 +111,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void warning(String message, Throwable throwable) {
         if(this.logger.isWarnEnabled()) {
-            this.logger.warn(changeLogName + ": " + changeSetName + ": " + message, throwable);
+            this.logger.warn(buildMessage(message), throwable);
         }
     }
 
@@ -109,7 +122,9 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void info(String message) {
-        this.logger.info("{}: {}: {}", changeLogName, changeSetName, message);
+        if(this.logger.isInfoEnabled()) {
+            this.logger.info(buildMessage(message));
+        }
     }
 
     /**
@@ -121,7 +136,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void info(String message, Throwable throwable) {
         if(this.logger.isInfoEnabled()) {
-            this.logger.info(changeLogName + ": " + changeSetName + ": " + message, throwable);
+            this.logger.info(buildMessage(message), throwable);
         }
     }
 
@@ -132,7 +147,9 @@ public class Slf4jLogger extends AbstractLogger {
      */
     @Override
     public void debug(String message) {
-        this.logger.debug("{}: {}: {}", changeLogName, changeSetName, message);
+        if(this.logger.isDebugEnabled()) {
+            this.logger.debug(buildMessage(message));
+        }
     }
 
     /**
@@ -144,7 +161,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void debug(String message, Throwable throwable) {
         if(this.logger.isDebugEnabled()) {
-            this.logger.debug(changeLogName + ": " + changeSetName + ": " + message, throwable);
+            this.logger.debug(buildMessage(message), throwable);
         }
     }
 
@@ -160,13 +177,21 @@ public class Slf4jLogger extends AbstractLogger {
         return PRIORITY;
     }
 
-    @Override
-    public void setChangeLog(DatabaseChangeLog databaseChangeLog) {
-        changeLogName = (databaseChangeLog == null) ? null : databaseChangeLog.getFilePath();
-    }
-
-    @Override
-    public void setChangeSet(ChangeSet changeSet) {
-        changeSetName = (changeSet == null ? null : changeSet.toString(false));
+    /**
+     * Build a log message with optional data if it exists.
+     *
+     * @param message The basic log message before optional data.
+     * @return the complete log message to print to the logger.
+     */
+    private String buildMessage(String message) {
+        StringBuilder msg = new StringBuilder();
+        if(changeLogName != null) {
+            msg.append(changeLogName).append(": ");
+        }
+        if(changeSetName != null) {
+            msg.append(changeSetName.replace(changeLogName + "::", "")).append(": ");
+        }
+        msg.append(message);
+        return msg.toString();
     }
 }

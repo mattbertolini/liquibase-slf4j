@@ -34,11 +34,13 @@ import org.slf4j.LoggerFactory;
  * @author Matt Bertolini
  */
 public class Slf4jLoggerTest {
+    private Logger unitTestLogger;
     private ListAppender<ILoggingEvent> listAppender;
 
     @Before
     public void setUp() {
-        Logger unitTestLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        this.unitTestLogger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        this.unitTestLogger.setLevel(Level.DEBUG);
         this.listAppender = (ListAppender<ILoggingEvent>) unitTestLogger.getAppender("list");
         this.listAppender.list.clear();
     }
@@ -73,6 +75,43 @@ public class Slf4jLoggerTest {
     }
 
     @Test
+    public void testSevereWithMessageLogLevelDisabled() {
+        String expectedChangeLogName = "/test/path";
+        String expectedChangeSetName = "TestChangeSet";
+        String expectedMessage = "This is a severe test.";
+        int expectedCount = 0;
+
+        DatabaseChangeLog mockChangeLog = Mockito.mock(DatabaseChangeLog.class);
+        Mockito.when(mockChangeLog.getFilePath()).thenReturn(expectedChangeLogName);
+        ChangeSet mockChangeSet = Mockito.mock(ChangeSet.class);
+        Mockito.when(mockChangeSet.toString(false)).thenReturn(expectedChangeSetName);
+
+        this.unitTestLogger.setLevel(Level.OFF);
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(mockChangeLog);
+        slf4jLogger.setChangeSet(mockChangeSet);
+        slf4jLogger.severe(expectedMessage);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+    }
+
+    @Test
+    public void testSevereWithMessageNoOptionalData() {
+        String expectedMessage = "This is a severe test.";
+        int expectedCount = 1;
+
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(null);
+        slf4jLogger.setChangeSet(null);
+        slf4jLogger.severe(expectedMessage);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
+        Assert.assertEquals(Level.ERROR, loggingEvent.getLevel());
+        Assert.assertEquals(expectedMessage, loggingEvent.getFormattedMessage());
+    }
+
+    @Test
     public void testSevereWithMessageAndThrowable() {
         String expectedChangeLogName = "/test/path";
         String expectedChangeSetName = "TestChangeSet";
@@ -96,6 +135,28 @@ public class Slf4jLoggerTest {
         Assert.assertEquals(Level.ERROR, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getFormattedMessage());
         Assert.assertEquals(expectedException.getClass().getName(), loggingEvent.getThrowableProxy().getClassName());
+    }
+
+    @Test
+    public void testSevereWithMessageAndThrowableLogLevelDisabled() {
+        String expectedChangeLogName = "/test/path";
+        String expectedChangeSetName = "TestChangeSet";
+        String expectedMessage = "This is a info test.";
+        int expectedCount = 0;
+
+        DatabaseChangeLog mockChangeLog = Mockito.mock(DatabaseChangeLog.class);
+        Mockito.when(mockChangeLog.getFilePath()).thenReturn(expectedChangeLogName);
+        ChangeSet mockChangeSet = Mockito.mock(ChangeSet.class);
+        Mockito.when(mockChangeSet.toString(false)).thenReturn(expectedChangeSetName);
+
+        this.unitTestLogger.setLevel(Level.OFF);
+        Exception expectedException = new RuntimeException("Exception");
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(mockChangeLog);
+        slf4jLogger.setChangeSet(mockChangeSet);
+        slf4jLogger.severe(expectedMessage, expectedException);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
     }
 
     @Test
@@ -123,10 +184,47 @@ public class Slf4jLoggerTest {
     }
 
     @Test
+    public void testWarningWithMessageLogLevelDisabled() {
+        String expectedChangeLogName = "/test/path";
+        String expectedChangeSetName = "TestChangeSet";
+        String expectedMessage = "This is a warning test.";
+        int expectedCount = 0;
+
+        DatabaseChangeLog mockChangeLog = Mockito.mock(DatabaseChangeLog.class);
+        Mockito.when(mockChangeLog.getFilePath()).thenReturn(expectedChangeLogName);
+        ChangeSet mockChangeSet = Mockito.mock(ChangeSet.class);
+        Mockito.when(mockChangeSet.toString(false)).thenReturn(expectedChangeSetName);
+
+        this.unitTestLogger.setLevel(Level.OFF);
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(mockChangeLog);
+        slf4jLogger.setChangeSet(mockChangeSet);
+        slf4jLogger.warning(expectedMessage);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+    }
+
+    @Test
+    public void testWarningWithMessageNoOptionalData() {
+        String expectedMessage = "This is a warning test.";
+        int expectedCount = 1;
+
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(null);
+        slf4jLogger.setChangeSet(null);
+        slf4jLogger.warning(expectedMessage);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
+        Assert.assertEquals(Level.WARN, loggingEvent.getLevel());
+        Assert.assertEquals(expectedMessage, loggingEvent.getFormattedMessage());
+    }
+
+    @Test
     public void testWarningWithMessageAndThrowable() {
         String expectedChangeLogName = "/test/path";
         String expectedChangeSetName = "TestChangeSet";
-        String expectedMessage = "This is a info test.";
+        String expectedMessage = "This is a warning test.";
         int expectedCount = 1;
         String expectedStr = expectedChangeLogName + ": " + expectedChangeSetName + ": " + expectedMessage;
 
@@ -146,6 +244,28 @@ public class Slf4jLoggerTest {
         Assert.assertEquals(Level.WARN, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getFormattedMessage());
         Assert.assertEquals(expectedException.getClass().getName(), loggingEvent.getThrowableProxy().getClassName());
+    }
+
+    @Test
+    public void testWarningWithMessageAndThrowableLogLevelDisabled() {
+        String expectedChangeLogName = "/test/path";
+        String expectedChangeSetName = "TestChangeSet";
+        String expectedMessage = "This is a info test.";
+        int expectedCount = 0;
+
+        DatabaseChangeLog mockChangeLog = Mockito.mock(DatabaseChangeLog.class);
+        Mockito.when(mockChangeLog.getFilePath()).thenReturn(expectedChangeLogName);
+        ChangeSet mockChangeSet = Mockito.mock(ChangeSet.class);
+        Mockito.when(mockChangeSet.toString(false)).thenReturn(expectedChangeSetName);
+
+        this.unitTestLogger.setLevel(Level.OFF);
+        Exception expectedException = new RuntimeException("Exception");
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(mockChangeLog);
+        slf4jLogger.setChangeSet(mockChangeSet);
+        slf4jLogger.warning(expectedMessage, expectedException);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
     }
 
     @Test
@@ -170,6 +290,43 @@ public class Slf4jLoggerTest {
         ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
         Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getFormattedMessage());
+    }
+
+    @Test
+    public void testInfoWithMessageLogLevelDisabled() {
+        String expectedChangeLogName = "/test/path";
+        String expectedChangeSetName = "TestChangeSet";
+        String expectedMessage = "This is a info test.";
+        int expectedCount = 0;
+
+        DatabaseChangeLog mockChangeLog = Mockito.mock(DatabaseChangeLog.class);
+        Mockito.when(mockChangeLog.getFilePath()).thenReturn(expectedChangeLogName);
+        ChangeSet mockChangeSet = Mockito.mock(ChangeSet.class);
+        Mockito.when(mockChangeSet.toString(false)).thenReturn(expectedChangeSetName);
+
+        this.unitTestLogger.setLevel(Level.OFF);
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(mockChangeLog);
+        slf4jLogger.setChangeSet(mockChangeSet);
+        slf4jLogger.info(expectedMessage);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+    }
+
+    @Test
+    public void testInfoWithMessageNoOptionalData() {
+        String expectedMessage = "This is a info test.";
+        int expectedCount = 1;
+
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(null);
+        slf4jLogger.setChangeSet(null);
+        slf4jLogger.info(expectedMessage);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
+        Assert.assertEquals(Level.INFO, loggingEvent.getLevel());
+        Assert.assertEquals(expectedMessage, loggingEvent.getFormattedMessage());
     }
 
     @Test
@@ -199,6 +356,28 @@ public class Slf4jLoggerTest {
     }
 
     @Test
+    public void testInfoWithMessageAndThrowableLogLevelDisabled() {
+        String expectedChangeLogName = "/test/path";
+        String expectedChangeSetName = "TestChangeSet";
+        String expectedMessage = "This is a info test.";
+        int expectedCount = 0;
+
+        DatabaseChangeLog mockChangeLog = Mockito.mock(DatabaseChangeLog.class);
+        Mockito.when(mockChangeLog.getFilePath()).thenReturn(expectedChangeLogName);
+        ChangeSet mockChangeSet = Mockito.mock(ChangeSet.class);
+        Mockito.when(mockChangeSet.toString(false)).thenReturn(expectedChangeSetName);
+
+        this.unitTestLogger.setLevel(Level.OFF);
+        Exception expectedException = new RuntimeException("Exception");
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(mockChangeLog);
+        slf4jLogger.setChangeSet(mockChangeSet);
+        slf4jLogger.info(expectedMessage, expectedException);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+    }
+
+    @Test
     public void testDebugWithMessage() {
         String expectedChangeLogName = "/test/path";
         String expectedChangeSetName = "TestChangeSet";
@@ -220,6 +399,43 @@ public class Slf4jLoggerTest {
         ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
         Assert.assertEquals(Level.DEBUG, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getFormattedMessage());
+    }
+
+    @Test
+    public void testDebugWithMessageLogLevelDisabled() {
+        String expectedChangeLogName = "/test/path";
+        String expectedChangeSetName = "TestChangeSet";
+        String expectedMessage = "This is a debug test.";
+        int expectedCount = 0;
+
+        DatabaseChangeLog mockChangeLog = Mockito.mock(DatabaseChangeLog.class);
+        Mockito.when(mockChangeLog.getFilePath()).thenReturn(expectedChangeLogName);
+        ChangeSet mockChangeSet = Mockito.mock(ChangeSet.class);
+        Mockito.when(mockChangeSet.toString(false)).thenReturn(expectedChangeSetName);
+
+        this.unitTestLogger.setLevel(Level.OFF);
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(mockChangeLog);
+        slf4jLogger.setChangeSet(mockChangeSet);
+        slf4jLogger.debug(expectedMessage);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+    }
+
+    @Test
+    public void testDebugWithMessageNoOptionalData() {
+        String expectedMessage = "This is a debug test.";
+        int expectedCount = 1;
+
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(null);
+        slf4jLogger.setChangeSet(null);
+        slf4jLogger.debug(expectedMessage);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
+        ILoggingEvent loggingEvent = this.listAppender.list.iterator().next();
+        Assert.assertEquals(Level.DEBUG, loggingEvent.getLevel());
+        Assert.assertEquals(expectedMessage, loggingEvent.getFormattedMessage());
     }
 
     @Test
@@ -246,6 +462,28 @@ public class Slf4jLoggerTest {
         Assert.assertEquals(Level.DEBUG, loggingEvent.getLevel());
         Assert.assertEquals(expectedStr, loggingEvent.getFormattedMessage());
         Assert.assertEquals(expectedException.getClass().getName(), loggingEvent.getThrowableProxy().getClassName());
+    }
+
+    @Test
+    public void testDebugWithMessageAndThrowableLogLevelDisabled() {
+        String expectedChangeLogName = "/test/path";
+        String expectedChangeSetName = "TestChangeSet";
+        String expectedMessage = "This is a info test.";
+        int expectedCount = 0;
+
+        DatabaseChangeLog mockChangeLog = Mockito.mock(DatabaseChangeLog.class);
+        Mockito.when(mockChangeLog.getFilePath()).thenReturn(expectedChangeLogName);
+        ChangeSet mockChangeSet = Mockito.mock(ChangeSet.class);
+        Mockito.when(mockChangeSet.toString(false)).thenReturn(expectedChangeSetName);
+
+        this.unitTestLogger.setLevel(Level.OFF);
+        Exception expectedException = new RuntimeException("Exception");
+        Slf4jLogger slf4jLogger = new Slf4jLogger();
+        slf4jLogger.setName("unit.test");
+        slf4jLogger.setChangeLog(mockChangeLog);
+        slf4jLogger.setChangeSet(mockChangeSet);
+        slf4jLogger.debug(expectedMessage, expectedException);
+        Assert.assertEquals(expectedCount, this.listAppender.list.size());
     }
 
     @Test

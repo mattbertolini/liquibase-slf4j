@@ -1,16 +1,24 @@
 # liquibase-slf4j
-Version 1.2.0
+Version 1.2.1<br/>
 Written by Matt Bertolini
 
 ## How to Use
 Grab the library from Maven Central and place it in your classpath.
 
+**Maven:**
+
 ```xml
 <dependency>
     <groupId>com.mattbertolini</groupId>
     <artifactId>liquibase-slf4j</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
 </dependency>
+```
+
+**Gradle:**
+
+```groovy
+runtime group: 'com.mattbertolini', name: 'liquibase-slf4j', version: '1.2.1'
 ```
 
 ## License
@@ -41,6 +49,11 @@ Please report any bugs in the issue tracker above. Please be as detailed as poss
 unit tests to verify the problem is fixed.
 
 ## Release Notes
+
+**1.2.1 - 2013-10-11**
+
+* Only printing the changeLogName and changeSetName if they are provided. This gets rid of the annoying nulls printed
+in logs.
 
 **1.2.0 - 2013-09-30**
 
