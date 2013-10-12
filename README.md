@@ -50,7 +50,7 @@ unit tests to verify the problem is fixed.
 
 ## Release Notes
 
-**1.2.1 - 2013-10-11**
+**1.2.1 - 2013-10-12**
 
 * Only printing the changeLogName and changeSetName if they are provided. This gets rid of the annoying nulls printed
 in logs.
