@@ -39,6 +39,7 @@ highest priority will be used.
 * [Apache Ant](http://ant.apache.org/) - Version 1.8 or higher.
 * JDK 6 or higher (Compiled with 1.6 source and target).
 
+### Build
 To build this project, clone the repo and run the ```ant``` command:
 ```
 $ git clone https://github.com/mattbertolini/liquibase-slf4j.git
