@@ -21,6 +21,12 @@ Grab the library from Maven Central and place it in your classpath.
 runtime group: 'com.mattbertolini', name: 'liquibase-slf4j', version: '1.2.1'
 ```
 
+**Ivy**
+
+```xml
+<dependency org="com.mattbertolini" name="liquibase-slf4j" rev="1.2.1"/>
+```
+
 ## License
 liquibase-slf4j is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php)
 
@@ -29,7 +35,11 @@ This logger has a priority number of 5. If you have more than one Liquibase logg
 highest priority will be used.
 
 ## Build and Test
-To build this project, clone the repo and run the ant command:
+### Requirements
+* [Apache Ant](http://ant.apache.org/) - Version 1.8 or higher.
+* JDK 6 or higher (Compiled with 1.6 source and target).
+
+To build this project, clone the repo and run the ```ant``` command:
 ```
 $ git clone https://github.com/mattbertolini/liquibase-slf4j.git
 $ cd liquibase-slf4j
