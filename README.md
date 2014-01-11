@@ -34,6 +34,31 @@ liquibase-slf4j is licensed under the [MIT License](http://www.opensource.org/li
 This logger has a priority number of 5. If you have more than one Liquibase logger on your classpath the one with the
 highest priority will be used.
 
+### Log Level Mappings
+
+<table>
+    <tr>
+        <th>Liquibase Level</th>
+        <th>SLF4J level</th>
+    </tr>
+    <tr>
+        <td>Debug</td>
+        <td>Debug</td>
+    </tr>
+    <tr>
+        <td>Info</td>
+        <td>Info</td>
+    </tr>
+    <tr>
+        <td>Warning</td>
+        <td>Warn</td>
+    </tr>
+    <tr>
+        <td>Severe</td>
+        <td>Error</td>
+    </tr>
+</table>
+
 ## Build and Test
 ### Requirements
 * [Apache Ant](http://ant.apache.org/) - Version 1.8 or higher.
