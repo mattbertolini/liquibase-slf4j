@@ -39,7 +39,7 @@ highest priority will be used.
 <table>
     <tr>
         <th>Liquibase Level</th>
-        <th>SLF4J level</th>
+        <th>SLF4J Level</th>
     </tr>
     <tr>
         <td>Debug</td>
