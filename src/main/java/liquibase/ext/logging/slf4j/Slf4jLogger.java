@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013 Matt Bertolini
+ * Copyright (c) 2012-2014 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -45,14 +45,14 @@ public class Slf4jLogger extends AbstractLogger {
     }
 
     /**
-     * This method does nothing in this implementation
+     * Sets the log level for Liquibase. Not used in this implementation.
      *
      * @param logLevel Log level
      * @param logFile Log file
      */
     @Override
     public void setLogLevel(String logLevel, String logFile) {
-        // Do nothing
+        super.setLogLevel(logLevel);
     }
 
     @Override
