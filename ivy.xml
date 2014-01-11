@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2013 Matt Bertolini
+ Copyright (c) 2012-2014 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -50,11 +50,11 @@
         <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="build->default">
             <exclude module="ant"/>
         </dependency>
-        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.6.3.201306030806" conf="build->default"/>
+        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.6.4.201312101107" conf="build->default"/>
         <!-- Findbugs in it's own configuration because of incompatibilities with the asm dependency in JaCoCo. -->
-        <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.1" conf="findbugs->default"/>
-        <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="2.0.1" conf="findbugs->default"/>
-        <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.49" conf="build->default"/>
+        <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.3" conf="findbugs->default"/>
+        <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="2.0.3" conf="findbugs->default"/>
+        <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.50" conf="build->default"/>
         <dependency org="com.mattbertolini" name="jxr-ant" rev="2.0.0" conf="build->default">
             <exclude module="ant"/>
         </dependency>

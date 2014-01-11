@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012 Matt Bertolini
+ Copyright (c) 2012-2014 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -18,7 +18,7 @@
 <ivysettings>
     <resolvers>
         <url name="maven-central-snapshot" m2compatible="true" signer="maven-central-pgp">
-            <artifact pattern="${maven.snapshot.url}/[organisation]/[module]/[revision].SNAPSHOT/[artifact]-[revision].${snapshot.timestamp}(-[classifier]).[ext]"/>
+            <artifact pattern="${maven.snapshot.url}/[organisation]/[module]/[revision]-SNAPSHOT/[artifact]-[revision].${snapshot.timestamp}(-[classifier]).[ext]"/>
         </url>
         <url name="maven-central-release" m2compatible="true" signer="maven-central-pgp">
             <artifact pattern="${maven.release.url}/[organisation]/[module]/[revision]/[artifact]-[revision](-[classifier]).[ext]"/>
