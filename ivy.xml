@@ -44,13 +44,13 @@
         <!-- Testing Dependencies -->
         <dependency org="junit" name="junit" rev="4.11" conf="test->default"/>
         <dependency org="org.mockito" name="mockito-core" rev="1.9.5" conf="test->default"/>
-        <dependency org="ch.qos.logback" name="logback-classic" rev="1.0.13" conf="test->default"/>
+        <dependency org="ch.qos.logback" name="logback-classic" rev="1.1.2" conf="test->default"/>
         <!-- Build Dependencies -->
         <dependency org="org.apache.ivy" name="ivy" rev="${project.ivy.version}" conf="build->default"/>
         <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="build->default">
             <exclude module="ant"/>
         </dependency>
-        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.6.4.201312101107" conf="build->default"/>
+        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.0.201403182114" conf="build->default"/>
         <!-- Findbugs in it's own configuration because of incompatibilities with the asm dependency in JaCoCo. -->
         <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.3" conf="findbugs->default"/>
         <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="2.0.3" conf="findbugs->default"/>
