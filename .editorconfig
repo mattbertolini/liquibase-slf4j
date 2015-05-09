@@ -1,0 +1,11 @@
+# EditorConfig file for liquibase-slf4j
+
+root = true
+
+[*]
+end_of_line = lf
+
+[*.{java,xml}]
+charset = utf-8
+indent_style = space
+indent_size = 4
