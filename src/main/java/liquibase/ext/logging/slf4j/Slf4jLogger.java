@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014 Matt Bertolini
+ * Copyright (c) 2012-2015 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -16,8 +16,6 @@
  */
 package liquibase.ext.logging.slf4j;
 
-import liquibase.changelog.ChangeSet;
-import liquibase.changelog.DatabaseChangeLog;
 import liquibase.logging.core.AbstractLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +29,6 @@ public class Slf4jLogger extends AbstractLogger {
     private static final int PRIORITY = 5;
 
     private Logger logger;
-    private String changeLogName = null;
-    private String changeSetName = null;
 
     /**
      * Takes the given logger name argument and associates it with a SLF4J logger.
@@ -53,16 +49,6 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void setLogLevel(String logLevel, String logFile) {
         super.setLogLevel(logLevel);
-    }
-
-    @Override
-    public void setChangeLog(DatabaseChangeLog databaseChangeLog) {
-        changeLogName = (databaseChangeLog == null) ? null : databaseChangeLog.getFilePath();
-    }
-
-    @Override
-    public void setChangeSet(ChangeSet changeSet) {
-        changeSetName = (changeSet == null) ? null : changeSet.toString(false);
     }
 
     /**
@@ -175,23 +161,5 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public int getPriority() {
         return PRIORITY;
-    }
-
-    /**
-     * Build a log message with optional data if it exists.
-     *
-     * @param message The basic log message before optional data.
-     * @return the complete log message to print to the logger.
-     */
-    private String buildMessage(String message) {
-        StringBuilder msg = new StringBuilder();
-        if(changeLogName != null) {
-            msg.append(changeLogName).append(": ");
-        }
-        if(changeSetName != null) {
-            msg.append(changeSetName.replace(changeLogName + "::", "")).append(": ");
-        }
-        msg.append(message);
-        return msg.toString();
     }
 }
