@@ -50,7 +50,7 @@
         <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="build->default">
             <exclude module="ant"/>
         </dependency>
-        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.0.201403182114" conf="build->default"/>
+        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.4.201502262128" conf="build->default"/>
         <!-- Findbugs in it's own configuration because of incompatibilities with the asm dependency in JaCoCo. -->
         <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.3" conf="findbugs->default"/>
         <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="2.0.3" conf="findbugs->default"/>
