@@ -44,7 +44,7 @@
         <!-- Testing Dependencies -->
         <dependency org="junit" name="junit" rev="4.12" conf="test->default"/>
         <dependency org="org.mockito" name="mockito-core" rev="1.10.19" conf="test->default"/>
-        <dependency org="ch.qos.logback" name="logback-classic" rev="1.1.2" conf="test->default"/>
+        <dependency org="ch.qos.logback" name="logback-classic" rev="1.1.3" conf="test->default"/>
         <!-- Build Dependencies -->
         <dependency org="org.apache.ivy" name="ivy" rev="${project.ivy.version}" conf="build->default"/>
         <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="build->default">
