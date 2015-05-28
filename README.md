@@ -31,7 +31,7 @@ runtime group: 'com.mattbertolini', name: 'liquibase-slf4j', version: '1.2.1'
 liquibase-slf4j is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php)
 
 ## Notes
-This logger has a priority number of 5. If you have more than one Liquibase logger on your classpath the one with the
+This logger has a priority number of 5. If there is more than one Liquibase logger on the classpath the one with the
 highest priority will be used.
 
 ### Log Level Mappings
