@@ -2,6 +2,8 @@
 Version 1.2.1<br/>
 Written by Matt Bertolini
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.mattbertolini/liquibase-slf4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.mattbertolini/liquibase-slf4j)
+
 ## How to Use
 Grab the library from Maven Central and place it in your classpath.
 
@@ -33,6 +35,9 @@ liquibase-slf4j is licensed under the [MIT License](http://www.opensource.org/li
 ## Notes
 This logger has a priority number of 5. If you have more than one Liquibase logger on your classpath the one with the
 highest priority will be used.
+
+Liquibase version 3.4.0 had an issue loading third party loggers in some situations. This logger may not work on that 
+version. It is recommended that you upgrade to Liquibase 3.4.1 which addresses this issue.
 
 ### Log Level Mappings
 
