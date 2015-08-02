@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014 Matt Bertolini
+ * Copyright (c) 2012-2013 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -490,7 +490,7 @@ public class Slf4jLoggerTest {
     public void testGetPriority() {
         Slf4jLogger slf4jLogger = new Slf4jLogger();
         // Just for the coverage. Does nothing.
-        slf4jLogger.setLogLevel("info", null);
+        slf4jLogger.setLogLevel(null, null);
         Assert.assertEquals(5, slf4jLogger.getPriority());
     }
 }

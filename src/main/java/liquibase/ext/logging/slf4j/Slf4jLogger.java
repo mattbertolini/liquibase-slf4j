@@ -41,14 +41,14 @@ public class Slf4jLogger extends AbstractLogger {
     }
 
     /**
-     * Sets the log level for Liquibase. Not used in this implementation.
+     * This method does nothing in this implementation
      *
      * @param logLevel Log level
      * @param logFile Log file
      */
     @Override
     public void setLogLevel(String logLevel, String logFile) {
-        super.setLogLevel(logLevel);
+        // Do nothing
     }
 
     /**
