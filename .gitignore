@@ -8,6 +8,8 @@ dist/
 build/
 bin/
 *.iml
+*.ipr
+*.iws
 .idea/
 out/
 nbbuild/
