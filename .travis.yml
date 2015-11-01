@@ -1,7 +1,6 @@
 # Travis CI build
 
 language: java
-install: ant deps
 sudo: false
 
 jdk:
