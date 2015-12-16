@@ -183,7 +183,7 @@ public class Slf4jLogger extends AbstractLogger {
      * @param message The basic log message before optional data.
      * @return the complete log message to print to the logger.
      */
-    private String buildMessage(String message) {
+    protected String buildMessage(String message) {
         StringBuilder msg = new StringBuilder();
         if(changeLogName != null) {
             msg.append(changeLogName).append(": ");
