@@ -40,7 +40,7 @@
     </publications>
     <dependencies defaultconfmapping="compile->default">
         <dependency org="org.slf4j" name="slf4j-api" rev="1.7.12"/>
-        <dependency org="org.liquibase" name="liquibase-core" rev="3.3.3"/>
+        <dependency org="org.liquibase" name="liquibase-core" rev="3.2.0"/>
         <!-- Testing Dependencies -->
         <dependency org="junit" name="junit" rev="4.12" conf="test->default"/>
         <dependency org="org.mockito" name="mockito-core" rev="1.10.19" conf="test->default"/>
