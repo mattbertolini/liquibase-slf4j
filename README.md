@@ -1,5 +1,5 @@
 # liquibase-slf4j
-Version 1.2.1<br/>
+Version 2.0.0<br/>
 Written by Matt Bertolini
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.mattbertolini/liquibase-slf4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.mattbertolini/liquibase-slf4j)
@@ -14,20 +14,20 @@ Grab the library from Maven Central and place it in your classpath.
 <dependency>
     <groupId>com.mattbertolini</groupId>
     <artifactId>liquibase-slf4j</artifactId>
-    <version>1.2.1</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
 **Gradle:**
 
 ```groovy
-runtime group: 'com.mattbertolini', name: 'liquibase-slf4j', version: '1.2.1'
+runtime group: 'com.mattbertolini', name: 'liquibase-slf4j', version: '2.0.0'
 ```
 
 **Ivy**
 
 ```xml
-<dependency org="com.mattbertolini" name="liquibase-slf4j" rev="1.2.1"/>
+<dependency org="com.mattbertolini" name="liquibase-slf4j" rev="2.0.0"/>
 ```
 
 ## License
@@ -91,6 +91,14 @@ Please report any bugs in the issue tracker above. Please be as detailed as poss
 unit tests to verify the problem is fixed.
 
 ## Release Notes
+
+**2.0.0 - 2015-12-16**
+
+* Switched the dependency scope of SLF4J and Liquibase to `provided`. This is because most users are already including 
+  their own versions of these libraries and the versions are often much newer than what is defined in this library. By 
+  marking them as `provided` it helps prevent version conflicts and extra exclusions in project files. For an example of 
+  this, check out the POM file from [Dropwizard](https://github.com/dropwizard/dropwizard/blob/a0bdb73053872e73762af4f940b893f78a363c2e/dropwizard-bom/pom.xml#L145)
+* The minimum required Liquibase version is now 3.2.0. This is done to take advantage of updates to `AbstractLogger`.
 
 **1.2.1 - 2013-10-12**
 
