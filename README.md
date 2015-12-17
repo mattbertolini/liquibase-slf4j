@@ -3,6 +3,7 @@ Version 1.2.1<br/>
 Written by Matt Bertolini
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.mattbertolini/liquibase-slf4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.mattbertolini/liquibase-slf4j)
+[![Build Status](https://travis-ci.org/mattbertolini/liquibase-slf4j.svg?branch=master)](https://travis-ci.org/mattbertolini/liquibase-slf4j)
 
 ## How to Use
 Grab the library from Maven Central and place it in your classpath.
