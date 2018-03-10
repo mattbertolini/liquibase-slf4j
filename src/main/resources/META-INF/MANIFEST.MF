@@ -1,0 +1,1 @@
+Automatic-Module-Name: com.mattbertolini.liquibase.logging.slf4j
