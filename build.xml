@@ -17,7 +17,7 @@
 -->
 <project name="liquibase-slf4j" basedir="." default="build" xmlns="antlib:org.apache.tools.ant"
          xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:ac="antlib:net.sf.antcontrib" xmlns:jacoco="antlib:org.jacoco.ant"
-         xmlns:findbugs="antlib:com.google.code.findbugs" xmlns:jxr="antlib:com.mattbertolini.jxr.ant">
+         xmlns:spotbugs="antlib:com.github.spotbugs" xmlns:jxr="antlib:com.mattbertolini.jxr.ant">
     <property file="build.properties"/>
 
     <condition property="offline" value="true" else="false">
@@ -28,10 +28,10 @@
 
     <!-- Private targets -->
     <target name="check-configuration">
-        <fail message="Need Ant version 1.8.0 or later to run.">
+        <fail message="Need Ant version 1.10.3 or later to run.">
             <condition>
                 <not>
-                    <antversion atleast="1.8"/>
+                    <antversion atleast="1.10.3"/>
                 </not>
             </condition>
         </fail>
@@ -57,7 +57,7 @@
         <mkdir dir="${build.reports.dependency.dir}"/>
         <mkdir dir="${build.reports.coverage.dir}"/>
         <mkdir dir="${build.reports.unittest.dir}"/>
-        <mkdir dir="${build.reports.findbugs.dir}"/>
+        <mkdir dir="${build.reports.spotbugs.dir}"/>
         <mkdir dir="${build.reports.xref.dir}"/>
         <mkdir dir="${build.temp.dir}"/>
         <mkdir dir="${dist.dir}"/>
@@ -95,8 +95,8 @@
             <fileset dir="${lib.test.dir}"/>
         </path>
 
-        <path id="findbugs-classpath">
-            <fileset dir="${lib.findbugs.dir}"/>
+        <path id="spotbugs-classpath">
+            <fileset dir="${lib.spotbugs.dir}"/>
         </path>
 
         <path id="compile-tests-classpath">
@@ -118,7 +118,7 @@
     <target name="load-third-party-tasks" depends="create-paths">
         <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="build-classpath" uri="antlib:net.sf.antcontrib"/>
         <taskdef resource="org/jacoco/ant/antlib.xml" classpathref="build-classpath" uri="antlib:org.jacoco.ant"/>
-        <taskdef resource="edu/umd/cs/findbugs/anttask/tasks.properties" classpathref="findbugs-classpath" uri="antlib:com.google.code.findbugs"/>
+        <taskdef resource="edu/umd/cs/findbugs/anttask/tasks.properties" classpathref="spotbugs-classpath" uri="antlib:com.github.spotbugs"/>
         <taskdef resource="com/mattbertolini/jxr/ant/antlib.xml" classpathref="build-classpath" uri="antlib:com.mattbertolini.jxr.ant"/>
     </target>
 
@@ -191,23 +191,23 @@
         <fail if="test.failed">One or more unit tests failed/errored. Check ${build.reports.unittest.dir} for details.</fail>
     </target>
 
-    <target name="run-findbugs" depends="create-paths, load-third-party-tasks, compile-source, compile-tests">
+    <target name="run-spotbugs" depends="create-paths, load-third-party-tasks, compile-source, compile-tests">
         <path id="aux-classpath">
             <path refid="compile-classpath"/>
             <path refid="test-classpath"/>
             <path refid="build-classpath"/>
-            <path refid="findbugs-classpath"/>
+            <path refid="spotbugs-classpath"/>
         </path>
-        <findbugs:findbugs classpathref="findbugs-classpath" pluginlist="" output="xml:withMessages" outputFile="${build.reports.findbugs.dir}/${project.name}-findbugs.xml" jvmargs="-Xms${findbugs.mem.initial} -Xmx${findbugs.mem.max}">
-            <findbugs:class location="${build.classes.dir}"/>
-            <findbugs:class location="${build.test.classes.dir}"/>
-            <findbugs:auxClasspath refid="aux-classpath"/>
-            <findbugs:sourcePath path="${src.main.java.dir}"/>
-            <findbugs:sourcePath path="${src.test.java.dir}"/>
-        </findbugs:findbugs>
-        <xslt in="${build.reports.findbugs.dir}/${project.name}-findbugs.xml" out="${build.reports.findbugs.dir}/${project.name}-findbugs.html">
+        <spotbugs:spotbugs classpathref="spotbugs-classpath" pluginlist="" output="xml:withMessages" outputFile="${build.reports.spotbugs.dir}/${project.name}-spotbugs.xml" jvmargs="-Xms${spotbugs.mem.initial} -Xmx${spotbugs.mem.max}">
+            <spotbugs:class location="${build.classes.dir}"/>
+            <spotbugs:class location="${build.test.classes.dir}"/>
+            <spotbugs:auxClasspath refid="aux-classpath"/>
+            <spotbugs:sourcePath path="${src.main.java.dir}"/>
+            <spotbugs:sourcePath path="${src.test.java.dir}"/>
+        </spotbugs:spotbugs>
+        <xslt in="${build.reports.spotbugs.dir}/${project.name}-spotbugs.xml" out="${build.reports.spotbugs.dir}/${project.name}-spotbugs.html">
             <style>
-                <url url="jar:file:${dependency.findbugs.findbugs}!/default.xsl"/>
+                <url url="jar:file:${dependency.spotbugs.spotbugs}!/color.xsl"/>
             </style>
         </xslt>
     </target>
@@ -266,7 +266,7 @@
         <antcall>
             <param name="param.full.build" value="true"/>
             <target name="run-unit-tests"/>
-            <target name="run-findbugs"/>
+            <target name="run-spotbugs"/>
             <target name="compile-xref-doc"/>
             <target name="make-artifacts"/>
         </antcall>

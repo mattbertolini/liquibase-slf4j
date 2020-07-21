@@ -27,7 +27,7 @@
         <conf name="compile"/>
         <conf name="test"/>
         <conf name="build"/>
-        <conf name="findbugs"/>
+        <conf name="spotbugs"/>
         <conf name="default" visibility="private"/>
         <conf name="sources" visibility="private"/>
         <conf name="javadoc" visibility="private"/>
@@ -42,8 +42,8 @@
         <dependency org="org.slf4j" name="slf4j-api" rev="1.7.30"/>
         <dependency org="org.liquibase" name="liquibase-core" rev="4.0.0"/>
         <!-- Testing Dependencies -->
-        <dependency org="junit" name="junit" rev="4.12" conf="test->default"/>
-        <dependency org="org.mockito" name="mockito-core" rev="1.10.19" conf="test->default"/>
+        <dependency org="junit" name="junit" rev="4.13" conf="test->default"/>
+        <dependency org="org.mockito" name="mockito-core" rev="3.3.3" conf="test->default"/>
         <dependency org="ch.qos.logback" name="logback-classic" rev="1.1.3" conf="test->default"/>
         <!-- Build Dependencies -->
         <dependency org="org.apache.ivy" name="ivy" rev="${project.ivy.version}" conf="build->default"/>
@@ -51,9 +51,8 @@
             <exclude module="ant"/>
         </dependency>
         <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.8.5" conf="build->default"/>
-        <!-- Findbugs in it's own configuration because of incompatibilities with the asm dependency in JaCoCo. -->
-        <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.3" conf="findbugs->default"/>
-        <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="2.0.3" conf="findbugs->default"/>
+        <dependency org="com.github.spotbugs" name="spotbugs" rev="4.0.6" conf="spotbugs->default"/>
+        <dependency org="com.github.spotbugs" name="spotbugs-ant" rev="4.0.6" conf="spotbugs->default"/>
         <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.50" conf="build->default"/>
         <dependency org="com.mattbertolini" name="jxr-ant" rev="2.0.0" conf="build->default">
             <exclude module="ant"/>
