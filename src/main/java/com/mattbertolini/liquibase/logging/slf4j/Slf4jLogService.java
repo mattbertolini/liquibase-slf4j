@@ -17,7 +17,6 @@
 
 package com.mattbertolini.liquibase.logging.slf4j;
 
-import liquibase.ext.logging.slf4j.Slf4jLogger;
 import liquibase.logging.Logger;
 import liquibase.logging.core.AbstractLogService;
 import org.slf4j.LoggerFactory;

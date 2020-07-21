@@ -15,7 +15,7 @@
 // * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // */
 //
-package liquibase.ext.logging.slf4j;
+package com.mattbertolini.liquibase.logging.slf4j;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
