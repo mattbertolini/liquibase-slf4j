@@ -31,12 +31,11 @@ public class Slf4jLogService extends AbstractLogService {
     private int priority;
 
     /**
-     * Default constructor. Needed for ServiceLoader to work.
+     * Default constructor is needed for ServiceLoader to work.
      *
      * @see liquibase.servicelocator.StandardServiceLocator
      */
     public Slf4jLogService() {
-        // default constructor needed for service loader
         this(System.getProperties());
     }
     

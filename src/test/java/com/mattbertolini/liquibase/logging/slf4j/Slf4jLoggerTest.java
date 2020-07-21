@@ -21,6 +21,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
+import java.util.logging.Level;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -31,21 +33,66 @@ import static org.mockito.Mockito.when;
 /**
  * @author Matt Bertolini
  */
-public class Slf4jLoggerTest {
+class Slf4jLoggerTest {
 
     private Logger delegate;
     private Slf4jLogger logger;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         delegate = mock(Logger.class);
         logger = new Slf4jLogger(delegate);
     }
 
+    // log method
+
+    @Test
+    void logWithSevereLevel() {
+        String message = "severe test";
+        logger.log(Level.SEVERE, message, null);
+        verify(delegate).error(message, (Throwable) null);
+    }
+
+    @Test
+    void logWithWarningLevel() {
+        String message = "warning test";
+        logger.log(Level.WARNING, message, null);
+        verify(delegate).warn(message, (Throwable) null);
+    }
+
+    @Test
+    void logWithInfoLevel() {
+        String message = "info test";
+        logger.log(Level.INFO, message, null);
+        verify(delegate).info(message, (Throwable) null);
+    }
+
+    @Test
+    void logWithConfigLevel() {
+        String message = "config test";
+        logger.log(Level.CONFIG, message, null);
+        verify(delegate).info(message, (Throwable) null);
+    }
+
+    @Test
+    void logWithFineLevel() {
+        String message = "fine test";
+        logger.log(Level.FINE, message, null);
+        verify(delegate).debug(message, (Throwable) null);
+    }
+
+    @Test
+    void logWithFinestLevel() {
+        String message = "finest test";
+        logger.log(Level.FINEST, message, null);
+        verify(delegate).trace(message, (Throwable) null);
+    }
+
+
     // Severe level
     
     @Test
-    public void logsSevereWithMessage() {
+    void logsSevereWithMessage() {
         String expected = "This is a severe test.";
         when(delegate.isErrorEnabled()).thenReturn(true);
         logger.severe(expected);
@@ -53,7 +100,7 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void logsSevereWithMessageAndThrowable() {
+    void logsSevereWithMessageAndThrowable() {
         RuntimeException exception = new RuntimeException("Exception");
         String expected = "This is a severe test.";
         when(delegate.isErrorEnabled()).thenReturn(true);
@@ -62,14 +109,14 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void doesNotLogSevereWhenLogLevelDisabled() {
+    void doesNotLogSevereWhenLogLevelDisabled() {
         when(delegate.isErrorEnabled()).thenReturn(false);
         logger.severe("do not log");
         verify(delegate, never()).error(anyString());
     }
 
     @Test
-    public void doesNotLogSevereWithThrowableWhenLogLevelDisabled() {
+    void doesNotLogSevereWithThrowableWhenLogLevelDisabled() {
         RuntimeException exception = new RuntimeException("Exception");
         when(delegate.isErrorEnabled()).thenReturn(false);
         logger.severe("do not log", exception);
@@ -79,7 +126,7 @@ public class Slf4jLoggerTest {
     // Warning level
 
     @Test
-    public void logsWarningWithMessage() {
+    void logsWarningWithMessage() {
         String expected = "This is a warning test.";
         when(delegate.isWarnEnabled()).thenReturn(true);
         logger.warning(expected);
@@ -87,7 +134,7 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void logsWarningWithMessageAndThrowable() {
+    void logsWarningWithMessageAndThrowable() {
         RuntimeException exception = new RuntimeException("Exception");
         String expected = "This is a warning test.";
         when(delegate.isWarnEnabled()).thenReturn(true);
@@ -96,14 +143,14 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void doesNotLogWarningWhenLogLevelDisabled() {
+    void doesNotLogWarningWhenLogLevelDisabled() {
         when(delegate.isWarnEnabled()).thenReturn(false);
         logger.warning("do not log");
         verify(delegate, never()).warn(anyString());
     }
 
     @Test
-    public void doesNotLogWarningWithThrowableWhenLogLevelDisabled() {
+    void doesNotLogWarningWithThrowableWhenLogLevelDisabled() {
         RuntimeException exception = new RuntimeException("Exception");
         when(delegate.isWarnEnabled()).thenReturn(false);
         logger.warning("do not log", exception);
@@ -113,7 +160,7 @@ public class Slf4jLoggerTest {
     // Info level
 
     @Test
-    public void logsInfoWithMessage() {
+    void logsInfoWithMessage() {
         String expected = "This is a info test.";
         when(delegate.isInfoEnabled()).thenReturn(true);
         logger.info(expected);
@@ -121,7 +168,7 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void logsInfoWithMessageAndThrowable() {
+    void logsInfoWithMessageAndThrowable() {
         RuntimeException exception = new RuntimeException("Exception");
         String expected = "This is a info test.";
         when(delegate.isInfoEnabled()).thenReturn(true);
@@ -130,14 +177,14 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void doesNotLogInfoWhenLogLevelDisabled() {
+    void doesNotLogInfoWhenLogLevelDisabled() {
         when(delegate.isInfoEnabled()).thenReturn(false);
         logger.info("do not log");
         verify(delegate, never()).info(anyString());
     }
 
     @Test
-    public void doesNotLogInfoWithThrowableWhenLogLevelDisabled() {
+    void doesNotLogInfoWithThrowableWhenLogLevelDisabled() {
         RuntimeException exception = new RuntimeException("Exception");
         when(delegate.isInfoEnabled()).thenReturn(false);
         logger.info("do not log", exception);
@@ -147,7 +194,7 @@ public class Slf4jLoggerTest {
     // Config level
     
     @Test
-    public void logsConfigWithMessage() {
+    void logsConfigWithMessage() {
         String expected = "This is a config test.";
         when(delegate.isInfoEnabled()).thenReturn(true);
         logger.config(expected);
@@ -155,7 +202,7 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void logsConfigWithMessageAndThrowable() {
+    void logsConfigWithMessageAndThrowable() {
         RuntimeException exception = new RuntimeException("Exception");
         String expected = "This is a config test.";
         when(delegate.isInfoEnabled()).thenReturn(true);
@@ -164,14 +211,14 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void doesNotLogConfigWhenLogLevelDisabled() {
+    void doesNotLogConfigWhenLogLevelDisabled() {
         when(delegate.isInfoEnabled()).thenReturn(false);
         logger.config("do not log");
         verify(delegate, never()).info(anyString());
     }
 
     @Test
-    public void doesNotLogConfigWithThrowableWhenLogLevelDisabled() {
+    void doesNotLogConfigWithThrowableWhenLogLevelDisabled() {
         RuntimeException exception = new RuntimeException("Exception");
         when(delegate.isInfoEnabled()).thenReturn(false);
         logger.config("do not log", exception);
@@ -181,7 +228,7 @@ public class Slf4jLoggerTest {
     // Fine level
 
     @Test
-    public void logsFineWithMessage() {
+    void logsFineWithMessage() {
         String expected = "This is a fine test.";
         when(delegate.isDebugEnabled()).thenReturn(true);
         logger.fine(expected);
@@ -189,7 +236,7 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void logsFineWithMessageAndThrowable() {
+    void logsFineWithMessageAndThrowable() {
         RuntimeException exception = new RuntimeException("Exception");
         String expected = "This is a fine test.";
         when(delegate.isDebugEnabled()).thenReturn(true);
@@ -198,14 +245,14 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void doesNotLogFineWhenLogLevelDisabled() {
+    void doesNotLogFineWhenLogLevelDisabled() {
         when(delegate.isDebugEnabled()).thenReturn(false);
         logger.fine("do not log");
         verify(delegate, never()).debug(anyString());
     }
 
     @Test
-    public void doesNotLogFineWithThrowableWhenLogLevelDisabled() {
+    void doesNotLogFineWithThrowableWhenLogLevelDisabled() {
         RuntimeException exception = new RuntimeException("Exception");
         when(delegate.isDebugEnabled()).thenReturn(false);
         logger.fine("do not log", exception);
@@ -215,7 +262,7 @@ public class Slf4jLoggerTest {
     // Debug level (deprecated). Delegates to fine
 
     @Test
-    public void logsDebugWithMessage() {
+    void logsDebugWithMessage() {
         String expected = "This is a debug test.";
         when(delegate.isDebugEnabled()).thenReturn(true);
         logger.debug(expected);
@@ -223,7 +270,7 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void logsDebugWithMessageAndThrowable() {
+    void logsDebugWithMessageAndThrowable() {
         RuntimeException exception = new RuntimeException("Exception");
         String expected = "This is a debug test.";
         when(delegate.isDebugEnabled()).thenReturn(true);
@@ -232,14 +279,14 @@ public class Slf4jLoggerTest {
     }
 
     @Test
-    public void doesNotLogDebugWhenLogLevelDisabled() {
+    void doesNotLogDebugWhenLogLevelDisabled() {
         when(delegate.isDebugEnabled()).thenReturn(false);
         logger.debug("do not log");
         verify(delegate, never()).debug(anyString());
     }
 
     @Test
-    public void doesNotLogDebugWithThrowableWhenLogLevelDisabled() {
+    void doesNotLogDebugWithThrowableWhenLogLevelDisabled() {
         RuntimeException exception = new RuntimeException("Exception");
         when(delegate.isDebugEnabled()).thenReturn(false);
         logger.debug("do not log", exception);

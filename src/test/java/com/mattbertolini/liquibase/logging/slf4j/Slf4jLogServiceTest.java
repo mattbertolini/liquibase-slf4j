@@ -18,22 +18,25 @@
 package com.mattbertolini.liquibase.logging.slf4j;
 
 
+import liquibase.logging.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.util.Properties;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-public class Slf4jLogServiceTest {
+class Slf4jLogServiceTest {
     @Test
-    public void usesDefaultPriority() {
+    void usesDefaultPriority() {
         Slf4jLogService logService = new Slf4jLogService(new Properties());
         assertEquals(5, logService.getPriority());
     }
 
     @Test
-    public void usesPriorityFromSystemProperties() {
+    void usesPriorityFromSystemProperties() {
         Properties systemProps = new Properties();
         systemProps.setProperty(Slf4jLogService.class.getName() + ".priority", "99");
         Slf4jLogService logService = new Slf4jLogService(systemProps);
@@ -41,7 +44,7 @@ public class Slf4jLogServiceTest {
     }
 
     @Test
-    public void usesDefaultPriorityOnPropertyParseError() {
+    void usesDefaultPriorityOnPropertyParseError() {
         Properties systemProps = new Properties();
         systemProps.setProperty(Slf4jLogService.class.getName() + ".priority", "not_a_number");
         Slf4jLogService logService = new Slf4jLogService(systemProps);
@@ -49,10 +52,20 @@ public class Slf4jLogServiceTest {
     }
 
     @Test
-    public void usesDefaultPriorityOnEmptyProperty() {
+    void usesDefaultPriorityOnEmptyProperty() {
         Properties systemProps = new Properties();
         systemProps.setProperty(Slf4jLogService.class.getName() + ".priority", "");
         Slf4jLogService logService = new Slf4jLogService(systemProps);
         assertEquals(5, logService.getPriority());
+    }
+
+    @Test
+    void returnsSlf4jLogger() {
+        Slf4jLogService logService = new Slf4jLogService();
+        Logger logger = logService.getLog(Slf4jLogServiceTest.class);
+        assertAll(() -> {
+            assertNotNull(logger);
+            assertEquals(Slf4jLogger.class, logger.getClass());
+        });
     }
 }
