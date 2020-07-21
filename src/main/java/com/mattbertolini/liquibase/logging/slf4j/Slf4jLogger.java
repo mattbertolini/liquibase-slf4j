@@ -34,9 +34,8 @@ public class Slf4jLogger extends AbstractLogger {
     private static final int WARN_THRESHOLD = Level.WARNING.intValue();
 
     private final Logger logger;
-
-    // TODO: Make package private
-    public Slf4jLogger(Logger logger) {
+    
+    Slf4jLogger(Logger logger) {
         this.logger = logger;
     }
 
