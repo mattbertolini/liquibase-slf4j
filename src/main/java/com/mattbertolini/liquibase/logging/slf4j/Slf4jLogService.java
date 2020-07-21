@@ -21,28 +21,40 @@ import liquibase.logging.Logger;
 import liquibase.logging.core.AbstractLogService;
 import org.slf4j.LoggerFactory;
 
+import java.util.Properties;
+
 public class Slf4jLogService extends AbstractLogService {
 
-    private static final String PRIORITY_PROPERTY_NAME = Slf4jLogService.class.getName() + ".priority";
     private static final int DEFAULT_PRIORITY = 5;
+    private static final String PRIORITY_PROPERTY_NAME = Slf4jLogService.class.getName() + ".priority";
 
-    private static int priority;
+    private int priority;
 
-    static {
+    /**
+     * Default constructor. Needed for ServiceLoader to work.
+     *
+     * @see liquibase.servicelocator.StandardServiceLocator
+     */
+    public Slf4jLogService() {
+        // default constructor needed for service loader
+        this(System.getProperties());
+    }
+    
+    Slf4jLogService(final Properties systemProps) {
         priority = DEFAULT_PRIORITY;
-        String priorityPropertyValue = System.getProperty(PRIORITY_PROPERTY_NAME);
+        String priorityPropertyValue = systemProps.getProperty(PRIORITY_PROPERTY_NAME);
         if (priorityPropertyValue != null && !priorityPropertyValue.isEmpty()) {
             try {
                 priority = Integer.parseInt(priorityPropertyValue);
             } catch (NumberFormatException e) {
-                priority = DEFAULT_PRIORITY;
+                // Do nothing
             }
         }
     }
 
     /**
-     * Gets the logger priority for this logger. The priority is used by Liquibase to determine which logger to use.
-     * The logger with the highest priority will be used. This implementation's priority is set to 5. Remove loggers
+     * Gets the logger priority for this logger. The priority is used by Liquibase to determine which LogService to use.
+     * The LogService with the highest priority will be selected. This implementation's priority is set to 5. Remove loggers
      * with higher priority numbers if needed.
      *
      * @return An integer (5)

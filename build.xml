@@ -64,7 +64,7 @@
     </target>
 
     <target name="download-ivy" depends="init" unless="${offline}">
-        <get src="https://repo2.maven.org/maven2/org/apache/ivy/ivy/${project.ivy.version}/ivy-${project.ivy.version}.jar" dest="${lib.build.dir}/ivy-${project.ivy.version}.jar" usetimestamp="true"/>
+        <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${project.ivy.version}/ivy-${project.ivy.version}.jar" dest="${lib.build.dir}/ivy-${project.ivy.version}.jar" usetimestamp="true"/>
     </target>
 
     <target name="init-ivy" depends="download-ivy">

@@ -15,13 +15,14 @@ Grab the library from Maven Central and place it in your classpath.
     <groupId>com.mattbertolini</groupId>
     <artifactId>liquibase-slf4j</artifactId>
     <version>3.0.0</version>
+    <scope>runtime</scope>
 </dependency>
 ```
 
 **Gradle:**
 
 ```groovy
-runtime group: 'com.mattbertolini', name: 'liquibase-slf4j', version: '3.0.0'
+implementation 'com.mattbertolini:liquibase-slf4j:3.0.0'
 ```
 
 **Ivy**
@@ -35,10 +36,11 @@ liquibase-slf4j is licensed under the [MIT License](http://www.opensource.org/li
 
 ## Notes
 This logger has a priority number of 5. If there is more than one Liquibase logger on the classpath the one with the
-highest priority will be used.
+highest priority will be used. The priority number can be overridden by setting the system property 
+`com.mattbertolini.liquibase.logging.slf4j.Slf4jLogService.priority` to an integer value of your choice.
 
 Liquibase version 3.4.0 had an issue loading third party loggers in some situations. This logger may not work on that 
-version. It is recommended that you upgrade to Liquibase 3.4.1 which addresses this issue.
+version. It is recommended to upgrade to Liquibase 3.4.1 which addresses this issue.
 
 ### Log Level Mappings
 
@@ -48,8 +50,16 @@ version. It is recommended that you upgrade to Liquibase 3.4.1 which addresses t
         <th>SLF4J Level</th>
     </tr>
     <tr>
+        <td>~~Debug~~ (Deprecated)</td>
         <td>Debug</td>
+    </tr>
+    <tr>
+        <td>Fine</td>
         <td>Debug</td>
+    </tr>
+    <tr>
+        <td>Config</td>
+        <td>Info</td>
     </tr>
     <tr>
         <td>Info</td>
@@ -87,7 +97,7 @@ $ ant run-unit-tests
 ```
 
 ## Bugs
-Please report any bugs in the issue tracker above. Please be as detailed as possible in your report so I can create
+Please report any bugs in the issue tracker above. Please be as detailed as possible in the report, so I can create
 unit tests to verify the problem is fixed.
 
 ## Release Notes
