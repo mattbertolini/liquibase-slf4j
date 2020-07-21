@@ -17,12 +17,12 @@
 
 package com.mattbertolini.liquibase.logging.slf4j;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -36,7 +36,7 @@ public class Slf4jLoggerTest {
     private Logger delegate;
     private Slf4jLogger logger;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         delegate = mock(Logger.class);
         logger = new Slf4jLogger(delegate);

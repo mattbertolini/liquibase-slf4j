@@ -28,10 +28,10 @@
 
     <!-- Private targets -->
     <target name="check-configuration">
-        <fail message="Need Ant version 1.10.3 or later to run.">
+        <fail message="Need Ant version 1.10.6 or later to run.">
             <condition>
                 <not>
-                    <antversion atleast="1.10.3"/>
+                    <antversion atleast="1.10.6"/>
                 </not>
             </condition>
         </fail>
@@ -156,17 +156,20 @@
         <sync todir="${build.instrumentedclasses.dir}">
             <fileset dir="${build.classes.dir}"/>
         </sync>
-        <jacoco:coverage destfile="${build.reports.coverage.dir}/${project.name}-coverage.exec">
-            <junit haltonerror="false" haltonfailure="false" printsummary="true" errorproperty="test.failed" failureproperty="test.failed" fork="true" forkmode="once">
-                <classpath refid="run-unit-tests-classpath"/>
-                <formatter type="xml"/>
-                <batchtest fork="true" todir="${build.reports.unittest.dir}">
-                    <fileset dir="${build.test.classes.dir}">
-                        <include name="**/*Test.class"/>
-                    </fileset>
-                </batchtest>
-            </junit>
-        </jacoco:coverage>
+        <jacoco:agent property="coverage.agent.property" destfile="${build.reports.coverage.dir}/${project.name}-coverage.exec"/>
+        <junitlauncher haltOnFailure="true" printSummary="true" failureproperty="test.failed">
+            <classpath refid="run-unit-tests-classpath"/>
+            <testclasses outputdir="${build.reports.unittest.dir}">
+                <fork>
+                    <jvmarg value="${coverage.agent.property}"/>
+                </fork>
+                <fileset dir="${build.test.classes.dir}">
+                    <include name="**/*Test.class"/>
+                </fileset>
+                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
+                <listener type="legacy-plain" sendSysOut="true" />
+            </testclasses>
+        </junitlauncher>
         <junitreport todir="${build.reports.unittest.dir}">
             <fileset dir="${build.reports.unittest.dir}">
                 <include name="TEST-*.xml"/>
