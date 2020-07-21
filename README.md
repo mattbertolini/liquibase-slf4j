@@ -1,5 +1,5 @@
 # liquibase-slf4j
-Version 2.0.0<br/>
+Version 3.0.0<br/>
 Written by Matt Bertolini
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.mattbertolini/liquibase-slf4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.mattbertolini/liquibase-slf4j)
@@ -14,20 +14,20 @@ Grab the library from Maven Central and place it in your classpath.
 <dependency>
     <groupId>com.mattbertolini</groupId>
     <artifactId>liquibase-slf4j</artifactId>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
 **Gradle:**
 
 ```groovy
-runtime group: 'com.mattbertolini', name: 'liquibase-slf4j', version: '2.0.0'
+runtime group: 'com.mattbertolini', name: 'liquibase-slf4j', version: '3.0.0'
 ```
 
 **Ivy**
 
 ```xml
-<dependency org="com.mattbertolini" name="liquibase-slf4j" rev="2.0.0"/>
+<dependency org="com.mattbertolini" name="liquibase-slf4j" rev="3.0.0"/>
 ```
 
 ## License
@@ -68,7 +68,7 @@ version. It is recommended that you upgrade to Liquibase 3.4.1 which addresses t
 ## Build and Test
 ### Requirements
 * [Apache Ant](http://ant.apache.org/) - Version 1.8 or higher.
-* JDK 6 or higher (Compiled with 1.6 source and target).
+* JDK 8 or higher (Compiled with 1.8 source and target).
 
 ### Build
 To build this project, clone the repo and run the ```ant``` command:
@@ -91,6 +91,14 @@ Please report any bugs in the issue tracker above. Please be as detailed as poss
 unit tests to verify the problem is fixed.
 
 ## Release Notes
+
+**3.0.0 - SNAPSHOT**
+
+- Upgraded to Liquibase version 4.0.0. This is a breaking change as the logging API changed significantly. Use version 
+2.x if you are using Liquibase versions lower than 4.0.0.
+- Upgraded to SLF4J 1.7.30.
+- Java 8 is now the minimum support JDK version.
+
 
 **2.0.0 - 2015-12-16**
 

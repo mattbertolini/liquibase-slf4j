@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Matt Bertolini
+ * Copyright (c) 2012-2020 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -18,7 +18,8 @@ package liquibase.ext.logging.slf4j;
 
 import liquibase.logging.core.AbstractLogger;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.logging.Level;
 
 /**
  * An implementation of the Liquibase Logger that sends log output to SLF4J.
@@ -26,29 +27,33 @@ import org.slf4j.LoggerFactory;
  * @author Matt Bertolini
  */
 public class Slf4jLogger extends AbstractLogger {
-    private static final int PRIORITY = 5;
 
-    private Logger logger;
+    private static final int TRACE_THRESHOLD = Level.FINEST.intValue();
+    private static final int DEBUG_THRESHOLD = Level.FINE.intValue();
+    private static final int INFO_THRESHOLD = Level.INFO.intValue();
+    private static final int WARN_THRESHOLD = Level.WARNING.intValue();
 
-    /**
-     * Takes the given logger name argument and associates it with a SLF4J logger.
-     *
-     * @param name The name of the logger.
-     */
-    @Override
-    public void setName(String name) {
-        this.logger = LoggerFactory.getLogger(name);
+    private final Logger logger;
+
+    // TODO: Make package private
+    public Slf4jLogger(Logger logger) {
+        this.logger = logger;
     }
 
-    /**
-     * This method does nothing in this implementation
-     *
-     * @param logLevel Log level
-     * @param logFile Log file
-     */
     @Override
-    public void setLogLevel(String logLevel, String logFile) {
-        // Do nothing
+    public void log(Level level, String message, Throwable e) {
+        int levelValue = level.intValue();
+        if (levelValue <= TRACE_THRESHOLD) {
+            logger.trace(message, e);
+        } else if (levelValue <= DEBUG_THRESHOLD) {
+            logger.debug(message, e);
+        } else if (levelValue <= INFO_THRESHOLD) {
+            logger.info(message, e);
+        } else if (levelValue <= WARN_THRESHOLD) {
+            logger.warn(message, e);
+        } else {
+            logger.error(message, e);
+        }
     }
 
     /**
@@ -59,7 +64,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void severe(String message) {
         if(this.logger.isErrorEnabled()) {
-            this.logger.error(buildMessage(message));
+            this.logger.error(message);
         }
     }
 
@@ -72,7 +77,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void severe(String message, Throwable throwable) {
         if(this.logger.isErrorEnabled()) {
-            this.logger.error(buildMessage(message), throwable);
+            this.logger.error(message, throwable);
         }
     }
 
@@ -84,7 +89,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void warning(String message) {
         if(this.logger.isWarnEnabled()) {
-            this.logger.warn(buildMessage(message));
+            this.logger.warn(message);
         }
     }
 
@@ -97,7 +102,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void warning(String message, Throwable throwable) {
         if(this.logger.isWarnEnabled()) {
-            this.logger.warn(buildMessage(message), throwable);
+            this.logger.warn(message, throwable);
         }
     }
 
@@ -109,7 +114,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void info(String message) {
         if(this.logger.isInfoEnabled()) {
-            this.logger.info(buildMessage(message));
+            this.logger.info(message);
         }
     }
 
@@ -122,44 +127,32 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void info(String message, Throwable throwable) {
         if(this.logger.isInfoEnabled()) {
-            this.logger.info(buildMessage(message), throwable);
+            this.logger.info(message, throwable);
         }
     }
 
     /**
-     * Log a debug message. Calls SLF4J {@link Logger#debug(String)}.
+     * Log a fine message. Calls SLF4J {@link Logger#debug(String)}.
      *
      * @param message The message to log.
      */
     @Override
-    public void debug(String message) {
-        if(this.logger.isDebugEnabled()) {
-            this.logger.debug(buildMessage(message));
+    public void fine(String message) {
+        if(logger.isDebugEnabled()) {
+            logger.debug(message);
         }
     }
 
     /**
-     * Log a debug message. Calls SLF4J {@link Logger#debug(String, Throwable)}.
+     * Log a fine message. Calls SLF4J {@link Logger#debug(String, Throwable)}.
      *
      * @param message The message to log.
-     * @param throwable The exception to log.
+     * @param e The exception to log.
      */
     @Override
-    public void debug(String message, Throwable throwable) {
-        if(this.logger.isDebugEnabled()) {
-            this.logger.debug(buildMessage(message), throwable);
+    public void fine(String message, Throwable e) {
+        if(logger.isDebugEnabled()) {
+            logger.debug(message, e);
         }
-    }
-
-    /**
-     * Gets the logger priority for this logger. The priority is used by Liquibase to determine which logger to use.
-     * The logger with the highest priority will be used. This implementation's priority is set to 5. Remove loggers
-     * with higher priority numbers if needed.
-     *
-     * @return An integer (5)
-     */
-    @Override
-    public int getPriority() {
-        return PRIORITY;
     }
 }

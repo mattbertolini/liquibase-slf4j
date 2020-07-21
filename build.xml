@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2015 Matt Bertolini
+ Copyright (c) 2012-2020 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -22,7 +22,7 @@
 
     <condition property="offline" value="true" else="false">
         <not>
-            <http url="http://www.google.com/"/>
+            <http url="https://www.google.com/"/>
         </not>
     </condition>
 
@@ -64,7 +64,7 @@
     </target>
 
     <target name="download-ivy" depends="init" unless="${offline}">
-        <get src="http://repo2.maven.org/maven2/org/apache/ivy/ivy/${project.ivy.version}/ivy-${project.ivy.version}.jar" dest="${lib.build.dir}/ivy-${project.ivy.version}.jar" usetimestamp="true"/>
+        <get src="https://repo2.maven.org/maven2/org/apache/ivy/ivy/${project.ivy.version}/ivy-${project.ivy.version}.jar" dest="${lib.build.dir}/ivy-${project.ivy.version}.jar" usetimestamp="true"/>
     </target>
 
     <target name="init-ivy" depends="download-ivy">
@@ -122,6 +122,12 @@
         <taskdef resource="com/mattbertolini/jxr/ant/antlib.xml" classpathref="build-classpath" uri="antlib:com.mattbertolini.jxr.ant"/>
     </target>
 
+    <target name="sync-main-resource" depends="init">
+        <sync todir="${build.resources.dir}">
+            <fileset dir="${src.main.resources.dir}"/>
+        </sync>
+    </target>
+
     <target name="sync-resources" depends="init">
         <sync todir="${build.test.resources.dir}">
             <fileset dir="${src.test.resources.dir}"/>
@@ -146,7 +152,7 @@
         </javac>
     </target>
 
-    <target name="run-unit-tests" depends="create-paths, load-third-party-tasks, compile-tests, sync-resources">
+    <target name="run-unit-tests" depends="create-paths, load-third-party-tasks, compile-tests, sync-main-resource, sync-resources">
         <sync todir="${build.instrumentedclasses.dir}">
             <fileset dir="${build.classes.dir}"/>
         </sync>
@@ -228,9 +234,10 @@
         <jxr:jxr destdir="${build.reports.xref.dir}" sourcepath="${src.main.java.dir}" inputencoding="UTF-8" outputencoding="UTF-8"/>
     </target>
 
-    <target name="make-jar" depends="compile-source">
-        <jar destfile="${dist.dir}/${project.name}-${project.version}.jar">
+    <target name="make-jar" depends="compile-source, sync-main-resource">
+        <jar destfile="${dist.dir}/${project.name}-${project.version}.jar" manifest="${build.resources.dir}/META-INF/MANIFEST.MF">
             <fileset dir="${build.classes.dir}"/>
+            <fileset dir="${build.resources.dir}"/>
         </jar>
     </target>
 
