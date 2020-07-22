@@ -2,7 +2,7 @@
 Version 3.0.0<br/>
 Written by Matt Bertolini
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.mattbertolini/liquibase-slf4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.mattbertolini/liquibase-slf4j)
+[![Maven Central](https://img.shields.io/maven-central/v/com.mattbertolini/liquibase-slf4j.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mattbertolini%22%20AND%20a:%22liquibase-slf4j%22)
 [![Build Status](https://travis-ci.org/mattbertolini/liquibase-slf4j.svg?branch=master)](https://travis-ci.org/mattbertolini/liquibase-slf4j)
 
 ## How to Use
@@ -77,7 +77,7 @@ version. It is recommended to upgrade to Liquibase 3.4.1 which addresses this is
 
 ## Build and Test
 ### Requirements
-* [Apache Ant](http://ant.apache.org/) - Version 1.8 or higher.
+* [Apache Ant](http://ant.apache.org/) - Version 1.10.6 or higher.
 * JDK 8 or higher (Compiled with 1.8 source and target).
 
 ### Build
@@ -107,7 +107,8 @@ unit tests to verify the problem is fixed.
 - Upgraded to Liquibase version 4.0.0. This is a breaking change as the logging API changed significantly. Use version 
 2.x if you are using Liquibase versions lower than 4.0.0.
 - Upgraded to SLF4J 1.7.30.
-- Java 8 is now the minimum support JDK version.
+- Java 8 is now the minimum supported JDK version.
+- Added an `Automatic-Module-Name` to support the Java 9+ module system. The module name is `com.mattbertolini.liquibase.logging.slf4j`.
 
 
 **2.0.0 - 2015-12-16**

@@ -23,9 +23,43 @@ import org.slf4j.Logger;
 import java.util.logging.Level;
 
 /**
- * An implementation of the Liquibase Logger that sends log output to SLF4J.
+ * <p>An implementation of the Liquibase Logger that sends log output to SLF4J.</p>
+ *
+ * <p><strong>Log level Mappings:</strong>
+ *  <table>
+ *     <tr>
+ *         <th>Liquibase Level</th>
+ *         <th>SLF4J Level</th>
+ *     </tr>
+ *     <tr>
+ *         <td>Debug</td>
+ *         <td>Debug</td>
+ *     </tr>
+ *     <tr>
+ *         <td>Fine</td>
+ *         <td>Debug</td>
+ *     </tr>
+ *     <tr>
+ *         <td>Config</td>
+ *         <td>Info</td>
+ *     </tr>
+ *     <tr>
+ *         <td>Info</td>
+ *         <td>Info</td>
+ *     </tr>
+ *     <tr>
+ *         <td>Warning</td>
+ *         <td>Warn</td>
+ *     </tr>
+ *     <tr>
+ *         <td>Severe</td>
+ *         <td>Error</td>
+ *     </tr>
+ * </table>
+ * </p>
  *
  * @author Matt Bertolini
+ * @see liquibase.logging.Logger
  */
 public class Slf4jLogger extends AbstractLogger {
 
