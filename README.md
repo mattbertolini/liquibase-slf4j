@@ -39,6 +39,11 @@ This logger has a priority number of 5. If there is more than one Liquibase logg
 highest priority will be used. The priority number can be overridden by setting the system property 
 `com.mattbertolini.liquibase.logging.slf4j.Slf4jLogService.priority` to an integer value of your choice.
 
+Version 4 of Liquibase introduced a new plugin loading mechanism based on the Java 
+[ServiceLoader](https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html). Version 3.0.0 of this logger 
+conforms to this new loader mechanism. If you are using Liquibase versions lower than 4, continue to use version 2.0.0 
+of this library.
+
 Liquibase version 3.4.0 had an issue loading third party loggers in some situations. This logger may not work on that 
 version. It is recommended to upgrade to Liquibase 3.4.1 which addresses this issue.
 
