@@ -26,7 +26,7 @@ import java.util.logging.Level;
  * <p>An implementation of the Liquibase Logger that sends log output to SLF4J.</p>
  *
  * <p><strong>Log level Mappings:</strong>
- *  <table>
+ *  <table summary="log level mappings">
  *     <tr>
  *         <th>Liquibase Level</th>
  *         <th>SLF4J Level</th>
@@ -56,7 +56,6 @@ import java.util.logging.Level;
  *         <td>Error</td>
  *     </tr>
  * </table>
- * </p>
  *
  * @author Matt Bertolini
  * @see liquibase.logging.Logger
