@@ -106,12 +106,12 @@ public class Slf4jLogger extends AbstractLogger {
      * Logs a severe message. Calls SLF4J {@link Logger#error(String, Throwable)}.
      *
      * @param message The message to log
-     * @param throwable The exception to log.
+     * @param e The exception to log.
      */
     @Override
-    public void severe(String message, Throwable throwable) {
+    public void severe(String message, Throwable e) {
         if (logger.isErrorEnabled()) {
-            logger.error(message, throwable);
+            logger.error(message, e);
         }
     }
 
@@ -131,12 +131,12 @@ public class Slf4jLogger extends AbstractLogger {
      * Logs a warning message. Calls SLF4J {@link Logger#warn(String, Throwable)}.
      *
      * @param message The message to log.
-     * @param throwable The exception to log.
+     * @param e The exception to log.
      */
     @Override
-    public void warning(String message, Throwable throwable) {
+    public void warning(String message, Throwable e) {
         if (logger.isWarnEnabled()) {
-            logger.warn(message, throwable);
+            logger.warn(message, e);
         }
     }
 
@@ -156,12 +156,12 @@ public class Slf4jLogger extends AbstractLogger {
      * Log an info message. Calls SLF4J {@link Logger#info(String, Throwable)}.
      *
      * @param message The message to log.
-     * @param throwable The exception to log.
+     * @param e The exception to log.
      */
     @Override
-    public void info(String message, Throwable throwable) {
+    public void info(String message, Throwable e) {
         if (logger.isInfoEnabled()) {
-            logger.info(message, throwable);
+            logger.info(message, e);
         }
     }
 
