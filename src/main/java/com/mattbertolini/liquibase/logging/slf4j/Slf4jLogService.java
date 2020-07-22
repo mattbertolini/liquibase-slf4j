@@ -23,6 +23,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
+/**
+ * Liquibase {@link liquibase.logging.LogService} that creates an SLF4J-backed logger.
+ */
 public class Slf4jLogService extends AbstractLogService {
 
     private static final int DEFAULT_PRIORITY = 5;
@@ -38,7 +41,10 @@ public class Slf4jLogService extends AbstractLogService {
     public Slf4jLogService() {
         this(System.getProperties());
     }
-    
+
+    /**
+     * Constructor visible for testing.
+     */
     Slf4jLogService(final Properties systemProps) {
         priority = DEFAULT_PRIORITY;
         String priorityPropertyValue = systemProps.getProperty(PRIORITY_PROPERTY_NAME);
@@ -56,7 +62,7 @@ public class Slf4jLogService extends AbstractLogService {
      * The LogService with the highest priority will be selected. This implementation's priority is set to 5. Remove loggers
      * with higher priority numbers if needed.
      *
-     * @return An integer (5)
+     * @return The priority integer. Defaults to 5 if no override is given.
      */
     @Override
     public int getPriority() {
