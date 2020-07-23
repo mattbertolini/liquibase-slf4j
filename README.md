@@ -119,7 +119,7 @@ unit tests to verify the problem is fixed.
 - Upgraded to Liquibase version 4.0.0. This is a breaking change as the logging API changed significantly. Use version 
 2.x if you are using Liquibase versions lower than 4.0.0.
 - Upgraded to SLF4J 1.7.30.
-- Added the ability to change the priortiy number of the logger by setting a Java property. To change the priority, set 
+- Added the ability to change the priority number of the logger by setting a Java property. To change the priority, set 
   the `com.mattbertolini.liquibase.logging.slf4j.Slf4jLogService.priority` property to an integer value.
 - Repackaged logger now that package name is no longer used for locating third-party loggers.
 - Java 8 is now the minimum supported JDK version.
