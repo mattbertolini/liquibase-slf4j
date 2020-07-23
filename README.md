@@ -43,7 +43,7 @@ liquibase-slf4j is licensed under the [MIT License](http://www.opensource.org/li
 
 ## Notes
 This logger has a priority number of 5. If there is more than one Liquibase logger on the classpath the one with the
-highest priority will be used. The priority number can be overridden by setting the system property 
+highest priority will be used. The priority number can be changed by setting the system property 
 `com.mattbertolini.liquibase.logging.slf4j.Slf4jLogService.priority` to an integer value of your choice.
 
 Version 4 of Liquibase introduced a new plugin loading mechanism based on the Java 
