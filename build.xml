@@ -16,6 +16,7 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="liquibase-slf4j" basedir="." default="build" xmlns="antlib:org.apache.tools.ant">
+    <include file="${basedir}/buildsrc/clean.xml"/>
     <include file="${basedir}/buildsrc/compile.xml"/>
     <include file="${basedir}/buildsrc/dependencies.xml"/>
     <include file="${basedir}/buildsrc/assemble.xml"/>
@@ -33,17 +34,11 @@
         </condition>
     </fail>
 
-    <!-- TODO: Move this to a src file -->
-    <target name="-clean">
-        <delete dir="${build.dir}"/>
-        <delete dir="${dist.dir}"/>
-    </target>
-
     <!-- Public targets -->
     <target name="assemble" description="Assembles the output of this project." depends="-assemble.-assemble"/>
     <target name="build" description="Assembles and tests the project." depends="assemble, test"/>
     <target name="check" description="Runs all checks" depends="spotbugs, test"/>
-    <target name="clean" description="Deletes the build and dist directories." depends="-clean"/>
+    <target name="clean" description="Deletes the build and dist directories." depends="-clean.-clean"/>
     <target name="dependencies" description="Displays all the dependencies in this project." depends="-dependencies.-dependencies"/>
     <target name="dependencyReport" description="Generate Ivy dependency report." depends="-dependencies.-dependency-report"/>
     <target name="javadoc" description="Generate Javadoc API documentation for the main source code." depends="-javadoc.-javadoc"/>
