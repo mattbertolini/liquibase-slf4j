@@ -29,7 +29,7 @@ Grab the library from Maven Central and place it in your classpath.
 **Gradle:**
 
 ```groovy
-implementation 'com.mattbertolini:liquibase-slf4j:3.0.0'
+runtimeOnly 'com.mattbertolini:liquibase-slf4j:3.0.0'
 ```
 
 **Ivy**
