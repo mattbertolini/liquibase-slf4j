@@ -24,12 +24,24 @@
     <target name="-main-jar" depends="-compile.-main-classes">
         <jar destfile="${dist.dir}/${project.name}-${project.version}.jar" manifest="${build.main.dir}/META-INF/MANIFEST.MF">
             <fileset dir="${build.main.dir}"/>
+            <manifest>
+                <attribute name="Implementation-Title" value="${project.name}"/>
+                <attribute name="Specification-Title" value="${project.name}"/>
+                <attribute name="Specification-Version" value="${project.version}"/>
+                <attribute name="Implementation-Version" value="${project.version}"/>
+            </manifest>
         </jar>
     </target>
 
     <target name="-main-javadoc-jar" depends="-javadoc.-javadoc">
         <jar destfile="${dist.dir}/${project.name}-${project.version}-javadoc.jar">
             <fileset dir="${build.javadoc.dir}"/>
+            <manifest>
+                <attribute name="Implementation-Title" value="${project.name}"/>
+                <attribute name="Specification-Title" value="${project.name}"/>
+                <attribute name="Specification-Version" value="${project.version}"/>
+                <attribute name="Implementation-Version" value="${project.version}"/>
+            </manifest>
         </jar>
     </target>
 
@@ -37,11 +49,18 @@
         <jar destfile="${dist.dir}/${project.name}-${project.version}-sources.jar" manifest="${build.main.dir}/META-INF/MANIFEST.MF">
             <fileset dir="${src.main.java.dir}"/>
             <fileset dir="${src.main.resources.dir}"/>
+            <manifest>
+                <attribute name="Implementation-Title" value="${project.name}"/>
+                <attribute name="Specification-Title" value="${project.name}"/>
+                <attribute name="Specification-Version" value="${project.version}"/>
+                <attribute name="Implementation-Version" value="${project.version}"/>
+            </manifest>
         </jar>
     </target>
 
     <target name="-make-pom" depends="-compile.-build-main-classpath">
-        <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${dist.dir}/${project.name}-${project.version}.pom" artifactpackaging="jar" templatefile="${basedir}/buildsrc/ivy/pom-template.xml" conf="compile">
+        <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${dist.dir}/${project.name}-${project.version}.pom"
+                     artifactpackaging="jar" templatefile="${basedir}/buildsrc/ivy/pom-template.xml" conf="compile">
             <ivy:mapping conf="compile" scope="provided"/>
         </ivy:makepom>
     </target>
