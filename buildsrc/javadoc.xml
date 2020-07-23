@@ -26,13 +26,12 @@
             </ac:sourcefiles>
             <ac:mapper type="glob" dir="${src.main.java.dir}" from="*.java" to="${build.javadoc.dir}/*.html"/>
             <ac:sequential>
-                <javadoc destdir="${build.javadoc.dir}" failonerror="true" classpathref="compile-main-classpath" windowtitle="Liquibase SLF4J Logger Documentation" charset="UTF-8">
+                <javadoc destdir="${build.javadoc.dir}" failonerror="true" classpathref="compile-main-classpath" windowtitle="Liquibase SLF4J Logger Documentation" charset="UTF-8" additionalparam="-Xdoclint:none">
                     <packageset dir="${src.main.java.dir}" defaultexcludes="true"/>
                     <link href="https://docs.oracle.com/javase/8/docs/api/"/>
                     <link href="https://www.liquibase.org/javadoc/"/>
                     <link href="http://slf4j.org/apidocs/"/>
                     <doctitle>Liquibase SLF4J Logger Documentation</doctitle>
-                    <additionalparam>-Xdoclint:none</additionalparam>
                 </javadoc>
             </ac:sequential>
         </ac:outofdate>
