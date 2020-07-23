@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2015 Matt Bertolini
+ Copyright (c) 2012-2020 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -26,8 +26,12 @@
     <configurations>
         <conf name="compile"/>
         <conf name="test"/>
-        <conf name="build"/>
-        <conf name="findbugs"/>
+        <conf name="spotbugs"/>
+        <conf name="ivy"/>
+        <conf name="antcontrib"/>
+        <conf name="jacoco"/>
+        <conf name="jxr"/>
+        <conf name="junit-platform"/>
         <conf name="default" visibility="private"/>
         <conf name="sources" visibility="private"/>
         <conf name="javadoc" visibility="private"/>
@@ -39,24 +43,22 @@
         <artifact type="pom" ext="pom"/>
     </publications>
     <dependencies defaultconfmapping="compile->default">
-        <dependency org="org.slf4j" name="slf4j-api" rev="1.7.12"/>
-        <dependency org="org.liquibase" name="liquibase-core" rev="3.2.0"/>
-        <!-- Testing Dependencies -->
-        <dependency org="junit" name="junit" rev="4.12" conf="test->default"/>
-        <dependency org="org.mockito" name="mockito-core" rev="1.10.19" conf="test->default"/>
-        <dependency org="ch.qos.logback" name="logback-classic" rev="1.1.3" conf="test->default"/>
-        <!-- Build Dependencies -->
-        <dependency org="org.apache.ivy" name="ivy" rev="${project.ivy.version}" conf="build->default"/>
-        <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="build->default">
+        <dependency org="org.slf4j" name="slf4j-api" rev="1.7.30"/>
+        <dependency org="org.liquibase" name="liquibase-core" rev="4.0.0"/>
+        <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.6.2" conf="test->default"/>
+        <dependency org="org.mockito" name="mockito-core" rev="3.3.3" conf="test->default"/>
+        <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.6.2" conf="junit-platform->default"/>
+        <dependency org="org.junit.platform" name="junit-platform-launcher" rev="1.6.2" conf="junit-platform->default"/>
+        <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="antcontrib->default">
             <exclude module="ant"/>
         </dependency>
-        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.7.4.201502262128" conf="build->default"/>
-        <!-- Findbugs in it's own configuration because of incompatibilities with the asm dependency in JaCoCo. -->
-        <dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.3" conf="findbugs->default"/>
-        <dependency org="com.google.code.findbugs" name="findbugs-ant" rev="2.0.3" conf="findbugs->default"/>
-        <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.50" conf="build->default"/>
-        <dependency org="com.mattbertolini" name="jxr-ant" rev="2.0.0" conf="build->default">
+        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.8.5" conf="jacoco->default"/>
+        <dependency org="com.github.spotbugs" name="spotbugs" rev="4.0.6" conf="spotbugs->default"/>
+        <dependency org="com.github.spotbugs" name="spotbugs-ant" rev="4.0.6" conf="spotbugs->default"/>
+        <dependency org="com.mattbertolini" name="jxr-ant" rev="2.0.0" conf="jxr->default">
             <exclude module="ant"/>
         </dependency>
+        <dependency org="org.apache.ivy" name="ivy" rev="${lib.ivy.version}" conf="ivy->default"/>
+        <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.50" conf="ivy->default"/>
     </dependencies>
 </ivy-module>

@@ -4,9 +4,19 @@ language: java
 sudo: false
 
 jdk:
-  - oraclejdk8
-  - oraclejdk7
-  - openjdk6
+  - openjdk8
+  - openjdk11
+
+before_script:
+  - export ANT_VERSION=1.10.8
+  - wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
+  - wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
+  - echo "$(cat apache-ant-${ANT_VERSION}-bin.tar.gz.sha512) apache-ant-${ANT_VERSION}-bin.tar.gz" | sha512sum -c
+  - tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C /opt/
+  - ln -s /opt/apache-ant-${ANT_VERSION} /opt/ant
+  - rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
+  - rm -f apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
+  - export PATH="/opt/ant/bin:$PATH"
 
 script:
-  - ant build
+  - ant clean build check

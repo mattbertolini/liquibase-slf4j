@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2012-2020 Matt Bertolini
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+ persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<project name="-assemble" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:ivy="antlib:org.apache.ivy.ant">
+    <include file="${basedir}/buildsrc/properties.xml"/>
+    <include file="${basedir}/buildsrc/compile.xml"/>
+    <include file="${basedir}/buildsrc/dependencies.xml"/>
+    <include file="${basedir}/buildsrc/javadoc.xml"/>
+
+    <target name="-main-jar" depends="-compile.-main-classes">
+        <jar destfile="${dist.dir}/${project.name}-${project.version}.jar" manifest="${build.main.dir}/META-INF/MANIFEST.MF">
+            <fileset dir="${build.main.dir}"/>
+            <manifest>
+                <attribute name="Implementation-Title" value="${project.name}"/>
+                <attribute name="Specification-Title" value="${project.name}"/>
+                <attribute name="Specification-Version" value="${project.version}"/>
+                <attribute name="Implementation-Version" value="${project.version}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="-main-javadoc-jar" depends="-javadoc.-javadoc">
+        <jar destfile="${dist.dir}/${project.name}-${project.version}-javadoc.jar">
+            <fileset dir="${build.javadoc.dir}"/>
+            <manifest>
+                <attribute name="Implementation-Title" value="${project.name}"/>
+                <attribute name="Specification-Title" value="${project.name}"/>
+                <attribute name="Specification-Version" value="${project.version}"/>
+                <attribute name="Implementation-Version" value="${project.version}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="-main-sources-jar">
+        <jar destfile="${dist.dir}/${project.name}-${project.version}-sources.jar" manifest="${build.main.dir}/META-INF/MANIFEST.MF">
+            <fileset dir="${src.main.java.dir}"/>
+            <fileset dir="${src.main.resources.dir}"/>
+            <manifest>
+                <attribute name="Implementation-Title" value="${project.name}"/>
+                <attribute name="Specification-Title" value="${project.name}"/>
+                <attribute name="Specification-Version" value="${project.version}"/>
+                <attribute name="Implementation-Version" value="${project.version}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="-make-pom" depends="-compile.-build-main-classpath">
+        <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${dist.dir}/${project.name}-${project.version}.pom"
+                     artifactpackaging="jar" templatefile="${basedir}/buildsrc/ivy/pom-template.xml" conf="compile">
+            <ivy:mapping conf="compile" scope="provided"/>
+        </ivy:makepom>
+    </target>
+
+    <target name="-assemble" depends="-main-jar, -main-javadoc-jar, -main-sources-jar, -make-pom"/>
+</project>

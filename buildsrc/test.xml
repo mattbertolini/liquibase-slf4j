@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2012-2020 Matt Bertolini
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+ persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<project name="-test" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:jacoco="antlib:org.jacoco.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j">
+    <include file="${basedir}/buildsrc/properties.xml"/>
+    <include file="${basedir}/buildsrc/dependencies.xml"/>
+    <include file="${basedir}/buildsrc/compile.xml"/>
+    <include file="${basedir}/buildsrc/jacoco.xml"/>
+
+    <property name="lib.junit-platform.dir" value="${lib.dir}/junit-platform"/>
+    <property name="build.reports.unittest.dir" value="${build.dir}/reports/unittest"/>
+    <property name="build.reports.coverage.dir" value="${build.dir}/reports/coverage"/>
+
+    <target name="-load-junit-platform" depends="-dependencies.-init-ivy">
+        <macro:retrieve-deps conf="junit-platform"/>
+        <path id="junit-platform.classpath">
+            <fileset dir="${lib.junit-platform.dir}"/>
+        </path>
+    </target>
+
+    <target name="-test" depends="-load-junit-platform, -jacoco.-load-jacoco, -compile.-main-classes, -compile.-test-classes" unless="test.run">
+        <path id="test-classpath">
+            <fileset dir="${lib.test.dir}"/>
+        </path>
+        <path id="run-unit-tests-classpath">
+            <path location="${build.main.dir}"/>
+            <path location="${build.test.dir}"/>
+            <path refid="compile-main-classpath"/>
+            <path refid="test-classpath"/>
+            <path refid="junit-platform.classpath"/>
+            <path refid="jacoco.classpath"/>
+        </path>
+        <mkdir dir="${build.reports.unittest.dir}"/>
+        <jacoco:agent property="jacoco.agent.property" destfile="${build.reports.coverage.dir}/${project.name}-coverage.exec"/>
+        <junitlauncher haltOnFailure="true" printSummary="true" failureproperty="test.failed">
+            <classpath refid="run-unit-tests-classpath"/>
+            <testclasses outputdir="${build.reports.unittest.dir}">
+                <fork>
+                    <jvmarg value="${jacoco.agent.property}"/>
+                </fork>
+                <fileset dir="${build.test.dir}">
+                    <include name="**/*Test.class"/>
+                </fileset>
+                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
+                <listener type="legacy-plain" sendSysOut="true" />
+            </testclasses>
+        </junitlauncher>
+        <junitreport todir="${build.reports.unittest.dir}">
+            <fileset dir="${build.reports.unittest.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${build.reports.unittest.dir}"/>
+        </junitreport>
+        <jacoco:report>
+            <jacoco:executiondata>
+                <file file="${build.reports.coverage.dir}/${project.name}-coverage.exec"/>
+            </jacoco:executiondata>
+            <jacoco:structure name="${project.name}">
+                <jacoco:classfiles>
+                    <fileset dir="${build.main.dir}"/>
+                </jacoco:classfiles>
+                <jacoco:sourcefiles encoding="UTF-8" tabwidth="4">
+                    <fileset dir="${src.main.java.dir}"/>
+                </jacoco:sourcefiles>
+            </jacoco:structure>
+            <jacoco:html destdir="${build.reports.coverage.dir}" encoding="UTF-8" locale="en_US"/>
+            <jacoco:xml destfile="${build.reports.coverage.dir}/${project.name}-coverage.xml" encoding="UTF-8"/>
+        </jacoco:report>
+        <fail if="test.failed">One or more unit tests failed/errored. Check ${build.reports.unittest.dir}/index.html for details.</fail>
+        <property name="test.run" value="true"/>
+    </target>
+</project>
