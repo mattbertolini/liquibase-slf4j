@@ -17,8 +17,8 @@
 -->
 <ivysettings>
     <property name="maven.artifact.pattern" value="[organisation]/[module]/[revision]/[artifact]-[revision](-[classifier]).[ext]"/>
-    <property name="maven-central-snapshot.url" value="https://oss.sonatype.org/content/repositories/snapshots/"/>
-    <property name="maven-central-release.url" value="https://oss.sonatype.org/service/local/staging/deploy/maven2/"/>
+    <property name="maven-central-snapshot.url" value="https://oss.sonatype.org/content/repositories/snapshots"/>
+    <property name="maven-central-release.url" value="https://oss.sonatype.org/service/local/staging/deploy/maven2"/>
     <resolvers>
         <filesystem name="maven-local" m2compatible="true" local="true">
             <artifact pattern="${user.home}/.m2/repository/${maven.artifact.pattern}"/>

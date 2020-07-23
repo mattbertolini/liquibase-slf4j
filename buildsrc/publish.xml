@@ -27,8 +27,8 @@
     </target>
 
     <target name="-authenticate-maven-central">
-        <input message="Enter Maven Central username: " addproperty="maven.username"/>
-        <input message="Enter Maven Central password: " addproperty="maven.password">
+        <input message="Enter Maven Central username: " addproperty="maven-central.username"/>
+        <input message="Enter Maven Central password: " addproperty="maven-central.password">
             <handler type="secure"/>
         </input>
     </target>
