@@ -25,6 +25,14 @@
     <include file="${basedir}/buildsrc/spotbugs.xml"/>
     <include file="${basedir}/buildsrc/jxr.xml"/>
 
+    <fail message="Need Ant version 1.10.6 or later to run.">
+        <condition>
+            <not>
+                <antversion atleast="1.10.6"/>
+            </not>
+        </condition>
+    </fail>
+
     <!-- TODO: Move this to a src file -->
     <target name="-clean">
         <delete dir="${build.dir}"/>
@@ -37,6 +45,7 @@
     <target name="check" description="Runs all checks" depends="spotbugs, test"/>
     <target name="clean" description="Deletes the build and dist directories." depends="-clean"/>
     <target name="dependencies" description="Displays all the dependencies in this project." depends="-dependencies.-dependencies"/>
+    <target name="dependencyReport" description="Generate Ivy dependency report." depends="-dependencies.-dependency-report"/>
     <target name="javadoc" description="Generate Javadoc API documentation for the main source code." depends="-javadoc.-javadoc"/>
     <target name="jxr" description="Generate a JXR source report." depends="-jxr.-run-jxr"/>
     <target name="publish" description="Publishes artifacts to configured repository" depends="-publish.-publish"/>

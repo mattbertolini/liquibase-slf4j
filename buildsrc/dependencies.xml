@@ -21,6 +21,7 @@
     <property name="lib.ivy.version" value="2.4.0"/>
     <property name="lib.ivy.dir" value="${lib.dir}/ivy"/>
     <property name="ivy.retrieve.pattern" value="${lib.dir}/[conf]/[artifact]-[revision](-[classifier]).[ext]"/>
+    <property name="build.reports.dependency.dir" value="${build.dir}/reports/ivy"/>
 
     <target name="-download-ivy" unless="-download-ivy.run">
         <mkdir dir="${lib.ivy.dir}"/>
@@ -40,6 +41,12 @@
 
     <target name="-dependencies" depends="-init-ivy">
         <ivy:dependencytree conf="*"/>
+    </target>
+
+    <target name="-dependency-report" depends="-init-ivy">
+        <mkdir dir="${build.reports.dependency.dir}"/>
+        <ivy:resolve file="${basedir}/ivy.xml" conf="*" haltonfailure="false" log="download-only"/>
+        <ivy:report todir="${build.reports.dependency.dir}"/>
     </target>
 
     <macrodef name="retrieve-deps" uri="antmacro:com.mattbertolini.liquibase.slf4j">
