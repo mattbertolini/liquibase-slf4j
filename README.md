@@ -5,6 +5,13 @@ Written by Matt Bertolini
 [![Maven Central](https://img.shields.io/maven-central/v/com.mattbertolini/liquibase-slf4j.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mattbertolini%22%20AND%20a:%22liquibase-slf4j%22)
 [![Build Status](https://travis-ci.org/mattbertolini/liquibase-slf4j.svg?branch=master)](https://travis-ci.org/mattbertolini/liquibase-slf4j)
 
+An implementation of the Liquibase logger that delegates directly to SLF4J.
+
+Liquibase has a logging mechanism that delegates to `java.util.logging`. It works great with SLF4J out of the box if 
+you use `jul-to-slf4j` library. Unfortunately, there is a known 
+[performance impact](http://www.slf4j.org/legacy.html#jul-to-slf4j) when bridging `java.util.logging` to SLF4J. This 
+library helps to eliminate that performance impact by logging Liquibase directly to SLF4J. 
+
 ## How to Use
 Grab the library from Maven Central and place it in your classpath.
 
