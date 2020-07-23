@@ -114,7 +114,7 @@ unit tests to verify the problem is fixed.
 
 ## Release Notes
 
-**3.0.0 - SNAPSHOT**
+**3.0.0 - 2020-07-23**
 
 - Upgraded to Liquibase version 4.0.0. This is a breaking change as the logging API changed significantly. Use version 
 2.x if you are using Liquibase versions lower than 4.0.0.
