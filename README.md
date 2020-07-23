@@ -62,7 +62,7 @@ version. It is recommended to upgrade to Liquibase 3.4.1 which addresses this is
         <th>SLF4J Level</th>
     </tr>
     <tr>
-        <td>~~Debug~~ (Deprecated)</td>
+        <td><del>Debug</del> (Deprecated)</td>
         <td>Debug</td>
     </tr>
     <tr>
