@@ -49,6 +49,7 @@
         <condition property="resolver-name" value="maven-central-snapshot" else="maven-central-release">
             <istrue value="${snapshot-release}"/>
         </condition>
+        <echo>Publishing to resolver ${resolver-name}.</echo>
         <ivy:publish resolver="${resolver-name}" pubrevision="${project.version}" status="release" overwrite="${snapshot-release}" publishivy="false" settingsref="publish-settings">
             <ivy:artifacts pattern="${dist.dir}/[artifact]-[revision](-[classifier]).[ext]"/>
         </ivy:publish>

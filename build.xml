@@ -26,7 +26,8 @@
     <include file="${basedir}/buildsrc/spotbugs.xml"/>
     <include file="${basedir}/buildsrc/jxr.xml"/>
 
-    <fail message="Need Ant version 1.10.6 or later to run.">
+    <antversion property="ant.version"/>
+    <fail message="Need Ant version 1.10.6 or later to run. Running ${ant.version}">
         <condition>
             <not>
                 <antversion atleast="1.10.6"/>
