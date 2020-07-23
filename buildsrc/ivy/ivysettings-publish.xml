@@ -23,12 +23,8 @@
         <filesystem name="maven-local" m2compatible="true" local="true">
             <artifact pattern="${user.home}/.m2/repository/${maven.artifact.pattern}"/>
         </filesystem>
-        <url name="maven-central-snapshot" m2compatible="true" signer="maven-central-pgp">
-            <artifact pattern="${maven-central-snapshot.url}/${maven.artifact.pattern}"/>
-        </url>
-        <url name="maven-central-release" m2compatible="true" signer="maven-central-pgp">
-            <artifact pattern="${maven-central-release.url}/${maven.artifact.pattern}"/>
-        </url>
+        <ibiblio name="maven-central-snapshot" m2compatible="true" signer="maven-central-pgp" root="${maven-central-snapshot.url}"/>
+        <ibiblio name="maven-central-release" m2compatible="true" signer="maven-central-pgp" root="${maven-central-release.url}"/>
     </resolvers>
     <credentials host="oss.sonatype.org" username="${maven-central.username}" passwd="${maven-central.password}" realm="Sonatype Nexus Repository Manager"/>
     <signers>
