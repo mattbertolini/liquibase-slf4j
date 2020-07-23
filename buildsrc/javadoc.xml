@@ -16,6 +16,7 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="-javadoc" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:ac="antlib:net.sf.antcontrib">
+    <include file="${basedir}/buildsrc/properties.xml"/>
     <include file="${basedir}/buildsrc/antcontrib.xml"/>
     <include file="${basedir}/buildsrc/compile.xml"/>
 
@@ -26,7 +27,9 @@
             </ac:sourcefiles>
             <ac:mapper type="glob" dir="${src.main.java.dir}" from="*.java" to="${build.javadoc.dir}/*.html"/>
             <ac:sequential>
-                <javadoc destdir="${build.javadoc.dir}" failonerror="true" classpathref="compile-main-classpath" windowtitle="Liquibase SLF4J Logger Documentation" charset="UTF-8" additionalparam="-Xdoclint:none">
+                <javadoc destdir="${build.javadoc.dir}" failonerror="true" classpathref="compile-main-classpath"
+                         source="${java.source.version}" windowtitle="Liquibase SLF4J Logger Documentation"
+                         charset="UTF-8" additionalparam="-Xdoclint:none">
                     <packageset dir="${src.main.java.dir}" defaultexcludes="true"/>
                     <link href="https://docs.oracle.com/javase/8/docs/api/"/>
                     <link href="https://www.liquibase.org/javadoc/"/>
