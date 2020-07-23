@@ -4,9 +4,8 @@ language: java
 sudo: false
 
 jdk:
-  - oraclejdk8
-  - oraclejdk7
-  - openjdk6
+  - openjdk8
+  - openjdk11
 
 script:
-  - ant build
+  - ant clean build check
