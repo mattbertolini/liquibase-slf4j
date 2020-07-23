@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2014 Matt Bertolini
+ Copyright (c) 2012-2020 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -15,17 +15,18 @@
  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
-<ivysettings>
-    <resolvers>
-        <url name="maven-central-snapshot" m2compatible="true" signer="maven-central-pgp">
-            <artifact pattern="${maven.snapshot.url}/[organisation]/[module]/[revision]-SNAPSHOT/[artifact]-[revision].${snapshot.timestamp}(-[classifier]).[ext]"/>
-        </url>
-        <url name="maven-central-release" m2compatible="true" signer="maven-central-pgp">
-            <artifact pattern="${maven.release.url}/[organisation]/[module]/[revision]/[artifact]-[revision](-[classifier]).[ext]"/>
-        </url>
-    </resolvers>
-    <credentials host="oss.sonatype.org" username="${maven.username}" passwd="${maven.password}" realm="Sonatype Nexus Repository Manager"/>
-    <signers>
-        <pgp name="maven-central-pgp" secring="${pgp.secring.file}" keyId="${pgp.key.id}" password="${pgp.key.password}"/>
-    </signers>
-</ivysettings>
+<project name="-jacoco" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j">
+    <include file="${basedir}/buildsrc/dependencies.xml"/>
+
+    <property name="lib.jacoco.dir" value="${lib.dir}/jacoco"/>
+
+    <target name="-load-jacoco" depends="-dependencies.-init-ivy" unless="load-jacoco.run">
+        <macro:retrieve-deps conf="jacoco"/>
+        <path id="jacoco.classpath">
+            <fileset dir="${lib.jacoco.dir}"/>
+        </path>
+        <taskdef resource="org/jacoco/ant/antlib.xml" classpathref="jacoco.classpath" uri="antlib:org.jacoco.ant"/>
+        <property name="load-jacoco.run" value="true"/>
+    </target>
+
+</project>

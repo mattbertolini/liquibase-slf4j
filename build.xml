@@ -15,263 +15,32 @@
  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
-<project name="liquibase-slf4j" basedir="." default="build" xmlns="antlib:org.apache.tools.ant"
-         xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:ac="antlib:net.sf.antcontrib" xmlns:jacoco="antlib:org.jacoco.ant"
-         xmlns:spotbugs="antlib:com.github.spotbugs" xmlns:jxr="antlib:com.mattbertolini.jxr.ant">
-    <property file="build.properties"/>
+<project name="liquibase-slf4j" basedir="." default="build" xmlns="antlib:org.apache.tools.ant">
+    <include file="${basedir}/buildsrc/compile.xml"/>
+    <include file="${basedir}/buildsrc/dependencies.xml"/>
+    <include file="${basedir}/buildsrc/assemble.xml"/>
+    <include file="${basedir}/buildsrc/test.xml"/>
+    <include file="${basedir}/buildsrc/javadoc.xml"/>
+    <include file="${basedir}/buildsrc/publish.xml"/>
+    <include file="${basedir}/buildsrc/spotbugs.xml"/>
+    <include file="${basedir}/buildsrc/jxr.xml"/>
 
-    <condition property="offline" value="true" else="false">
-        <not>
-            <http url="https://www.google.com/"/>
-        </not>
-    </condition>
-
-    <!-- Private targets -->
-    <target name="check-configuration">
-        <fail message="Need Ant version 1.10.6 or later to run.">
-            <condition>
-                <not>
-                    <antversion atleast="1.10.6"/>
-                </not>
-            </condition>
-        </fail>
-        <echo level="info">Offline Mode: ${offline}</echo>
-    </target>
-
-    <target name="clean" depends="check-configuration" if="${param.full.build}">
+    <!-- TODO: Move this to a src file -->
+    <target name="-clean">
         <delete dir="${build.dir}"/>
         <delete dir="${dist.dir}"/>
     </target>
 
-    <target name="init" depends="clean">
-        <mkdir dir="${lib.compile.dir}"/>
-        <mkdir dir="${lib.test.dir}"/>
-        <mkdir dir="${lib.build.dir}"/>
-        <mkdir dir="${build.temp.dir}"/>
-        <mkdir dir="${build.classes.dir}"/>
-        <mkdir dir="${build.instrumentedclasses.dir}"/>
-        <mkdir dir="${build.test.classes.dir}"/>
-        <mkdir dir="${build.resources.dir}"/>
-        <mkdir dir="${build.test.resources.dir}"/>
-        <mkdir dir="${build.javadoc.dir}"/>
-        <mkdir dir="${build.reports.dependency.dir}"/>
-        <mkdir dir="${build.reports.coverage.dir}"/>
-        <mkdir dir="${build.reports.unittest.dir}"/>
-        <mkdir dir="${build.reports.spotbugs.dir}"/>
-        <mkdir dir="${build.reports.xref.dir}"/>
-        <mkdir dir="${build.temp.dir}"/>
-        <mkdir dir="${dist.dir}"/>
-    </target>
-
-    <target name="download-ivy" depends="init" unless="${offline}">
-        <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${project.ivy.version}/ivy-${project.ivy.version}.jar" dest="${lib.build.dir}/ivy-${project.ivy.version}.jar" usetimestamp="true"/>
-    </target>
-
-    <target name="init-ivy" depends="download-ivy">
-        <path id="ivy-classpath">
-            <fileset dir="${lib.build.dir}"/>
-        </path>
-        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy-classpath"/>
-    </target>
-
-    <target name="retrieve-dependencies" depends="init-ivy" unless="${offline}">
-        <ivy:configure file="${project.home}/ivysettings-ant.xml"/>
-        <ivy:resolve file="${project.home}/ivy.xml" haltonfailure="false"/>
-        <ivy:retrieve pattern="${lib.dir}/[conf]/[artifact]-[revision](-[classifier]).[ext]" sync="true" haltonfailure="true"/>
-        <ivy:report todir="${build.reports.dependency.dir}"/>
-        <ivy:artifactproperty name="dependency.[conf].[artifact]" value="${lib.dir}/[conf]/[artifact]-[revision](-[classifier]).[ext]"/>
-    </target>
-
-    <target name="create-paths" depends="retrieve-dependencies">
-        <path id="build-classpath">
-            <fileset dir="${lib.build.dir}"/>
-        </path>
-
-        <path id="compile-classpath">
-            <fileset dir="${lib.compile.dir}"/>
-        </path>
-
-        <path id="test-classpath">
-            <fileset dir="${lib.test.dir}"/>
-        </path>
-
-        <path id="spotbugs-classpath">
-            <fileset dir="${lib.spotbugs.dir}"/>
-        </path>
-
-        <path id="compile-tests-classpath">
-            <path location="${build.classes.dir}"/>
-            <path refid="test-classpath"/>
-            <path refid="compile-classpath"/>
-        </path>
-
-        <path id="run-unit-tests-classpath">
-            <path location="${build.instrumentedclasses.dir}"/>
-            <path location="${build.test.classes.dir}"/>
-            <path location="${build.test.resources.dir}"/>
-            <path refid="test-classpath"/>
-            <path refid="compile-classpath"/>
-            <path refid="build-classpath"/>
-        </path>
-    </target>
-
-    <target name="load-third-party-tasks" depends="create-paths">
-        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="build-classpath" uri="antlib:net.sf.antcontrib"/>
-        <taskdef resource="org/jacoco/ant/antlib.xml" classpathref="build-classpath" uri="antlib:org.jacoco.ant"/>
-        <taskdef resource="edu/umd/cs/findbugs/anttask/tasks.properties" classpathref="spotbugs-classpath" uri="antlib:com.github.spotbugs"/>
-        <taskdef resource="com/mattbertolini/jxr/ant/antlib.xml" classpathref="build-classpath" uri="antlib:com.mattbertolini.jxr.ant"/>
-    </target>
-
-    <target name="sync-main-resource" depends="init">
-        <sync todir="${build.resources.dir}">
-            <fileset dir="${src.main.resources.dir}"/>
-        </sync>
-    </target>
-
-    <target name="sync-resources" depends="init">
-        <sync todir="${build.test.resources.dir}">
-            <fileset dir="${src.test.resources.dir}"/>
-        </sync>
-    </target>
-
-    <target name="compile-source" depends="create-paths">
-        <depend srcdir="${src.main.java.dir}" destdir="${build.classes.dir}" cache="${build.temp.dir}" closure="true">
-            <include name= "**/*.java"/>
-        </depend>
-        <javac srcdir="${src.main.java.dir}" destdir="${build.classes.dir}" source="${project.java.source.version}" target="${project.java.target.version}" fork="true" failonerror="true" includeantruntime="false" debug="true" encoding="UTF-8">
-            <classpath refid="compile-classpath"/>
-        </javac>
-    </target>
-
-    <target name="compile-tests" depends="compile-source">
-        <depend srcdir="${src.test.java.dir}" destdir="${build.test.classes.dir}" cache="${build.temp.dir}" closure="true">
-            <include name= "**/*.java"/>
-        </depend>
-        <javac srcdir="${src.test.java.dir}" destdir="${build.test.classes.dir}" source="${project.java.source.version}" target="${project.java.target.version}" fork="true" failonerror="true" includeantruntime="false" debug="true" encoding="UTF-8">
-            <classpath refid="compile-tests-classpath"/>
-        </javac>
-    </target>
-
-    <target name="run-unit-tests" depends="create-paths, load-third-party-tasks, compile-tests, sync-main-resource, sync-resources">
-        <sync todir="${build.instrumentedclasses.dir}">
-            <fileset dir="${build.classes.dir}"/>
-        </sync>
-        <jacoco:agent property="coverage.agent.property" destfile="${build.reports.coverage.dir}/${project.name}-coverage.exec"/>
-        <junitlauncher haltOnFailure="true" printSummary="true" failureproperty="test.failed">
-            <classpath refid="run-unit-tests-classpath"/>
-            <testclasses outputdir="${build.reports.unittest.dir}">
-                <fork>
-                    <jvmarg value="${coverage.agent.property}"/>
-                </fork>
-                <fileset dir="${build.test.classes.dir}">
-                    <include name="**/*Test.class"/>
-                </fileset>
-                <listener type="legacy-xml" sendSysOut="true" sendSysErr="true"/>
-                <listener type="legacy-plain" sendSysOut="true" />
-            </testclasses>
-        </junitlauncher>
-        <junitreport todir="${build.reports.unittest.dir}">
-            <fileset dir="${build.reports.unittest.dir}">
-                <include name="TEST-*.xml"/>
-            </fileset>
-            <report format="frames" todir="${build.reports.unittest.dir}"/>
-        </junitreport>
-        <jacoco:report>
-            <jacoco:executiondata>
-                <file file="${build.reports.coverage.dir}/${project.name}-coverage.exec"/>
-            </jacoco:executiondata>
-            <jacoco:structure name="${project.name}">
-                <jacoco:classfiles>
-                    <fileset dir="${build.instrumentedclasses.dir}"/>
-                </jacoco:classfiles>
-                <jacoco:sourcefiles encoding="UTF-8" tabwidth="4">
-                    <fileset dir="${src.main.java.dir}"/>
-                </jacoco:sourcefiles>
-            </jacoco:structure>
-            <jacoco:html destdir="${build.reports.coverage.dir}" encoding="UTF-8" locale="en_US"/>
-            <jacoco:xml destfile="${build.reports.coverage.dir}/${project.name}-coverage.xml" encoding="UTF-8"/>
-        </jacoco:report>
-        <fail if="test.failed">One or more unit tests failed/errored. Check ${build.reports.unittest.dir} for details.</fail>
-    </target>
-
-    <target name="run-spotbugs" depends="create-paths, load-third-party-tasks, compile-source, compile-tests">
-        <path id="aux-classpath">
-            <path refid="compile-classpath"/>
-            <path refid="test-classpath"/>
-            <path refid="build-classpath"/>
-            <path refid="spotbugs-classpath"/>
-        </path>
-        <spotbugs:spotbugs classpathref="spotbugs-classpath" pluginlist="" output="xml:withMessages" outputFile="${build.reports.spotbugs.dir}/${project.name}-spotbugs.xml" jvmargs="-Xms${spotbugs.mem.initial} -Xmx${spotbugs.mem.max}">
-            <spotbugs:class location="${build.classes.dir}"/>
-            <spotbugs:class location="${build.test.classes.dir}"/>
-            <spotbugs:auxClasspath refid="aux-classpath"/>
-            <spotbugs:sourcePath path="${src.main.java.dir}"/>
-            <spotbugs:sourcePath path="${src.test.java.dir}"/>
-        </spotbugs:spotbugs>
-        <xslt in="${build.reports.spotbugs.dir}/${project.name}-spotbugs.xml" out="${build.reports.spotbugs.dir}/${project.name}-spotbugs.html">
-            <style>
-                <url url="jar:file:${dependency.spotbugs.spotbugs}!/color.xsl"/>
-            </style>
-        </xslt>
-    </target>
-
-    <target name="compile-javadoc" depends="init, load-third-party-tasks">
-        <ac:outofdate>
-            <ac:sourcefiles>
-                <fileset dir="${src.main.java.dir}" includes="**/*.java"/>
-            </ac:sourcefiles>
-            <ac:mapper type="glob" dir="${src.main.java.dir}" from="*.java" to="${build.javadoc.dir}/*.html"/>
-            <ac:sequential>
-                <javadoc destdir="${build.javadoc.dir}" failonerror="true" classpathref="compile-classpath" windowtitle="Liquibase SLF4J Logger Documentation" charset="UTF-8">
-                    <packageset dir="${src.main.java.dir}" defaultexcludes="true"/>
-                    <link href="http://docs.oracle.com/javase/6/docs/api/"/>
-                    <link href="http://www.liquibase.org/javadoc/"/>
-                    <link href="http://slf4j.org/apidocs/"/>
-                    <doctitle>Liquibase SLF4J Logger Documentation</doctitle>
-                </javadoc>
-            </ac:sequential>
-        </ac:outofdate>
-    </target>
-
-    <target name="compile-xref-doc" depends="init, load-third-party-tasks">
-        <jxr:jxr destdir="${build.reports.xref.dir}" sourcepath="${src.main.java.dir}" inputencoding="UTF-8" outputencoding="UTF-8"/>
-    </target>
-
-    <target name="make-jar" depends="compile-source, sync-main-resource">
-        <jar destfile="${dist.dir}/${project.name}-${project.version}.jar" manifest="${build.resources.dir}/META-INF/MANIFEST.MF">
-            <fileset dir="${build.classes.dir}"/>
-            <fileset dir="${build.resources.dir}"/>
-        </jar>
-    </target>
-
-    <target name="make-javadoc-jar" depends="compile-javadoc">
-        <jar destfile="${dist.dir}/${project.name}-${project.version}-javadoc.jar">
-            <fileset dir="${build.javadoc.dir}"/>
-        </jar>
-    </target>
-
-    <target name="make-sources-jar">
-        <jar destfile="${dist.dir}/${project.name}-${project.version}-sources.jar">
-            <fileset dir="${src.main.java.dir}"/>
-        </jar>
-    </target>
-
-    <target name="make-pom" depends="retrieve-dependencies">
-        <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${dist.dir}/${project.name}-${project.version}.pom" artifactpackaging="jar" templatefile="pom-template.xml" conf="compile">
-            <ivy:mapping conf="compile" scope="provided"/>
-        </ivy:makepom>
-    </target>
-
-    <target name="make-artifacts" depends="make-jar, make-javadoc-jar, make-sources-jar, make-pom"/>
-
     <!-- Public targets -->
-    <target name="build" description="Runs the main build and makes distributable artifacts.">
-        <antcall>
-            <param name="param.full.build" value="true"/>
-            <target name="run-unit-tests"/>
-            <target name="run-spotbugs"/>
-            <target name="compile-xref-doc"/>
-            <target name="make-artifacts"/>
-        </antcall>
-    </target>
+    <target name="assemble" description="Assembles the output of this project." depends="-assemble.-assemble"/>
+    <target name="build" description="Assembles and tests the project." depends="assemble, test"/>
+    <target name="check" description="Runs all checks" depends="spotbugs, test"/>
+    <target name="clean" description="Deletes the build and dist directories." depends="-clean"/>
+    <target name="dependencies" description="Displays all the dependencies in this project." depends="-dependencies.-dependencies"/>
+    <target name="javadoc" description="Generate Javadoc API documentation for the main source code." depends="-javadoc.-javadoc"/>
+    <target name="jxr" description="Generate a JXR source report." depends="-jxr.-run-jxr"/>
+    <target name="publish" description="Publishes artifacts to configured repository" depends="-publish.-publish"/>
+    <target name="publishToMavenLocal" description="Publishes artifacts to the Maven local cache" depends="-publish.-publish-to-maven-local"/>
+    <target name="spotbugs" description="Runs SpotBugs" depends="-spotbugs.-run-spotbugs"/>
+    <target name="test" description="Runs all the unit tests." depends="-test.-test"/>
 </project>

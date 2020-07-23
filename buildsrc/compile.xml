@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2012-2020 Matt Bertolini
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+ persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<project name="-compile" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j">
+    <include file="${basedir}/buildsrc/properties.xml"/>
+    <include file="${basedir}/buildsrc/macros.xml"/>
+    <include file="${basedir}/buildsrc/dependencies.xml"/>
+
+    <property name="lib.compile.dir" value="${lib.dir}/compile"/>
+    <property name="lib.test.dir" value="${lib.dir}/test"/>
+
+    <target name="-build-main-classpath" depends="-dependencies.-init-ivy" unless="build-main-classpath.run">
+        <macro:retrieve-deps conf="compile"/>
+        <path id="compile-main-classpath">
+            <fileset dir="${lib.compile.dir}"/>
+        </path>
+        <property name="build-main-classpath.run" value="true"/>
+    </target>
+    
+    <target name="-compile-main" depends="-build-main-classpath" if="main.java.dir.exists">
+        <macro:javacompile srcdir="${src.main.java.dir}" destdir="${build.main.dir}" source="${java.source.version}" target="${java.target.version}">
+            <classpath refid="compile-main-classpath"/>
+        </macro:javacompile>
+    </target>
+
+    <target name="-process-main-resources" if="main.resources.dir.exsits">
+        <macro:processresources dir="${src.main.resources.dir}" todir="${build.main.dir}"/>
+    </target>
+
+    <target name="-build-test-classpath" depends="-dependencies.-init-ivy, -build-main-classpath" unless="build-test-classpath.run">
+        <macro:retrieve-deps conf="test"/>
+        <path id="test-classpath">
+            <fileset dir="${lib.test.dir}"/>
+        </path>
+        <path id="compile-test-classpath">
+            <path location="${build.main.dir}"/>
+            <path refid="test-classpath"/>
+            <path refid="compile-main-classpath"/>
+        </path>
+        <property name="build-test-classpath.run" value="true"/>
+    </target>
+
+    <target name="-compile-test" depends="-build-test-classpath" if="test.java.dir.exists">
+        <macro:javacompile srcdir="${src.test.java.dir}" destdir="${build.test.dir}" source="${java.source.version}" target="${java.target.version}">
+            <classpath refid="compile-test-classpath"/>
+        </macro:javacompile>
+    </target>
+
+    <target name="-process-test-resources" if="test.resources.dir.exsits">
+        <macro:processresources dir="${src.test.resources.dir}" todir="${build.test.dir}"/>
+    </target>
+
+    <target name="-main-classes" depends="-compile-main, -process-main-resources"/>
+    <target name="-test-classes" depends="-compile-test, -process-test-resources"/>
+</project>

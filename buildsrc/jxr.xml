@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2012-2020 Matt Bertolini
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+ persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<project name="-jxr" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j" xmlns:jxr="antlib:com.mattbertolini.jxr.ant">
+    <include file="${basedir}/buildsrc/properties.xml"/>
+    <include file="${basedir}/buildsrc/dependencies.xml"/>
+
+    <property name="lib.jxr.dir" value="${lib.dir}/jxr"/>
+    <property name="build.reports.xref.dir" value="${build.dir}/reports/jxr"/>
+
+    <target name="-load-jxr" depends="-dependencies.-init-ivy" unless="-load-jxr.run">
+        <macro:retrieve-deps conf="jxr"/>
+        <path id="jxr.classpath">
+            <fileset dir="${lib.jxr.dir}"/>
+        </path>
+        <taskdef resource="com/mattbertolini/jxr/ant/antlib.xml" classpathref="jxr.classpath" uri="antlib:com.mattbertolini.jxr.ant"/>
+        <property name="-load-jxr.run" value="true"/>
+    </target>
+
+    <target name="-run-jxr" depends="-load-jxr">
+        <mkdir dir="${build.reports.xref.dir}"/>
+        <jxr:jxr destdir="${build.reports.xref.dir}" sourcepath="${src.main.java.dir}" inputencoding="UTF-8" outputencoding="UTF-8"/>
+    </target>
+
+</project>

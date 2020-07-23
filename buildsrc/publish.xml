@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2012-2020 Matt Bertolini
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+ persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<project name="-publish" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:ivy="antlib:org.apache.ivy.ant">
+    <include file="${basedir}/buildsrc/properties.xml"/>
+    <include file="${basedir}/buildsrc/dependencies.xml"/>
+    <include file="${basedir}/buildsrc/assemble.xml"/>
+
+    <property file="${basedir}/build-publish.properties" />
+
+    <target name="-init-ivy-publish-settings" depends="-dependencies.-init-ivy">
+        <ivy:settings id="publish-settings" file="${basedir}/buildsrc/ivy/ivysettings-publish.xml"/>
+    </target>
+
+    <target name="-authenticate-maven-central">
+        <input message="Enter Maven Central username: " addproperty="maven.username"/>
+        <input message="Enter Maven Central password: " addproperty="maven.password">
+            <handler type="secure"/>
+        </input>
+    </target>
+
+    <target name="-publish-to-maven-local" depends="-dependencies.-init-ivy, -init-ivy-publish-settings, -assemble.-assemble">
+        <condition property="snapshot-release" value="true" else="false">
+            <contains string="${project.version}" substring="-SNAPSHOT"/>
+        </condition>
+        <ivy:publish resolver="maven-local" pubrevision="${project.version}" status="release" overwrite="${snapshot-release}" publishivy="false" settingsref="publish-settings">
+            <ivy:artifacts pattern="${dist.dir}/[artifact]-[revision](-[classifier]).[ext]"/>
+        </ivy:publish>
+    </target>
+
+    <target name="-publish" depends="-dependencies.-init-ivy, -init-ivy-publish-settings, -authenticate-maven-central, -assemble.-assemble">
+        <condition property="snapshot-release" value="true" else="false">
+            <contains string="${project.version}" substring="-SNAPSHOT"/>
+        </condition>
+        <condition property="resolver-name" value="maven-central-snapshot" else="maven-central-release">
+            <istrue value="${snapshot-release}"/>
+        </condition>
+        <ivy:publish resolver="${resolver-name}" pubrevision="${project.version}" status="release" overwrite="${snapshot-release}" publishivy="false" settingsref="publish-settings">
+            <ivy:artifacts pattern="${dist.dir}/[artifact]-[revision](-[classifier]).[ext]"/>
+        </ivy:publish>
+    </target>
+</project>

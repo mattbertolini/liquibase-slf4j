@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2013 Matt Bertolini
+ Copyright (c) 2012-2020 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -15,10 +15,30 @@
  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
-<ivysettings>
-    <properties file="build.properties"/>
-    <settings defaultResolver="maven-central"/>
-    <resolvers>
-        <ibiblio name="maven-central" m2compatible="true"/>
-    </resolvers>
-</ivysettings>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>${ivy.pom.groupId}</groupId>
+    <artifactId>${ivy.pom.artifactId}</artifactId>
+    <packaging>jar</packaging>
+    <name>${project.name}</name>
+    <version>${ivy.pom.version}</version>
+    <description>${project.description}</description>
+    <url>${ivy.pom.url}</url>
+    <licenses>
+        <license>
+            <name>${project.license.name}</name>
+            <url>${project.license.url}</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>${project.url}</url>
+        <connection>scm:git:${project.scm.readonly.url}</connection>
+    </scm>
+    <developers>
+        <developer>
+            <name>Matt Bertolini</name>
+        </developer>
+    </developers>
+</project>

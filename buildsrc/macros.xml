@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2012-2020 Matt Bertolini
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+ persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<project name="macros" basedir="../" xmlns="antlib:org.apache.tools.ant">
+    <include file="${basedir}/buildsrc/properties.xml"/>
+
+    <macrodef name="javacompile" uri="antmacro:com.mattbertolini.liquibase.slf4j">
+        <attribute name="srcdir"/>
+        <attribute name="destdir"/>
+        <attribute name="source" default="${ant.java.version}"/>
+        <attribute name="target" default="${ant.java.version}"/>
+        <element name="compileClasspath" implicit="true" optional="true"/>
+        <sequential>
+            <mkdir dir="@{destdir}"/>
+            <depend srcdir="@{srcdir}" destdir="@{destdir}" cache="${build.temp.dir}" closure="true">
+                <include name= "**/*.java"/>
+            </depend>
+            <javac srcdir="@{srcdir}" destdir="@{destdir}" source="@{source}" target="@{target}" fork="true" failonerror="true" includeantruntime="false" debug="true" encoding="UTF-8">
+                <compileClasspath/>
+            </javac>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="processresources" uri="antmacro:com.mattbertolini.liquibase.slf4j">
+        <attribute name="dir"/>
+        <attribute name="todir"/>
+        <sequential>
+            <sync todir="@{todir}">
+                <fileset dir="@{dir}"/>
+                <preserveintarget>
+                    <include name="**/*.class"/>
+                </preserveintarget>
+            </sync>
+        </sequential>
+    </macrodef>
+</project>
