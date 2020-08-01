@@ -25,11 +25,12 @@
     <property name="build.reports.unittest.dir" value="${build.dir}/reports/unittest"/>
     <property name="build.reports.coverage.dir" value="${build.dir}/reports/coverage"/>
 
-    <target name="-load-junit-platform" depends="-dependencies.-init-ivy">
+    <target name="-load-junit-platform" depends="-dependencies.-init-ivy" unless="load-junit-platform.run">
         <macro:retrieve-deps conf="junit-platform"/>
         <path id="junit-platform.classpath">
             <fileset dir="${lib.junit-platform.dir}"/>
         </path>
+        <property name="load-junit-platform.run" value="true"/>
     </target>
 
     <target name="-test" depends="-load-junit-platform, -jacoco.-load-jacoco, -compile.-main-classes, -compile.-test-classes" unless="test.run">
