@@ -26,6 +26,7 @@ import java.util.logging.Level;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -37,13 +38,13 @@ import static org.mockito.Mockito.when;
 class Slf4jLoggerTest {
 
     private Logger delegate;
-    private LogMessageFilter filter;
+    private TestingFilter filter;
     private Slf4jLogger logger;
 
     @BeforeEach
     void setUp() {
         delegate = mock(Logger.class);
-        filter = mock(LogMessageFilter.class);
+        filter = new TestingFilter();
         logger = new Slf4jLogger(delegate, filter);
     }
 
@@ -57,10 +58,26 @@ class Slf4jLoggerTest {
     }
 
     @Test
+    void logWithSevereLevelUsingFilter() {
+        String message = "severe test";
+        String filteredMessage = filter.setExpected("filtered");
+        logger.log(Level.SEVERE, message, null);
+        verify(delegate).error(filteredMessage, (Throwable) null);
+    }
+
+    @Test
     void logWithWarningLevel() {
         String message = "warning test";
         logger.log(Level.WARNING, message, null);
         verify(delegate).warn(message, (Throwable) null);
+    }
+
+    @Test
+    void logWithWarningLevelUsingFilter() {
+        String message = "warning test";
+        String filteredMessage = filter.setExpected("filtered");
+        logger.log(Level.WARNING, message, null);
+        verify(delegate).warn(filteredMessage, (Throwable) null);
     }
 
     @Test
@@ -71,10 +88,26 @@ class Slf4jLoggerTest {
     }
 
     @Test
+    void logWithInfoLevelUsingFilter() {
+        String message = "info test";
+        String filteredMessage = filter.setExpected("filtered");
+        logger.log(Level.INFO, message, null);
+        verify(delegate).info(filteredMessage, (Throwable) null);
+    }
+
+    @Test
     void logWithConfigLevel() {
         String message = "config test";
         logger.log(Level.CONFIG, message, null);
         verify(delegate).info(message, (Throwable) null);
+    }
+
+    @Test
+    void logWithConfigLevelUsingFilter() {
+        String message = "config test";
+        String filteredMessage = filter.setExpected("filtered");
+        logger.log(Level.CONFIG, message, null);
+        verify(delegate).info(filteredMessage, (Throwable) null);
     }
 
     @Test
@@ -85,10 +118,26 @@ class Slf4jLoggerTest {
     }
 
     @Test
+    void logWithFineLevelUsingFilter() {
+        String message = "fine test";
+        String filteredMessage = filter.setExpected("filtered");
+        logger.log(Level.FINE, message, null);
+        verify(delegate).debug(filteredMessage, (Throwable) null);
+    }
+
+    @Test
     void logWithFinestLevel() {
         String message = "finest test";
         logger.log(Level.FINEST, message, null);
         verify(delegate).trace(message, (Throwable) null);
+    }
+
+    @Test
+    void logWithFinestLevelUsingFilter() {
+        String message = "finest test";
+        String filteredMessage = filter.setExpected("filtered");
+        logger.log(Level.FINEST, message, null);
+        verify(delegate).trace(filteredMessage, (Throwable) null);
     }
 
 
@@ -126,6 +175,25 @@ class Slf4jLoggerTest {
         verify(delegate, never()).error(anyString(), any(Throwable.class));
     }
 
+    @Test
+    void logsSevereWithFilteredMessage() {
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isErrorEnabled()).thenReturn(true);
+        logger.severe(message);
+        verify(delegate).error(filteredMessage);
+    }
+
+    @Test
+    void logsSevereWithFilteredMessageAndException() {
+        RuntimeException exception = new RuntimeException("Exception");
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isErrorEnabled()).thenReturn(true);
+        logger.severe(message, exception);
+        verify(delegate).error(eq(filteredMessage), any(Throwable.class));
+    }
+
     // Warning level
 
     @Test
@@ -158,6 +226,25 @@ class Slf4jLoggerTest {
         when(delegate.isWarnEnabled()).thenReturn(false);
         logger.warning("do not log", exception);
         verify(delegate, never()).warn(anyString(), any(Throwable.class));
+    }
+
+    @Test
+    void logsWarningWithFilteredMessage() {
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isWarnEnabled()).thenReturn(true);
+        logger.warning(message);
+        verify(delegate).warn(filteredMessage);
+    }
+
+    @Test
+    void logsWarningWithFilteredMessageAndException() {
+        RuntimeException exception = new RuntimeException("Exception");
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isWarnEnabled()).thenReturn(true);
+        logger.warning(message, exception);
+        verify(delegate).warn(eq(filteredMessage), any(Throwable.class));
     }
 
     // Info level
@@ -194,6 +281,25 @@ class Slf4jLoggerTest {
         verify(delegate, never()).info(anyString(), any(Throwable.class));
     }
 
+    @Test
+    void logsInfoWithFilteredMessage() {
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isInfoEnabled()).thenReturn(true);
+        logger.info(message);
+        verify(delegate).info(filteredMessage);
+    }
+
+    @Test
+    void logsInfoWithFilteredMessageAndException() {
+        RuntimeException exception = new RuntimeException("Exception");
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isInfoEnabled()).thenReturn(true);
+        logger.info(message, exception);
+        verify(delegate).info(eq(filteredMessage), any(Throwable.class));
+    }
+
     // Config level
     
     @Test
@@ -226,6 +332,25 @@ class Slf4jLoggerTest {
         when(delegate.isInfoEnabled()).thenReturn(false);
         logger.config("do not log", exception);
         verify(delegate, never()).info(anyString(), any(Throwable.class));
+    }
+
+    @Test
+    void logsConfigWithFilteredMessage() {
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isInfoEnabled()).thenReturn(true);
+        logger.config(message);
+        verify(delegate).info(filteredMessage);
+    }
+
+    @Test
+    void logsConfigWithFilteredMessageAndException() {
+        RuntimeException exception = new RuntimeException("Exception");
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isInfoEnabled()).thenReturn(true);
+        logger.config(message, exception);
+        verify(delegate).info(eq(filteredMessage), any(Throwable.class));
     }
 
     // Fine level
@@ -262,6 +387,25 @@ class Slf4jLoggerTest {
         verify(delegate, never()).debug(anyString(), any(Throwable.class));
     }
 
+    @Test
+    void logsFineWithFilteredMessage() {
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isDebugEnabled()).thenReturn(true);
+        logger.fine(message);
+        verify(delegate).debug(filteredMessage);
+    }
+
+    @Test
+    void logsFineWithFilteredMessageAndException() {
+        RuntimeException exception = new RuntimeException("Exception");
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isDebugEnabled()).thenReturn(true);
+        logger.fine(message, exception);
+        verify(delegate).debug(eq(filteredMessage), any(Throwable.class));
+    }
+
     // Debug level (deprecated). Delegates to fine
 
     @Test
@@ -294,5 +438,58 @@ class Slf4jLoggerTest {
         when(delegate.isDebugEnabled()).thenReturn(false);
         logger.debug("do not log", exception);
         verify(delegate, never()).debug(anyString(), any(Throwable.class));
+    }
+
+    @Test
+    void logsDebugWithFilteredMessage() {
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isDebugEnabled()).thenReturn(true);
+        logger.debug(message);
+        verify(delegate).debug(filteredMessage);
+    }
+
+    @Test
+    void logsDebugWithFilteredMessageAndException() {
+        RuntimeException exception = new RuntimeException("Exception");
+        String message = "not filtered";
+        String filteredMessage = filter.setExpected("filtered");
+        when(delegate.isDebugEnabled()).thenReturn(true);
+        logger.debug(message, exception);
+        verify(delegate).debug(eq(filteredMessage), any(Throwable.class));
+    }
+
+    @Test
+    void worksWithNullFilter() {
+        String message = "message";
+        Slf4jLogger slf4jLogger = new Slf4jLogger(delegate, null);
+        when(delegate.isInfoEnabled()).thenReturn(true);
+        slf4jLogger.info(message);
+        verify(delegate).info(message);
+    }
+
+    private static class TestingFilter implements LogMessageFilter {
+        private String expected;
+
+        public TestingFilter() {
+            reset();
+        }
+
+        @Override
+        public String filterMessage(String message) {
+            if (expected != null) {
+                return expected;
+            }
+            return message;
+        }
+
+        public void reset() {
+            expected = null;
+        }
+
+        public String setExpected(String expected) {
+            this.expected = expected;
+            return expected;
+        }
     }
 }

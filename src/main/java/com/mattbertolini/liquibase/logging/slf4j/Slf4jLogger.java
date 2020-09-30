@@ -77,17 +77,18 @@ public class Slf4jLogger extends AbstractLogger {
 
     @Override
     public void log(Level level, String message, Throwable e) {
+        String filteredMessage = filterMessage(message);
         int levelValue = level.intValue();
         if (levelValue <= TRACE_THRESHOLD) {
-            logger.trace(message, e);
+            logger.trace(filteredMessage, e);
         } else if (levelValue <= DEBUG_THRESHOLD) {
-            logger.debug(message, e);
+            logger.debug(filteredMessage, e);
         } else if (levelValue <= INFO_THRESHOLD) {
-            logger.info(message, e);
+            logger.info(filteredMessage, e);
         } else if (levelValue <= WARN_THRESHOLD) {
-            logger.warn(message, e);
+            logger.warn(filteredMessage, e);
         } else {
-            logger.error(message, e);
+            logger.error(filteredMessage, e);
         }
     }
 
@@ -99,7 +100,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void severe(String message) {
         if (logger.isErrorEnabled()) {
-            logger.error(message);
+            logger.error(filterMessage(message));
         }
     }
 
@@ -112,7 +113,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void severe(String message, Throwable e) {
         if (logger.isErrorEnabled()) {
-            logger.error(message, e);
+            logger.error(filterMessage(message), e);
         }
     }
 
@@ -124,7 +125,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void warning(String message) {
         if (logger.isWarnEnabled()) {
-            logger.warn(message);
+            logger.warn(filterMessage(message));
         }
     }
 
@@ -137,7 +138,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void warning(String message, Throwable e) {
         if (logger.isWarnEnabled()) {
-            logger.warn(message, e);
+            logger.warn(filterMessage(message), e);
         }
     }
 
@@ -149,7 +150,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void info(String message) {
         if (logger.isInfoEnabled()) {
-            logger.info(message);
+            logger.info(filterMessage(message));
         }
     }
 
@@ -162,7 +163,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void info(String message, Throwable e) {
         if (logger.isInfoEnabled()) {
-            logger.info(message, e);
+            logger.info(filterMessage(message), e);
         }
     }
 
@@ -174,7 +175,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void config(String message) {
         if (logger.isInfoEnabled()) {
-            logger.info(message);
+            logger.info(filterMessage(message));
         }
     }
 
@@ -187,7 +188,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void config(String message, Throwable e) {
         if (logger.isInfoEnabled()) {
-            logger.info(message, e);
+            logger.info(filterMessage(message), e);
         }
     }
 
@@ -199,7 +200,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void fine(String message) {
         if (logger.isDebugEnabled()) {
-            logger.debug(message);
+            logger.debug(filterMessage(message));
         }
     }
 
@@ -212,7 +213,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void fine(String message, Throwable e) {
         if (logger.isDebugEnabled()) {
-            logger.debug(message, e);
+            logger.debug(filterMessage(message), e);
         }
     }
 }
