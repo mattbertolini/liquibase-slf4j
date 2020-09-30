@@ -17,6 +17,7 @@
 
 package com.mattbertolini.liquibase.logging.slf4j;
 
+import liquibase.logging.LogMessageFilter;
 import liquibase.logging.core.AbstractLogger;
 import org.slf4j.Logger;
 
@@ -69,7 +70,8 @@ public class Slf4jLogger extends AbstractLogger {
 
     private final Logger logger;
 
-    Slf4jLogger(Logger logger) {
+    Slf4jLogger(Logger logger, LogMessageFilter filter) {
+        super(filter);
         this.logger = logger;
     }
 

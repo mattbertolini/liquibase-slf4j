@@ -44,7 +44,7 @@
     </publications>
     <dependencies defaultconfmapping="compile->default">
         <dependency org="org.slf4j" name="slf4j-api" rev="1.7.30"/>
-        <dependency org="org.liquibase" name="liquibase-core" rev="4.0.0"/>
+        <dependency org="org.liquibase" name="liquibase-core" rev="4.1.0"/>
         <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.6.2" conf="test->default"/>
         <dependency org="org.mockito" name="mockito-core" rev="3.3.3" conf="test->default"/>
         <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.6.2" conf="junit-platform->default"/>

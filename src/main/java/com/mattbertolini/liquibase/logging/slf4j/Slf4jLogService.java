@@ -76,6 +76,6 @@ public class Slf4jLogService extends AbstractLogService {
      */
     @Override
     public Logger getLog(Class clazz) {
-        return new Slf4jLogger(LoggerFactory.getLogger(clazz));
+        return new Slf4jLogger(LoggerFactory.getLogger(clazz), getFilter());
     }
 }

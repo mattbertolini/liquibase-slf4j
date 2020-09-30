@@ -17,6 +17,7 @@
 
 package com.mattbertolini.liquibase.logging.slf4j;
 
+import liquibase.logging.LogMessageFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -36,12 +37,14 @@ import static org.mockito.Mockito.when;
 class Slf4jLoggerTest {
 
     private Logger delegate;
+    private LogMessageFilter filter;
     private Slf4jLogger logger;
 
     @BeforeEach
     void setUp() {
         delegate = mock(Logger.class);
-        logger = new Slf4jLogger(delegate);
+        filter = mock(LogMessageFilter.class);
+        logger = new Slf4jLogger(delegate, filter);
     }
 
     // log method
