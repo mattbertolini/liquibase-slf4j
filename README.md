@@ -1,5 +1,5 @@
 # liquibase-slf4j
-Version 3.0.0<br/>
+Version 4.0.0<br/>
 Written by Matt Bertolini
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.mattbertolini/liquibase-slf4j.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mattbertolini%22%20AND%20a:%22liquibase-slf4j%22)
@@ -22,7 +22,7 @@ Grab the library from Maven Central and place it in your classpath.
 <dependency>
     <groupId>com.mattbertolini</groupId>
     <artifactId>liquibase-slf4j</artifactId>
-    <version>3.0.0</version>
+    <version>4.0.0</version>
     <scope>runtime</scope>
 </dependency>
 ```
@@ -30,13 +30,13 @@ Grab the library from Maven Central and place it in your classpath.
 **Gradle:**
 
 ```groovy
-runtimeOnly 'com.mattbertolini:liquibase-slf4j:3.0.0'
+runtimeOnly 'com.mattbertolini:liquibase-slf4j:4.0.0'
 ```
 
 **Ivy**
 
 ```xml
-<dependency org="com.mattbertolini" name="liquibase-slf4j" rev="3.0.0"/>
+<dependency org="com.mattbertolini" name="liquibase-slf4j" rev="4.0.0"/>
 ```
 
 ## License
@@ -114,6 +114,11 @@ Please report any bugs in the issue tracker above. Please be as detailed as poss
 unit tests to verify the problem is fixed.
 
 ## Release Notes
+
+**4.0.0 - 2020-09-30**
+
+- Upgraded Liquibase to version 4.1.0. This is a breaking change as the logging API introduced a new filter class and 
+changed constructors. ([Pull Request](https://github.com/mattbertolini/liquibase-slf4j/pull/10))
 
 **3.0.0 - 2020-07-23**
 
