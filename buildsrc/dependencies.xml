@@ -20,7 +20,7 @@
 
     <property name="lib.ivy.version" value="2.4.0"/>
     <property name="lib.ivy.dir" value="${lib.dir}/ivy"/>
-    <property name="ivy.retrieve.pattern" value="${lib.dir}/[conf]/[artifact]-[revision](-[classifier]).[ext]"/>
+    <property name="ivy.retrieve.pattern" value="[artifact]-[revision](-[classifier]).[ext]"/>
     <property name="build.reports.dependency.dir" value="${build.dir}/reports/ivy"/>
 
     <target name="-download-ivy" unless="-download-ivy.run">
@@ -52,9 +52,10 @@
     <macrodef name="retrieve-deps" uri="antmacro:com.mattbertolini.liquibase.slf4j">
         <attribute name="conf"/>
         <sequential>
+            <mkdir dir="${lib.dir}/@{conf}"/>
             <ivy:resolve file="${basedir}/ivy.xml" conf="@{conf}" haltonfailure="false" log="download-only"/>
-            <ivy:retrieve pattern="${ivy.retrieve.pattern}" sync="false" haltonfailure="true"/>
-            <ivy:artifactproperty name="dependency.[conf].[artifact]" value="${ivy.retrieve.pattern}"/>
+            <ivy:retrieve pattern="${lib.dir}/@{conf}/${ivy.retrieve.pattern}" sync="true" haltonfailure="true"/>
+            <ivy:artifactproperty name="dependency.[conf].[artifact]" value="${lib.dir}/@{conf}/${ivy.retrieve.pattern}"/>
             <ivy:artifactproperty name="ivy.retrieve.[conf].run" value="true"/>
         </sequential>
     </macrodef>

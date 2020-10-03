@@ -19,4 +19,4 @@ before_script:
   - export PATH="/opt/ant/bin:$PATH"
 
 script:
-  - ant clean build check
+  - ant -logger org.apache.tools.ant.NoBannerLogger clean build check
