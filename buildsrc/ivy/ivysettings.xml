@@ -16,7 +16,6 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <ivysettings>
-    <property name="lib.ivy.version" value="2.4.0"/>
     <settings defaultResolver="maven-central"/>
     <resolvers>
         <ibiblio name="maven-central" m2compatible="true"/>

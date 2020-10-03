@@ -17,8 +17,7 @@
 -->
 <project name="-dependencies" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j">
     <include file="${basedir}/buildsrc/properties.xml"/>
-
-    <property name="lib.ivy.version" value="2.4.0"/>
+    
     <property name="lib.ivy.dir" value="${lib.dir}/ivy"/>
     <property name="ivy.retrieve.pattern" value="[artifact]-[revision](-[classifier]).[ext]"/>
     <property name="build.reports.dependency.dir" value="${build.dir}/reports/ivy"/>

@@ -59,6 +59,6 @@
             <exclude module="ant"/>
         </dependency>
         <dependency org="org.apache.ivy" name="ivy" rev="${lib.ivy.version}" conf="ivy->default"/>
-        <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.50" conf="ivy->default"/>
+        <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.62" conf="ivy->default"/>
     </dependencies>
 </ivy-module>
