@@ -17,6 +17,7 @@ before_script:
   - rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
   - rm -f apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
   - export PATH="/opt/ant/bin:$PATH"
+  - ant -version
 
 script:
   - ant -logger org.apache.tools.ant.NoBannerLogger clean build check
