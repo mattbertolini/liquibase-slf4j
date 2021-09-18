@@ -20,4 +20,4 @@ before_script:
 
 script:
   - ant -version
-  - ant -logger org.apache.tools.ant.NoBannerLogger clean build check
+  - ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
