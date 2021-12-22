@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2020 Matt Bertolini
+ Copyright (c) 2012-2021 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -43,18 +43,18 @@
         <artifact type="pom" ext="pom"/>
     </publications>
     <dependencies defaultconfmapping="compile->default">
-        <dependency org="org.slf4j" name="slf4j-api" rev="1.7.30"/>
+        <dependency org="org.slf4j" name="slf4j-api" rev="1.7.32"/>
         <dependency org="org.liquibase" name="liquibase-core" rev="4.1.0"/>
-        <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.6.2" conf="test->default"/>
-        <dependency org="org.mockito" name="mockito-core" rev="3.3.3" conf="test->default"/>
-        <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.6.2" conf="junit-platform->default"/>
-        <dependency org="org.junit.platform" name="junit-platform-launcher" rev="1.6.2" conf="junit-platform->default"/>
+        <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.8.2" conf="test->default"/>
+        <dependency org="org.mockito" name="mockito-core" rev="4.2.0" conf="test->default"/>
+        <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.8.2" conf="junit-platform->default"/>
+        <dependency org="org.junit.platform" name="junit-platform-launcher" rev="1.8.2" conf="junit-platform->default"/>
         <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="antcontrib->default">
             <exclude module="ant"/>
         </dependency>
-        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.8.5" conf="jacoco->default"/>
-        <dependency org="com.github.spotbugs" name="spotbugs" rev="4.0.6" conf="spotbugs->default"/>
-        <dependency org="com.github.spotbugs" name="spotbugs-ant" rev="4.0.6" conf="spotbugs->default"/>
+        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.8.7" conf="jacoco->default"/>
+        <dependency org="com.github.spotbugs" name="spotbugs" rev="4.5.2" conf="spotbugs->default"/>
+        <dependency org="com.github.spotbugs" name="spotbugs-ant" rev="4.5.2" conf="spotbugs->default"/>
         <dependency org="com.mattbertolini" name="jxr-ant" rev="2.0.0" conf="jxr->default">
             <exclude module="ant"/>
         </dependency>
