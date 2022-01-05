@@ -21,6 +21,7 @@
     <property name="src.main.resources.dir" value="${basedir}/src/main/resources"/>
     <property name="src.test.java.dir" value="${basedir}/src/test/java"/>
     <property name="src.test.resources.dir" value="${basedir}/src/test/resources"/>
+    <property name="meta_inf.dir" value="${basedir}/META-INF"/>
     <property name="build.dir" value="${basedir}/build"/>
     <property name="dist.dir" value="${basedir}/dist"/>
     <property name="build.temp.dir" value="${build.dir}/temp"/>
@@ -49,6 +50,11 @@
     <condition property="test.resources.dir.exsits">
         <resourceexists>
             <file file="${src.test.resources.dir}"/>
+        </resourceexists>
+    </condition>
+    <condition property="meta_inf.dir.exists">
+        <resourceexists>
+            <file file="${meta_inf.dir}"/>
         </resourceexists>
     </condition>
 </project>

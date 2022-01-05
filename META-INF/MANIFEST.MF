@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Liquibase Slf4j Logging
+Bundle-SymbolicName: com.mattbertolini.liquibase.logging.slf4j
+Bundle-Version: 4.0.0
+Automatic-Module-Name: com.mattbertolini.liquibase.logging.slf4j
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: com.mattbertolini.liquibase.logging.slf4j;version="4.0.0"
+Import-Package: liquibase.logging;version="4.0.0",
+ liquibase.logging.core;version="4.0.0",
+ org.junit.jupiter.api;version="5.7.1";resolution:=optional,
+ org.mockito;version="2.23.0";resolution:=optional,
+ org.mockito.stubbing;version="2.23.0";resolution:=optional,
+ org.slf4j;version="1.7.0"
+Fragment-Host: org.liquibase.core;bundle-version="[4.0.0,5.0.0)"

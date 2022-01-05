@@ -63,7 +63,11 @@
     <target name="-process-test-resources" if="test.resources.dir.exsits">
         <macro:processresources dir="${src.test.resources.dir}" todir="${build.test.dir}"/>
     </target>
+	
+	<target name="-process-meta-inf-resources" if="meta_inf.dir.exists">
+	    <macro:processresources dir="${meta_inf.dir}" todir="${build.main.dir}/META-INF"/>
+	</target>
 
-    <target name="-main-classes" depends="-compile-main, -process-main-resources"/>
+    <target name="-main-classes" depends="-compile-main, -process-main-resources, -process-meta-inf-resources"/>
     <target name="-test-classes" depends="-compile-test, -process-test-resources"/>
 </project>

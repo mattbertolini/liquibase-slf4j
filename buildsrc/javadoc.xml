@@ -20,7 +20,7 @@
     <include file="${basedir}/buildsrc/antcontrib.xml"/>
     <include file="${basedir}/buildsrc/compile.xml"/>
 
-    <target name="-javadoc" depends="-antcontrib.-load-antcontrib, -compile.-compile-main, -compile.-process-main-resources">
+    <target name="-javadoc" depends="-antcontrib.-load-antcontrib, -compile.-compile-main, -compile.-process-main-resources, -compile.-process-meta-inf-resources">
         <ac:outofdate>
             <ac:sourcefiles>
                 <fileset dir="${src.main.java.dir}" includes="**/*.java"/>
