@@ -15,30 +15,18 @@
  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>${ivy.pom.groupId}</groupId>
-    <artifactId>${ivy.pom.artifactId}</artifactId>
-    <packaging>jar</packaging>
-    <name>${project.name}</name>
-    <version>${ivy.pom.version}</version>
-    <description>${project.description}</description>
-    <url>${ivy.pom.url}</url>
-    <licenses>
-        <license>
-            <name>${project.license.name}</name>
-            <url>${project.license.url}</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <scm>
-        <url>${project.url}</url>
-        <connection>scm:git:${project.scm.readonly.url}</connection>
-    </scm>
-    <developers>
-        <developer>
-            <name>Matt Bertolini</name>
-        </developer>
-    </developers>
+<project name="-bnd" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j">
+    <include file="${basedir}/buildsrc/dependencies.xml"/>
+
+    <property name="lib.bnd.dir" value="${lib.dir}/bnd"/>
+
+    <target name="-load-bnd" depends="-dependencies.-init-ivy" unless="load-bnd.run">
+        <macro:retrieve-deps conf="bnd"/>
+        <path id="bnd.classpath">
+            <fileset dir="${lib.bnd.dir}"/>
+        </path>
+        <taskdef resource="aQute/bnd/ant/taskdef.properties" classpathref="bnd.classpath" uri="antlib:aqute.bnd.ant"/>
+        <property name="load-bnd.run" value="true"/>
+    </target>
+
 </project>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2020 Matt Bertolini
+ Copyright (c) 2012-2022 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -35,15 +35,14 @@
 
     <target name="-test" depends="-load-junit-platform, -jacoco.-load-jacoco, -compile.-main-classes, -compile.-test-classes" unless="test.run">
         <path id="test-classpath">
+            <fileset dir="${lib.compile.dir}"/>
             <fileset dir="${lib.test.dir}"/>
         </path>
         <path id="run-unit-tests-classpath">
             <path location="${build.main.dir}"/>
             <path location="${build.test.dir}"/>
-            <path refid="compile-main-classpath"/>
             <path refid="test-classpath"/>
             <path refid="junit-platform.classpath"/>
-            <path refid="jacoco.classpath"/>
         </path>
         <mkdir dir="${build.reports.unittest.dir}"/>
         <jacoco:agent property="jacoco.agent.property" destfile="${build.reports.coverage.dir}/${project.name}-coverage.exec"/>

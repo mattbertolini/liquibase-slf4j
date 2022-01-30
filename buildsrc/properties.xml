@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2020 Matt Bertolini
+ Copyright (c) 2012-2022 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -30,6 +30,19 @@
     <property name="lib.dir" value="${basedir}/lib"/>
 
     <property file="${basedir}/build.properties"/>
+
+    <!--
+        Create a dedicated property for the OSGi version. OSGi has a very specific format for versions and doesn't like
+        dashes.
+    -->
+    <loadresource property="project.version.osgi">
+        <propertyresource name="project.version"/>
+        <filterchain>
+            <tokenfilter>
+                <replacestring from="-SNAPSHOT" to=".SNAPSHOT"/>
+            </tokenfilter>
+        </filterchain>
+    </loadresource>
 
     <condition property="main.java.dir.exists">
         <resourceexists>
