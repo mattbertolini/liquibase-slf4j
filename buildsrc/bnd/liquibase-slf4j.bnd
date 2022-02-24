@@ -15,7 +15,7 @@
 
 Bundle-Name: ${project.name}
 Bundle-SymbolicName: com.mattbertolini.liquibase.logging.slf4j
-Bundle-Version: ${project.version.osgi}
-Fragment-Host: org.liquibase.core;bundle-version="[${dependency.compile.liquibase-core.version},5)"
+Bundle-Version: ${version_cleanup;${project.version}}
+Fragment-Host: org.liquibase.core;bundle-version="[${dependency.compile.liquibase-core.version},${versionmask;+;${dependency.compile.liquibase-core.version}})"
 Provide-Capability: osgi.serviceloader; osgi.serviceloader=liquibase.logging.LogService
 Require-Capability: osgi.serviceloader; filter:="(osgi.serviceloader=liquibase.logging.LogService)"; cardinality:=multiple

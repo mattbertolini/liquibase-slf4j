@@ -31,19 +31,6 @@
 
     <property file="${basedir}/build.properties"/>
 
-    <!--
-        Create a dedicated property for the OSGi version. OSGi has a very specific format for versions and doesn't like
-        dashes.
-    -->
-    <loadresource property="project.version.osgi">
-        <propertyresource name="project.version"/>
-        <filterchain>
-            <tokenfilter>
-                <replacestring from="-SNAPSHOT" to=".SNAPSHOT"/>
-            </tokenfilter>
-        </filterchain>
-    </loadresource>
-
     <condition property="main.java.dir.exists">
         <resourceexists>
             <file file="${src.main.java.dir}"/>

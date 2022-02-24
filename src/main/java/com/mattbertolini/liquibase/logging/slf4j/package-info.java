@@ -19,7 +19,7 @@
  * The main package of the Liquibase SLF4J library.
  */
 @Export
-@Version("${project.version.osgi}") // Property defined in Ant build
+@Version("${version_cleanup;${project.version}}") // Project version property defined in Ant build
 package com.mattbertolini.liquibase.logging.slf4j;
 
 import org.osgi.annotation.bundle.Export;
