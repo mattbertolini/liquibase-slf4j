@@ -23,6 +23,7 @@
     <include file="${basedir}/buildsrc/bnd.xml"/>
 
     <target name="-main-jar" depends="-compile.-main-classes, -bnd.-load-bnd">
+        <local name="main.jar.name"/>
         <property name="main.jar.name" value="${project.name}-${project.version}.jar"/>
         <jar destfile="${dist.dir}/${main.jar.name}" manifest="${build.main.dir}/META-INF/MANIFEST.MF">
             <fileset dir="${build.main.dir}"/>
