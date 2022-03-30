@@ -1,5 +1,5 @@
 # liquibase-slf4j
-Version 4.0.0<br/>
+Version 4.1.0<br/>
 Written by Matt Bertolini
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.mattbertolini/liquibase-slf4j.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mattbertolini%22%20AND%20a:%22liquibase-slf4j%22)
@@ -22,25 +22,31 @@ Grab the library from Maven Central and place it in your classpath.
 <dependency>
     <groupId>com.mattbertolini</groupId>
     <artifactId>liquibase-slf4j</artifactId>
-    <version>4.0.0</version>
+    <version>4.1.0</version>
     <scope>runtime</scope>
 </dependency>
 ```
 
 **Gradle:**
 
+Groovy DSL:
 ```groovy
-runtimeOnly 'com.mattbertolini:liquibase-slf4j:4.0.0'
+runtimeOnly 'com.mattbertolini:liquibase-slf4j:4.1.0'
+```
+
+Kotlin DSL:
+```kotlin
+runtimeOnly("com.mattbertolini:liquibase-slf4j:4.1.0")
 ```
 
 **Ivy**
 
 ```xml
-<dependency org="com.mattbertolini" name="liquibase-slf4j" rev="4.0.0"/>
+<dependency org="com.mattbertolini" name="liquibase-slf4j" rev="4.1.0"/>
 ```
 
 ## License
-liquibase-slf4j is licensed under the [MIT License](http://www.opensource.org/licenses/mit-license.php)
+liquibase-slf4j is licensed under the [MIT License](https://opensource.org/licenses/MIT)
 
 ## Notes
 This logger has a priority number of 5. If there is more than one Liquibase logger on the classpath the one with the
@@ -115,6 +121,14 @@ unit tests to verify the problem is fixed.
 
 ## Release Notes
 
+**4.1.0 - 2022-03-30**
+
+- Generated OSGi metadata making the jar a OSGi fragment where Liquibase is the host bundle. This was tested with 
+- Liquibase 4.9.1. This fixes issue [#12](https://github.com/mattbertolini/liquibase-slf4j/issues/12) 
+([Pull Request](https://github.com/mattbertolini/liquibase-slf4j/pull/14))
+- Upgraded to SLF4J 1.7.36
+- Upgraded to Liquibase 4.9.1. The library should still work with Liquibase 4.1.0 and above when not using OSGi.
+
 **4.0.0 - 2020-09-30**
 
 - Upgraded Liquibase to version 4.1.0. This is a breaking change as the logging API introduced a new filter class and 
@@ -131,7 +145,6 @@ changed constructors. ([Pull Request](https://github.com/mattbertolini/liquibase
 - Java 8 is now the minimum supported JDK version.
 - Added an `Automatic-Module-Name` to support the Java 9+ module system. The module name is `com.mattbertolini.liquibase.logging.slf4j`.
 - Overhauled build files.
-
 
 **2.0.0 - 2015-12-16**
 
