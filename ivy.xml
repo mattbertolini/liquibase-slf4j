@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2021 Matt Bertolini
+ Copyright (c) 2012-2022 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -25,6 +25,7 @@
     </info>
     <configurations>
         <conf name="compile"/>
+        <conf name="compile-only"/>
         <conf name="test"/>
         <conf name="spotbugs"/>
         <conf name="ivy"/>
@@ -32,6 +33,7 @@
         <conf name="jacoco"/>
         <conf name="jxr"/>
         <conf name="junit-platform"/>
+        <conf name="bnd"/>
         <conf name="default" visibility="private"/>
         <conf name="sources" visibility="private"/>
         <conf name="javadoc" visibility="private"/>
@@ -43,8 +45,8 @@
         <artifact type="pom" ext="pom"/>
     </publications>
     <dependencies defaultconfmapping="compile->default">
-        <dependency org="org.slf4j" name="slf4j-api" rev="1.7.32"/>
-        <dependency org="org.liquibase" name="liquibase-core" rev="4.1.0"/>
+        <dependency org="org.slf4j" name="slf4j-api" rev="1.7.36"/>
+        <dependency org="org.liquibase" name="liquibase-core" rev="4.9.1"/>
         <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.8.2" conf="test->default"/>
         <dependency org="org.mockito" name="mockito-core" rev="4.2.0" conf="test->default"/>
         <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.8.2" conf="junit-platform->default"/>
@@ -55,7 +57,9 @@
         <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.8.7" conf="jacoco->default"/>
         <dependency org="com.github.spotbugs" name="spotbugs" rev="4.5.2" conf="spotbugs->default"/>
         <dependency org="com.github.spotbugs" name="spotbugs-ant" rev="4.5.2" conf="spotbugs->default"/>
-        <dependency org="com.mattbertolini" name="jxr-ant" rev="2.0.0" conf="jxr->default">
+        <dependency org="com.mattbertolini" name="jxr-ant" rev="2.0.0" conf="jxr->default"/>
+        <dependency org="org.osgi" name="osgi.annotation" rev="8.0.1" conf="compile-only->default"/>
+        <dependency org="biz.aQute.bnd" name="biz.aQute.bnd.ant" rev="6.2.0" conf="bnd->default">
             <exclude module="ant"/>
         </dependency>
         <dependency org="org.apache.ivy" name="ivy" rev="${lib.ivy.version}" conf="ivy->default"/>

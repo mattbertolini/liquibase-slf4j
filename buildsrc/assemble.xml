@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2020 Matt Bertolini
+ Copyright (c) 2012-2022 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -15,14 +15,17 @@
  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
-<project name="-assemble" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="-assemble" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:bnd="antlib:aqute.bnd.ant">
     <include file="${basedir}/buildsrc/properties.xml"/>
     <include file="${basedir}/buildsrc/compile.xml"/>
     <include file="${basedir}/buildsrc/dependencies.xml"/>
     <include file="${basedir}/buildsrc/javadoc.xml"/>
+    <include file="${basedir}/buildsrc/bnd.xml"/>
 
-    <target name="-main-jar" depends="-compile.-main-classes">
-        <jar destfile="${dist.dir}/${project.name}-${project.version}.jar" manifest="${build.main.dir}/META-INF/MANIFEST.MF">
+    <target name="-main-jar" depends="-compile.-main-classes, -bnd.-load-bnd">
+        <local name="main.jar.name"/>
+        <property name="main.jar.name" value="${project.name}-${project.version}.jar"/>
+        <jar destfile="${dist.dir}/${main.jar.name}" manifest="${build.main.dir}/META-INF/MANIFEST.MF">
             <fileset dir="${build.main.dir}"/>
             <manifest>
                 <attribute name="Implementation-Title" value="${project.name}"/>
@@ -31,6 +34,10 @@
                 <attribute name="Implementation-Version" value="${project.version}"/>
             </manifest>
         </jar>
+        <bnd:bndwrap failok="false" force="true" definitions="${basedir}/buildsrc/bnd/liquibase-slf4j.bnd" classpath="${toString:compile-main-classpath}" output="${dist.dir}/${main.jar.name}">
+            <fileset file="${dist.dir}/${main.jar.name}"/>
+        </bnd:bndwrap>
+        <delete file="${dist.dir}/${main.jar.name}.bak" failonerror="false"/>
     </target>
 
     <target name="-main-javadoc-jar" depends="-javadoc.-javadoc">

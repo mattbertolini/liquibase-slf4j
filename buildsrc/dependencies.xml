@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2020 Matt Bertolini
+ Copyright (c) 2012-2022 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -55,6 +55,7 @@
             <ivy:resolve file="${basedir}/ivy.xml" conf="@{conf}" haltonfailure="false" log="download-only"/>
             <ivy:retrieve pattern="${lib.dir}/@{conf}/${ivy.retrieve.pattern}" sync="true" haltonfailure="true"/>
             <ivy:artifactproperty name="dependency.[conf].[artifact]" value="${lib.dir}/@{conf}/${ivy.retrieve.pattern}"/>
+            <ivy:artifactproperty name="dependency.[conf].[artifact].version" value="[revision]"/>
             <ivy:artifactproperty name="ivy.retrieve.[conf].run" value="true"/>
         </sequential>
     </macrodef>
