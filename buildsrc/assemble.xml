@@ -22,10 +22,13 @@
     <include file="${basedir}/buildsrc/javadoc.xml"/>
     <include file="${basedir}/buildsrc/bnd.xml"/>
 
+    <!-- Consistent modification time to use in jar files. This helps make the jar's reproducible. -->
+    <property name="mod.time" value="1980-02-01T00:00:00Z"/>
+
     <target name="-main-jar" depends="-compile.-main-classes, -bnd.-load-bnd">
         <local name="main.jar.name"/>
         <property name="main.jar.name" value="${project.name}-${project.version}.jar"/>
-        <jar destfile="${dist.dir}/${main.jar.name}" manifest="${build.main.dir}/META-INF/MANIFEST.MF">
+        <jar destfile="${dist.dir}/${main.jar.name}" manifest="${build.main.dir}/META-INF/MANIFEST.MF" modificationtime="${mod.time}">
             <fileset dir="${build.main.dir}"/>
             <manifest>
                 <attribute name="Implementation-Title" value="${project.name}"/>
@@ -37,11 +40,12 @@
         <bnd:bndwrap failok="false" force="true" definitions="${basedir}/buildsrc/bnd/liquibase-slf4j.bnd" classpath="${toString:compile-main-classpath}" output="${dist.dir}/${main.jar.name}">
             <fileset file="${dist.dir}/${main.jar.name}"/>
         </bnd:bndwrap>
+        <touch file="${dist.dir}/${main.jar.name}"/>
         <delete file="${dist.dir}/${main.jar.name}.bak" failonerror="false"/>
     </target>
 
     <target name="-main-javadoc-jar" depends="-javadoc.-javadoc">
-        <jar destfile="${dist.dir}/${project.name}-${project.version}-javadoc.jar">
+        <jar destfile="${dist.dir}/${project.name}-${project.version}-javadoc.jar" modificationtime="${mod.time}">
             <fileset dir="${build.javadoc.dir}"/>
             <manifest>
                 <attribute name="Implementation-Title" value="${project.name}"/>
@@ -53,7 +57,7 @@
     </target>
 
     <target name="-main-sources-jar">
-        <jar destfile="${dist.dir}/${project.name}-${project.version}-sources.jar" manifest="${build.main.dir}/META-INF/MANIFEST.MF">
+        <jar destfile="${dist.dir}/${project.name}-${project.version}-sources.jar" manifest="${build.main.dir}/META-INF/MANIFEST.MF" modificationtime="${mod.time}">
             <fileset dir="${src.main.java.dir}"/>
             <fileset dir="${src.main.resources.dir}"/>
             <manifest>
