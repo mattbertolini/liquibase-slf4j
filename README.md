@@ -3,14 +3,14 @@ Version 4.1.0<br/>
 Written by Matt Bertolini
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.mattbertolini/liquibase-slf4j.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mattbertolini%22%20AND%20a:%22liquibase-slf4j%22)
-[![javadoc](https://javadoc.io/badge2/com.mattbertolini/liquibase-slf4j/javadoc.svg)](https://javadoc.io/doc/com.mattbertolini/liquibase-slf4j) 
-[![Build Status](https://travis-ci.com/mattbertolini/liquibase-slf4j.svg?branch=master)](https://travis-ci.com/mattbertolini/liquibase-slf4j)
+[![javadoc](https://javadoc.io/badge2/com.mattbertolini/liquibase-slf4j/javadoc.svg)](https://javadoc.io/doc/com.mattbertolini/liquibase-slf4j)
+[![Build Status](https://app.travis-ci.com/mattbertolini/liquibase-slf4j.svg?branch=main)](https://app.travis-ci.com/mattbertolini/liquibase-slf4j)
 
 An implementation of the Liquibase logger that delegates directly to SLF4J.
 
 Liquibase has a logging mechanism that delegates to `java.util.logging`. It works great with SLF4J out of the box if 
 you use `jul-to-slf4j` library. Unfortunately, there is a known 
-[performance impact](http://www.slf4j.org/legacy.html#jul-to-slf4j) when bridging `java.util.logging` to SLF4J. This 
+[performance impact](https://www.slf4j.org/legacy.html#jul-to-slf4j) when bridging `java.util.logging` to SLF4J. This 
 library helps to eliminate that performance impact by logging Liquibase directly to SLF4J. 
 
 ## How to Use
@@ -96,7 +96,7 @@ version. It is recommended to upgrade to Liquibase 3.4.1 which addresses this is
 
 ## Build and Test
 ### Requirements
-* [Apache Ant](http://ant.apache.org/) - Version 1.10.6 or higher.
+* [Apache Ant](https://ant.apache.org/) - Version 1.10.6 or higher.
 * JDK 8 or higher (Compiled with 1.8 source and target).
 
 ### Build
@@ -124,7 +124,7 @@ unit tests to verify the problem is fixed.
 **4.1.0 - 2022-03-30**
 
 - Generated OSGi metadata making the jar a OSGi fragment where Liquibase is the host bundle. This was tested with 
-- Liquibase 4.9.1. This fixes issue [#12](https://github.com/mattbertolini/liquibase-slf4j/issues/12) 
+Liquibase 4.9.1. This fixes issue [#12](https://github.com/mattbertolini/liquibase-slf4j/issues/12) 
 ([Pull Request](https://github.com/mattbertolini/liquibase-slf4j/pull/14))
 - Upgraded to SLF4J 1.7.36
 - Upgraded to Liquibase 4.9.1. The library should still work with Liquibase 4.1.0 and above when not using OSGi.
