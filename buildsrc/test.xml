@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2022 Matt Bertolini
+ Copyright (c) 2012-2023 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -46,7 +46,7 @@
         </path>
         <mkdir dir="${build.reports.unittest.dir}"/>
         <jacoco:agent property="jacoco.agent.property" destfile="${build.reports.coverage.dir}/${project.name}-coverage.exec"/>
-        <junitlauncher haltOnFailure="true" printSummary="true" failureproperty="test.failed">
+        <junitlauncher haltOnFailure="false" printSummary="true" failureproperty="test.failed">
             <classpath refid="run-unit-tests-classpath"/>
             <testclasses outputdir="${build.reports.unittest.dir}">
                 <fork>

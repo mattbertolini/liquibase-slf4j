@@ -1,5 +1,5 @@
 # liquibase-slf4j
-Version 4.1.0<br/>
+Version 5.0.0<br/>
 Written by Matt Bertolini
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.mattbertolini/liquibase-slf4j.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mattbertolini%22%20AND%20a:%22liquibase-slf4j%22)
@@ -120,6 +120,12 @@ Please report any bugs in the issue tracker above. Please be as detailed as poss
 unit tests to verify the problem is fixed.
 
 ## Release Notes
+
+** 5.0.0 - TODO**
+
+- Upgraded to SLF4J 2.x (2.0.6)
+- Upgrade to Liquibase 4.19.0
+- Remove deprecated logging filter support
 
 **4.1.0 - 2022-03-30**
 

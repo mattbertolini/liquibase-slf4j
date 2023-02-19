@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Matt Bertolini
+ * Copyright (c) 2012-2023 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -70,8 +70,8 @@ public class Slf4jLogger extends AbstractLogger {
 
     private final Logger logger;
 
-    Slf4jLogger(Logger logger, LogMessageFilter filter) {
-        super(filter);
+    Slf4jLogger(Logger logger) {
+        super();
         this.logger = logger;
     }
 
