@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2022 Matt Bertolini
+ Copyright (c) 2012-2023 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -57,6 +57,8 @@
             <ivy:artifactproperty name="dependency.[conf].[artifact]" value="${lib.dir}/@{conf}/${ivy.retrieve.pattern}"/>
             <ivy:artifactproperty name="dependency.[conf].[artifact].version" value="[revision]"/>
             <ivy:artifactproperty name="ivy.retrieve.[conf].run" value="true"/>
+            <!-- Creating the directory again to make sure that empty configurations still have a directory. -->
+            <mkdir dir="${lib.dir}/@{conf}"/>
         </sequential>
     </macrodef>
 </project>

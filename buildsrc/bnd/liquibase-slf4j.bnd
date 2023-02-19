@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2022 Matt Bertolini
+# Copyright (c) 2012-2023 Matt Bertolini
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 # documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -19,6 +19,7 @@
 Bundle-Name: ${project.name}
 Bundle-SymbolicName: com.mattbertolini.liquibase.logging.slf4j
 Bundle-Version: ${version_cleanup;${project.version}}
+Export-Package: com.mattbertolini.liquibase.logging.slf4j;version=${version_cleanup;${project.version}}
 Fragment-Host: org.liquibase.core;bundle-version="[${dependency.compile.liquibase-core.version},${versionmask;+;${dependency.compile.liquibase-core.version}})"
 Provide-Capability: osgi.serviceloader; osgi.serviceloader=liquibase.logging.LogService
 Require-Capability: osgi.serviceloader; filter:="(osgi.serviceloader=liquibase.logging.LogService)"; cardinality:=multiple

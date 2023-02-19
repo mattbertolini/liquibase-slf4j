@@ -58,7 +58,6 @@
         <dependency org="com.github.spotbugs" name="spotbugs" rev="4.7.3" conf="spotbugs->default"/>
         <dependency org="com.github.spotbugs" name="spotbugs-ant" rev="4.7.3" conf="spotbugs->default"/>
         <dependency org="com.mattbertolini" name="jxr-ant" rev="2.0.0" conf="jxr->default"/>
-        <dependency org="org.osgi" name="osgi.annotation" rev="8.1.0" conf="compile-only->default"/>
         <dependency org="biz.aQute.bnd" name="biz.aQute.bnd.ant" rev="6.4.0" conf="bnd->default">
             <exclude module="ant"/>
         </dependency>

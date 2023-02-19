@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Matt Bertolini
+ * Copyright (c) 2012-2023 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -18,9 +18,4 @@
 /**
  * The main package of the Liquibase SLF4J library.
  */
-@Export
-@Version("${version_cleanup;${project.version}}") // Project version property defined in Ant build
 package com.mattbertolini.liquibase.logging.slf4j;
-
-import org.osgi.annotation.bundle.Export;
-import org.osgi.annotation.versioning.Version;
