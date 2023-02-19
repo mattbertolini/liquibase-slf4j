@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2020 Matt Bertolini
+ Copyright (c) 2012-2023 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -21,15 +21,14 @@
     <macrodef name="javacompile" uri="antmacro:com.mattbertolini.liquibase.slf4j">
         <attribute name="srcdir"/>
         <attribute name="destdir"/>
-        <attribute name="source" default="${ant.java.version}"/>
-        <attribute name="target" default="${ant.java.version}"/>
+        <attribute name="release" default="${ant.java.version}"/>
         <element name="compileClasspath" implicit="true" optional="true"/>
         <sequential>
             <mkdir dir="@{destdir}"/>
             <depend srcdir="@{srcdir}" destdir="@{destdir}" cache="${build.temp.dir}" closure="true">
                 <include name= "**/*.java"/>
             </depend>
-            <javac srcdir="@{srcdir}" destdir="@{destdir}" source="@{source}" target="@{target}" fork="true" failonerror="true" includeantruntime="false" debug="true" encoding="UTF-8">
+            <javac srcdir="@{srcdir}" destdir="@{destdir}" release="@{release}" fork="true" failonerror="true" includeantruntime="false" debug="true" encoding="UTF-8">
                 <compileClasspath/>
             </javac>
         </sequential>

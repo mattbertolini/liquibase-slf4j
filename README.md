@@ -123,9 +123,10 @@ unit tests to verify the problem is fixed.
 
 ** 5.0.0 - TODO**
 
+- Build now requires Java 11 or higher. The source is still compiled to Java 8 bytecode.
 - Upgraded to SLF4J 2.x (2.0.6)
 - Upgrade to Liquibase 4.19.0
-- Remove deprecated logging filter support
+- Remove deprecated logging filter support.
 
 **4.1.0 - 2022-03-30**
 
