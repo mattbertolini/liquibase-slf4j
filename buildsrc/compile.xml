@@ -19,7 +19,6 @@
     <include file="${basedir}/buildsrc/properties.xml"/>
     <include file="${basedir}/buildsrc/macros.xml"/>
     <include file="${basedir}/buildsrc/dependencies.xml"/>
-    <include file="${basedir}/buildsrc/compile-module.xml"/>
 
     <property name="lib.compile.dir" value="${lib.dir}/compile"/>
     <property name="lib.compileonly.dir" value="${lib.dir}/compile-only"/>
@@ -38,6 +37,13 @@
     <target name="-compile-main" depends="-build-main-classpath" if="main.java.dir.exists">
         <macro:javacompile srcdir="${src.main.java.dir}" destdir="${build.main.dir}" release="${java.release.version}">
             <classpath refid="compile-main-classpath"/>
+        </macro:javacompile>
+    </target>
+
+    <!-- Separate compile step for JPMS module since Java 8 is still supported -->
+    <target name="-compile-jpms-module" depends="-build-main-classpath" if="main.java9.dir.exists">
+        <macro:javacompile srcdir="${src.main.java9.dir}" destdir="${build.main.dir}" release="9">
+            <modulepath refid="compile-main-classpath"/>
         </macro:javacompile>
     </target>
 
@@ -68,6 +74,6 @@
         <macro:processresources dir="${src.test.resources.dir}" todir="${build.test.dir}"/>
     </target>
 
-    <target name="-main-classes" depends="-compile-main, -process-main-resources, -compile-module.-compile-jpms-module"/>
+    <target name="-main-classes" depends="-compile-main, -process-main-resources, -compile-jpms-module"/>
     <target name="-test-classes" depends="-compile-test, -process-test-resources"/>
 </project>
