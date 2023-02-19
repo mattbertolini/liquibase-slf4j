@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2022 Matt Bertolini
+ Copyright (c) 2012-2023 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -28,7 +28,7 @@
             <ac:mapper type="glob" dir="${src.main.java.dir}" from="*.java" to="${build.javadoc.dir}/*.html"/>
             <ac:sequential>
                 <javadoc destdir="${build.javadoc.dir}" failonerror="true" classpathref="compile-main-classpath"
-                         source="${java.source.version}" windowtitle="Liquibase SLF4J Logger Documentation"
+                         source="${java.release.version}" windowtitle="Liquibase SLF4J Logger Documentation"
                          charset="UTF-8" additionalparam="-Xdoclint:none">
                     <packageset dir="${src.main.java.dir}" defaultexcludes="true"/>
                     <link href="https://docs.oracle.com/javase/8/docs/api/"/>

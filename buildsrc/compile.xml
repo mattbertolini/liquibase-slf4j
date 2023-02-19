@@ -19,6 +19,7 @@
     <include file="${basedir}/buildsrc/properties.xml"/>
     <include file="${basedir}/buildsrc/macros.xml"/>
     <include file="${basedir}/buildsrc/dependencies.xml"/>
+    <include file="${basedir}/buildsrc/compile-module.xml"/>
 
     <property name="lib.compile.dir" value="${lib.dir}/compile"/>
     <property name="lib.compileonly.dir" value="${lib.dir}/compile-only"/>
@@ -67,6 +68,6 @@
         <macro:processresources dir="${src.test.resources.dir}" todir="${build.test.dir}"/>
     </target>
 
-    <target name="-main-classes" depends="-compile-main, -process-main-resources"/>
+    <target name="-main-classes" depends="-compile-main, -process-main-resources, -compile-module.-compile-jpms-module"/>
     <target name="-test-classes" depends="-compile-test, -process-test-resources"/>
 </project>

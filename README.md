@@ -123,6 +123,7 @@ unit tests to verify the problem is fixed.
 
 ** 5.0.0 - TODO**
 
+- Add JPMS module-info file to support Java 9+ modules.
 - Build now requires Java 11 or higher. The source is still compiled to Java 8 bytecode.
 - Upgraded to SLF4J 2.x (2.0.6)
 - Upgrade to Liquibase 4.19.0

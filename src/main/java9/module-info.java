@@ -15,7 +15,13 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * The main package of the Liquibase SLF4J library.
- */
-package com.mattbertolini.liquibase.logging.slf4j;
+module com.mattbertolini.liquibase.logging.slf4j {
+    requires java.logging;
+    requires liquibase.core;
+    requires org.slf4j;
+
+    exports com.mattbertolini.liquibase.logging.slf4j;
+
+    provides liquibase.logging.LogService
+        with com.mattbertolini.liquibase.logging.slf4j.Slf4jLogService;
+}
