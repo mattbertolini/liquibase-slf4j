@@ -12,6 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk-version: [11, 17]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,7 +22,7 @@ jobs:
       - name: Setup Java JDK
         uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: ${{ matrix.jdk-version }}
           distribution: 'temurin'
 
       - name: Install Apache Ant
@@ -38,6 +41,6 @@ jobs:
       - name: Run Ant Build
         shell: bash
         run: |
-          export PATH="/opt/ant/bin:$PATH"
-          ant -version
-          ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
+#          export PATH="/opt/ant/bin:$PATH"
+          /opt/ant/bin/ant -version
+          /opt/ant/bin/ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
