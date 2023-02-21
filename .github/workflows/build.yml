@@ -42,5 +42,5 @@ jobs:
         shell: bash
         run: |
 #          export PATH="/opt/ant/bin:$PATH"
-          /opt/ant/bin/ant -version
-          /opt/ant/bin/ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
+          ant -version
+          ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
