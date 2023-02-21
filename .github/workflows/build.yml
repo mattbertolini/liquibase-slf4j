@@ -41,6 +41,6 @@ jobs:
       - name: Run Ant Build
         shell: bash
         run: |
-#          export PATH="/opt/ant/bin:$PATH"
+          export PATH="/opt/ant/bin:$PATH"
           ant -version
           ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
