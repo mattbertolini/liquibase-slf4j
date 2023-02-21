@@ -4,7 +4,7 @@ Written by Matt Bertolini
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.mattbertolini/liquibase-slf4j.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mattbertolini%22%20AND%20a:%22liquibase-slf4j%22)
 [![javadoc](https://javadoc.io/badge2/com.mattbertolini/liquibase-slf4j/javadoc.svg)](https://javadoc.io/doc/com.mattbertolini/liquibase-slf4j)
-[![Build Status](https://app.travis-ci.com/mattbertolini/liquibase-slf4j.svg?branch=main)](https://app.travis-ci.com/mattbertolini/liquibase-slf4j)
+[![Build Status](https://github.com/mattbertolini/liquibase-slf4j/actions/workflows/build.yml/badge.svg)](https://github.com/mattbertolini/liquibase-slf4j/actions/workflows/build.yml)
 
 An implementation of the Liquibase logger that delegates directly to SLF4J.
 
