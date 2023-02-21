@@ -1,0 +1,40 @@
+name: build
+run-name: CI build
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.10.0
+        with:
+          java-version: 11
+          distribution: 'temurin'
+
+      - name: Install Apache Ant
+        run: |
+          export ANT_VERSION=1.10.12
+          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
+          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
+          echo "$(cat apache-ant-${ANT_VERSION}-bin.tar.gz.sha512) apache-ant-${ANT_VERSION}-bin.tar.gz" | sha512sum -c
+          tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C /opt/
+          ln -s /opt/apache-ant-${ANT_VERSION} /opt/ant
+          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
+          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
+          export PATH="/opt/ant/bin:$PATH"
+
+      - name: Run Ant Build
+        run: |
+          ant -version
+          ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
