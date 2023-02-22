@@ -28,7 +28,7 @@ jobs:
       - name: Install Apache Ant
         shell: bash
         env:
-          ANT_VERSION: '1.10.13'
+          ANT_VERSION: '1.10.12'
         run: |
           wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
           wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
