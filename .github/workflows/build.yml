@@ -25,22 +25,24 @@ jobs:
           java-version: ${{ matrix.jdk-version }}
           distribution: 'temurin'
 
-#      - name: Install Apache Ant
-#        shell: bash
-#        env:
-#          ANT_VERSION: '1.10.13'
-#        run: |
-#          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
-#          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
-#          echo "$(cat apache-ant-${ANT_VERSION}-bin.tar.gz.sha512) apache-ant-${ANT_VERSION}-bin.tar.gz" | sha512sum -c
-#          tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C /opt/
-#          ln -s /opt/apache-ant-${ANT_VERSION} /opt/ant
-#          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
-#          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
+      - name: Install Apache Ant
+        shell: bash
+        env:
+          ANT_VERSION: '1.10.13'
+        run: |
+          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
+          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
+          echo "$(cat apache-ant-${ANT_VERSION}-bin.tar.gz.sha512) apache-ant-${ANT_VERSION}-bin.tar.gz" | sha512sum -c
+          tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C /opt/
+          echo "Add symlink"
+          ln -s /opt/apache-ant-${ANT_VERSION} /opt/ant
+          echo "Cleanup"
+          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
+          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
 
       - name: Run Ant Build
         shell: bash
         run: |
           export PATH="/opt/ant/bin:${PATH}"
-          ant -version
-          ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
+          /opt/ant/bin/ant -version
+          /opt/ant/bin/ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
