@@ -25,6 +25,10 @@ jobs:
           java-version: ${{ matrix.jdk-version }}
           distribution: 'temurin'
 
+      - name: Setup
+        shell: bash
+        run: mkdir ./tools
+
       - name: Install Apache Ant
         shell: bash
         working-directory: ./tools
