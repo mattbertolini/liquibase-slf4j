@@ -27,15 +27,16 @@ jobs:
 
       - name: Install Apache Ant
         shell: bash
+        working-directory: ./tools
         env:
-          ANT_VERSION: '1.10.12'
+          ANT_VERSION: '1.10.13'
         run: |
           wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
           wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
           echo "$(cat apache-ant-${ANT_VERSION}-bin.tar.gz.sha512) apache-ant-${ANT_VERSION}-bin.tar.gz" | sha512sum -c
-          tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C /opt/
+          tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C .
           echo "Add symlink"
-          ln -s /opt/apache-ant-${ANT_VERSION} /opt/ant
+          ln -s ./apache-ant-${ANT_VERSION} ./ant
           echo "Cleanup"
           rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
           rm -f apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
@@ -43,6 +44,5 @@ jobs:
       - name: Run Ant Build
         shell: bash
         run: |
-          export PATH="/opt/ant/bin:${PATH}"
-          /opt/ant/bin/ant -version
-          /opt/ant/bin/ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
+          ./tools/ant/bin/ant -version
+          ./tools/ant/bin/ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
