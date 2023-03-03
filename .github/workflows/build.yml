@@ -50,4 +50,5 @@ jobs:
         shell: bash
         run: |
           ./tools/ant/bin/ant -version
+          ./tools/ant/bin/ant -diagnostics
           ./tools/ant/bin/ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check

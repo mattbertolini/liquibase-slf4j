@@ -42,6 +42,7 @@
             </not>
         </condition>
     </fail>
+    <echo level="info">${ant.version}</echo>
 
     <!-- Public targets -->
     <target name="assemble" description="Assembles the output of this project." depends="-assemble.-assemble"/>
