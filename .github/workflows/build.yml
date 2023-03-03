@@ -40,7 +40,7 @@ jobs:
           echo "$(cat apache-ant-${ANT_VERSION}-bin.tar.gz.sha512) apache-ant-${ANT_VERSION}-bin.tar.gz" | sha512sum -c
           tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C /opt/
           echo "Add symlink"
-          ln -s /opt/apache-ant-${ANT_VERSION} ./opt/ant
+          ln -s /opt/apache-ant-${ANT_VERSION} /opt/ant
           echo "Cleanup"
           rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
           rm -f apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
