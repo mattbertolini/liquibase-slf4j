@@ -27,7 +27,10 @@ jobs:
           distribution: 'temurin'
 
       - name: Install Ant
-        run: sudo apt-get install -y ant ant-optional ant-junit
+        run: sudo apt-get install -y ant ant-optional
+
+      - name: Fetch And Dependencies
+        run: ant -f fetch.xml -Ddest=user
 
 #      - name: Install Apache Ant
 #        shell: bash
