@@ -27,7 +27,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Install Ant
-        run: sudo apt-get install -y ant ant-optional
+        run: sudo apt-get install -y ant ant-optional ant-junit
 
 #      - name: Install Apache Ant
 #        shell: bash
