@@ -29,8 +29,8 @@ jobs:
       - name: Install Ant
         run: sudo apt-get install -y ant ant-optional
 
-      - name: Fetch And Dependencies
-        run: ant -f fetch.xml -Ddest=user
+      - name: Fetch Ant Dependencies
+        run: ant -f ${ANT_HOME}/fetch.xml -Ddest=user
 
 #      - name: Install Apache Ant
 #        shell: bash
