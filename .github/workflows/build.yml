@@ -26,28 +26,27 @@ jobs:
           java-version: ${{ matrix.jdk-version }}
           distribution: 'temurin'
 
-      - name: Setup
-        shell: bash
-        run: mkdir ./tools
+      - name: Install Ant
+        run: sudo apt-get install -y ant ant-optional
 
-      - name: Install Apache Ant
-        shell: bash
-        env:
-          ANT_VERSION: '1.10.13'
-        run: |
-          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
-          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
-          echo "$(cat apache-ant-${ANT_VERSION}-bin.tar.gz.sha512) apache-ant-${ANT_VERSION}-bin.tar.gz" | sha512sum -c
-          tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C /opt/
-          echo "Add symlink"
-          ln -s /opt/apache-ant-${ANT_VERSION} /opt/ant
-          echo "Cleanup"
-          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
-          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
+#      - name: Install Apache Ant
+#        shell: bash
+#        env:
+#          ANT_VERSION: '1.10.13'
+#        run: |
+#          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
+#          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
+#          echo "$(cat apache-ant-${ANT_VERSION}-bin.tar.gz.sha512) apache-ant-${ANT_VERSION}-bin.tar.gz" | sha512sum -c
+#          tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C /opt/
+#          echo "Add symlink"
+#          ln -s /opt/apache-ant-${ANT_VERSION} /opt/ant
+#          echo "Cleanup"
+#          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
+#          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
 
       - name: Run Ant Build
         shell: bash
         run: |
-          /opt/ant/bin/ant -version
-          /opt/ant/bin/ant -diagnostics
-          /opt/ant/bin/ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
+          ant -version
+          ant -diagnostics
+          ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
