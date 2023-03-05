@@ -26,11 +26,11 @@ jobs:
           java-version: ${{ matrix.jdk-version }}
           distribution: 'temurin'
 
-      - name: Install Ant
-        run: sudo apt-get install -y ant ant-optional
-
-      - name: Fetch Ant Dependencies
-        run: ant -f ${ANT_HOME}/fetch.xml -Ddest=user
+      - uses: sdkman/sdkman-action@master
+        id: sdkman
+        with:
+          candidate: ant
+          version: 1.10.13
 
 #      - name: Install Apache Ant
 #        shell: bash
