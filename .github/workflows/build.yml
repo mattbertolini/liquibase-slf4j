@@ -50,6 +50,6 @@ jobs:
       - name: Run Ant Build
         shell: bash
         run: |
-          ant -version
-          ant -diagnostics
-          ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
+          ~/.sdkman/candidates/ant/current/bin/ant -version
+          ~/.sdkman/candidates/ant/current/bin/ant -diagnostics
+          ~/.sdkman/candidates/ant/current/bin/ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
