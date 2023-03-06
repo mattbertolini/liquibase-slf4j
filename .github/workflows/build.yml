@@ -27,7 +27,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Initialize Ant
-        run: scripts/init-ant.sh
+        run: ./scripts/init-ant.sh
 
 #      - name: Install Apache Ant
 ##        shell: bash
