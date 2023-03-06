@@ -17,8 +17,10 @@ function downloadJunitLauncher() {
   local antVersion="$1"
   mkdir -p "${HOME}/.ant/lib"
   cd "${HOME}/.ant/lib"
+  echo "Installing Ant JunitLauncher"
   wget "https://repo1.maven.org/maven2/org/apache/ant/ant-junitlauncher/${antVersion}/ant-junitlauncher-${antVersion}.jar"
 }
 
 antVersion=$(getAntVersion)
+echo "Found Ant version ${antVersion}"
 downloadJunitLauncher "${antVersion}"
