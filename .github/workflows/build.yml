@@ -26,23 +26,25 @@ jobs:
           java-version: ${{ matrix.jdk-version }}
           distribution: 'temurin'
 
-      - name: Install Apache Ant
-#        shell: bash
-        env:
-          ANT_VERSION: '1.10.13'
-        run: |
-          mkdir -p ${{ github.workspace }}/tools/
-          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
-          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
-          echo "$(cat apache-ant-${ANT_VERSION}-bin.tar.gz.sha512) apache-ant-${ANT_VERSION}-bin.tar.gz" | sha512sum -c
-          tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C ${{ github.workspace }}/tools/
-          ln -s ${{ github.workspace }}/tools/apache-ant-${ANT_VERSION} ${{ github.workspace }}/tools/ant
-          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
-          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
+      - name: Initialize Ant
+        run: scripts/init-ant.sh
+
+#      - name: Install Apache Ant
+##        shell: bash
+#        env:
+#          ANT_VERSION: '1.10.13'
+#        run: |
+#          mkdir -p ${{ github.workspace }}/tools/
+#          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz
+#          wget --no-cookies https://archive.apache.org/dist/ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
+#          echo "$(cat apache-ant-${ANT_VERSION}-bin.tar.gz.sha512) apache-ant-${ANT_VERSION}-bin.tar.gz" | sha512sum -c
+#          tar -zvxf apache-ant-${ANT_VERSION}-bin.tar.gz -C ${{ github.workspace }}/tools/
+#          ln -s ${{ github.workspace }}/tools/apache-ant-${ANT_VERSION} ${{ github.workspace }}/tools/ant
+#          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz
+#          rm -f apache-ant-${ANT_VERSION}-bin.tar.gz.sha512
 
       - name: Run Ant Build
 #        shell: bash
         run: |
-          ${{ github.workspace }}/tools/ant/bin/ant -version
-          ${{ github.workspace }}/tools/ant/bin/ant -diagnostics
-          ${{ github.workspace }}/tools/ant/bin/ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
+          ant -version
+          ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
