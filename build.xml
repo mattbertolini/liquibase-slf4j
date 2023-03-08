@@ -43,6 +43,7 @@
         </condition>
     </fail>
     <echo level="info">${ant.version}</echo>
+    <echo level="info">${java.runtime.name} ${java.vendor.version} ${os.arch}</echo>
 
     <!-- Public targets -->
     <target name="assemble" description="Assembles the output of this project." depends="-assemble.-assemble"/>
