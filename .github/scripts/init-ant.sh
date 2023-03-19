@@ -14,7 +14,7 @@ readonly ANT_DEPENDENCIES=(
   "org.apache.ant:ant-junitlauncher"
 )
 
-function getAntVersion() {
+function printAntVersion() {
   local antVersionLine
   local antVersion
   antVersionLine=$(ant -version)
@@ -47,7 +47,7 @@ function retrieveDependencies() {
   done
 }
 
-antVersion=$(getAntVersion)
+antVersion=$(printAntVersion)
 echo "Found Ant version ${antVersion}"
 initAntLibDir
 retrieveDependencies "${antVersion}"
