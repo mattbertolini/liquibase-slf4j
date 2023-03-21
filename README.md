@@ -1,10 +1,10 @@
 # liquibase-slf4j
-Version 4.1.0<br/>
+Version 5.0.0<br/>
 Written by Matt Bertolini
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.mattbertolini/liquibase-slf4j.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mattbertolini%22%20AND%20a:%22liquibase-slf4j%22)
 [![javadoc](https://javadoc.io/badge2/com.mattbertolini/liquibase-slf4j/javadoc.svg)](https://javadoc.io/doc/com.mattbertolini/liquibase-slf4j)
-[![Build Status](https://app.travis-ci.com/mattbertolini/liquibase-slf4j.svg?branch=main)](https://app.travis-ci.com/mattbertolini/liquibase-slf4j)
+[![Build Status](https://github.com/mattbertolini/liquibase-slf4j/actions/workflows/build.yml/badge.svg)](https://github.com/mattbertolini/liquibase-slf4j/actions/workflows/build.yml)
 
 An implementation of the Liquibase logger that delegates directly to SLF4J.
 
@@ -120,6 +120,14 @@ Please report any bugs in the issue tracker above. Please be as detailed as poss
 unit tests to verify the problem is fixed.
 
 ## Release Notes
+
+**5.0.0 - TODO**
+
+- Add JPMS module-info file to support Java 9+ modules.
+- Build now requires Java 11 or higher. The source is still compiled to Java 8 bytecode.
+- Upgraded to SLF4J 2.x (2.0.6)
+- Upgrade to Liquibase 4.19.0
+- Remove deprecated logging filter support.
 
 **4.1.0 - 2022-03-30**
 

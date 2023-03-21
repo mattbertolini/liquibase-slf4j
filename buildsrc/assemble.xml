@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2022 Matt Bertolini
+ Copyright (c) 2012-2023 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -28,7 +28,7 @@
     <target name="-main-jar" depends="-compile.-main-classes, -bnd.-load-bnd">
         <local name="main.jar.name"/>
         <property name="main.jar.name" value="${project.name}-${project.version}.jar"/>
-        <jar destfile="${dist.dir}/${main.jar.name}" manifest="${build.main.dir}/META-INF/MANIFEST.MF" modificationtime="${mod.time}">
+        <jar destfile="${dist.dir}/${main.jar.name}" modificationtime="${mod.time}">
             <fileset dir="${build.main.dir}"/>
             <manifest>
                 <attribute name="Implementation-Title" value="${project.name}"/>
@@ -57,7 +57,7 @@
     </target>
 
     <target name="-main-sources-jar">
-        <jar destfile="${dist.dir}/${project.name}-${project.version}-sources.jar" manifest="${build.main.dir}/META-INF/MANIFEST.MF" modificationtime="${mod.time}">
+        <jar destfile="${dist.dir}/${project.name}-${project.version}-sources.jar" modificationtime="${mod.time}">
             <fileset dir="${src.main.java.dir}"/>
             <fileset dir="${src.main.resources.dir}"/>
             <manifest>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2022 Matt Bertolini
+ Copyright (c) 2012-2023 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -35,8 +35,15 @@
     </target>
     
     <target name="-compile-main" depends="-build-main-classpath" if="main.java.dir.exists">
-        <macro:javacompile srcdir="${src.main.java.dir}" destdir="${build.main.dir}" source="${java.source.version}" target="${java.target.version}">
+        <macro:javacompile srcdir="${src.main.java.dir}" destdir="${build.main.dir}" release="${java.release.version}">
             <classpath refid="compile-main-classpath"/>
+        </macro:javacompile>
+    </target>
+
+    <!-- Separate compile step for JPMS module since Java 8 is still supported -->
+    <target name="-compile-jpms-module" depends="-build-main-classpath" if="main.java9.dir.exists">
+        <macro:javacompile srcdir="${src.main.java9.dir}" destdir="${build.main.dir}" release="9">
+            <modulepath refid="compile-main-classpath"/>
         </macro:javacompile>
     </target>
 
@@ -58,7 +65,7 @@
     </target>
 
     <target name="-compile-test" depends="-build-test-classpath" if="test.java.dir.exists">
-        <macro:javacompile srcdir="${src.test.java.dir}" destdir="${build.test.dir}" source="${java.source.version}" target="${java.target.version}">
+        <macro:javacompile srcdir="${src.test.java.dir}" destdir="${build.test.dir}" release="${java.release.version}">
             <classpath refid="compile-test-classpath"/>
         </macro:javacompile>
     </target>
@@ -67,6 +74,6 @@
         <macro:processresources dir="${src.test.resources.dir}" todir="${build.test.dir}"/>
     </target>
 
-    <target name="-main-classes" depends="-compile-main, -process-main-resources"/>
+    <target name="-main-classes" depends="-compile-main, -process-main-resources, -compile-jpms-module"/>
     <target name="-test-classes" depends="-compile-test, -process-test-resources"/>
 </project>

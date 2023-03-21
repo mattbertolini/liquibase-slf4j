@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Matt Bertolini
+ * Copyright (c) 2012-2023 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -15,12 +15,13 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * The main package of the Liquibase SLF4J library.
- */
-@Export
-@Version("${version_cleanup;${project.version}}") // Project version property defined in Ant build
-package com.mattbertolini.liquibase.logging.slf4j;
+module com.mattbertolini.liquibase.logging.slf4j {
+    requires java.logging;
+    requires liquibase.core;
+    requires org.slf4j;
 
-import org.osgi.annotation.bundle.Export;
-import org.osgi.annotation.versioning.Version;
+    exports com.mattbertolini.liquibase.logging.slf4j;
+
+    provides liquibase.logging.LogService
+        with com.mattbertolini.liquibase.logging.slf4j.Slf4jLogService;
+}

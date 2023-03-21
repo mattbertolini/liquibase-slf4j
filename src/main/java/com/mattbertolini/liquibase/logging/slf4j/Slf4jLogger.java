@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Matt Bertolini
+ * Copyright (c) 2012-2023 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -17,7 +17,6 @@
 
 package com.mattbertolini.liquibase.logging.slf4j;
 
-import liquibase.logging.LogMessageFilter;
 import liquibase.logging.core.AbstractLogger;
 import org.slf4j.Logger;
 
@@ -70,25 +69,24 @@ public class Slf4jLogger extends AbstractLogger {
 
     private final Logger logger;
 
-    Slf4jLogger(Logger logger, LogMessageFilter filter) {
-        super(filter);
+    Slf4jLogger(Logger logger) {
+        super();
         this.logger = logger;
     }
 
     @Override
     public void log(Level level, String message, Throwable e) {
-        String filteredMessage = filterMessage(message);
         int levelValue = level.intValue();
         if (levelValue <= TRACE_THRESHOLD) {
-            logger.trace(filteredMessage, e);
+            logger.trace(message, e);
         } else if (levelValue <= DEBUG_THRESHOLD) {
-            logger.debug(filteredMessage, e);
+            logger.debug(message, e);
         } else if (levelValue <= INFO_THRESHOLD) {
-            logger.info(filteredMessage, e);
+            logger.info(message, e);
         } else if (levelValue <= WARN_THRESHOLD) {
-            logger.warn(filteredMessage, e);
+            logger.warn(message, e);
         } else {
-            logger.error(filteredMessage, e);
+            logger.error(message, e);
         }
     }
 
@@ -100,7 +98,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void severe(String message) {
         if (logger.isErrorEnabled()) {
-            logger.error(filterMessage(message));
+            logger.error(message);
         }
     }
 
@@ -113,7 +111,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void severe(String message, Throwable e) {
         if (logger.isErrorEnabled()) {
-            logger.error(filterMessage(message), e);
+            logger.error(message, e);
         }
     }
 
@@ -125,7 +123,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void warning(String message) {
         if (logger.isWarnEnabled()) {
-            logger.warn(filterMessage(message));
+            logger.warn(message);
         }
     }
 
@@ -138,7 +136,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void warning(String message, Throwable e) {
         if (logger.isWarnEnabled()) {
-            logger.warn(filterMessage(message), e);
+            logger.warn(message, e);
         }
     }
 
@@ -150,7 +148,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void info(String message) {
         if (logger.isInfoEnabled()) {
-            logger.info(filterMessage(message));
+            logger.info(message);
         }
     }
 
@@ -163,7 +161,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void info(String message, Throwable e) {
         if (logger.isInfoEnabled()) {
-            logger.info(filterMessage(message), e);
+            logger.info(message, e);
         }
     }
 
@@ -175,7 +173,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void config(String message) {
         if (logger.isInfoEnabled()) {
-            logger.info(filterMessage(message));
+            logger.info(message);
         }
     }
 
@@ -188,7 +186,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void config(String message, Throwable e) {
         if (logger.isInfoEnabled()) {
-            logger.info(filterMessage(message), e);
+            logger.info(message, e);
         }
     }
 
@@ -200,7 +198,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void fine(String message) {
         if (logger.isDebugEnabled()) {
-            logger.debug(filterMessage(message));
+            logger.debug(message);
         }
     }
 
@@ -213,7 +211,7 @@ public class Slf4jLogger extends AbstractLogger {
     @Override
     public void fine(String message, Throwable e) {
         if (logger.isDebugEnabled()) {
-            logger.debug(filterMessage(message), e);
+            logger.debug(message, e);
         }
     }
 }
