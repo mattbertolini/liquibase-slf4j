@@ -22,7 +22,7 @@ Grab the library from Maven Central and place it in your classpath.
 <dependency>
     <groupId>com.mattbertolini</groupId>
     <artifactId>liquibase-slf4j</artifactId>
-    <version>4.1.0</version>
+    <version>5.0.0</version>
     <scope>runtime</scope>
 </dependency>
 ```
@@ -31,18 +31,18 @@ Grab the library from Maven Central and place it in your classpath.
 
 Groovy DSL:
 ```groovy
-runtimeOnly 'com.mattbertolini:liquibase-slf4j:4.1.0'
+runtimeOnly 'com.mattbertolini:liquibase-slf4j:5.0.0'
 ```
 
 Kotlin DSL:
 ```kotlin
-runtimeOnly("com.mattbertolini:liquibase-slf4j:4.1.0")
+runtimeOnly("com.mattbertolini:liquibase-slf4j:5.0.0")
 ```
 
 **Ivy**
 
 ```xml
-<dependency org="com.mattbertolini" name="liquibase-slf4j" rev="4.1.0"/>
+<dependency org="com.mattbertolini" name="liquibase-slf4j" rev="5.0.0"/>
 ```
 
 ## License
