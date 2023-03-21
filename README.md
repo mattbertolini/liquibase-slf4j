@@ -121,7 +121,7 @@ unit tests to verify the problem is fixed.
 
 ## Release Notes
 
-**5.0.0 - TODO**
+**5.0.0 - 2023-03-20**
 
 - Add JPMS module-info file to support Java 9+ modules.
 - Build now requires Java 11 or higher. The source is still compiled to Java 8 bytecode.
