@@ -45,11 +45,11 @@
         <artifact type="pom" ext="pom"/>
     </publications>
     <dependencies defaultconfmapping="compile->default">
-        <dependency org="org.slf4j" name="slf4j-api" rev="2.0.6"/>
-        <dependency org="org.liquibase" name="liquibase-core" rev="4.19.0"/>
+        <dependency org="org.slf4j" name="slf4j-api" rev="2.0.7"/>
+        <dependency org="org.liquibase" name="liquibase-core" rev="4.20.0"/>
         <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.9.2" conf="test->default"/>
         <dependency org="org.mockito" name="mockito-core" rev="5.1.1" conf="test->default"/>
-        <dependency org="org.slf4j" name="slf4j-nop" rev="2.0.6" conf="test->default" />
+        <dependency org="org.slf4j" name="slf4j-nop" rev="2.0.7" conf="test->default" />
         <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.9.2" conf="junit-platform->default"/>
         <dependency org="org.junit.platform" name="junit-platform-launcher" rev="1.9.2" conf="junit-platform->default"/>
         <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="antcontrib->default">

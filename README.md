@@ -125,9 +125,10 @@ unit tests to verify the problem is fixed.
 
 - Add JPMS module-info file to support Java 9+ modules.
 - Build now requires Java 11 or higher. The source is still compiled to Java 8 bytecode.
-- Upgraded to SLF4J 2.x (2.0.6)
+- Upgraded to SLF4J 2.x (2.0.7)
 - Upgrade to Liquibase 4.19.0
 - Remove deprecated logging filter support.
+- Switched from TravisCI to GitHub Actions.
 
 **4.1.0 - 2022-03-30**
 
