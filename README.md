@@ -97,7 +97,7 @@ version. It is recommended to upgrade to Liquibase 3.4.1 which addresses this is
 ## Build and Test
 ### Requirements
 * [Apache Ant](https://ant.apache.org/) - Version 1.10.6 or higher.
-* JDK 8 or higher (Compiled with 1.8 source and target).
+* JDK 11 or higher (Compiled with 1.8 source and target).
 
 ### Build
 To build this project, clone the repo and run the ```ant``` command:
