@@ -31,7 +31,7 @@ jobs:
         name: Restore Ivy Dependency Cache
         with:
           path: lib/
-          key: ivy-lib-cache-v1-${{ hashFiles('ivy.xml') }}
+          key: ivy-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('ivy.xml') }}
 
       - name: Initialize Ant
         run: ./.github/scripts/init-ant.sh
@@ -46,7 +46,7 @@ jobs:
         name: Save Ivy Dependency Cache
         with:
           path: lib/
-          key: ivy-lib-cache-v1-${{ hashFiles('ivy.xml') }}
+          key: ivy-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('ivy.xml') }}
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v3
