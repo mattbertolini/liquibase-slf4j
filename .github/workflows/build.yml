@@ -26,6 +26,11 @@ jobs:
           java-version: ${{ matrix.jdk-version }}
           distribution: 'temurin'
 
+      - uses: actions/cache/restore@v3
+        id: restore-ivy-lib-cache
+        with:
+          key: ivy-lib-cache-v1-${{ hashFiles('ivy.xml') }}
+
       - name: Initialize Ant
         run: ./.github/scripts/init-ant.sh
 
@@ -33,6 +38,12 @@ jobs:
         run: |
           ant -version
           ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
+
+      - uses: actions/cache/save@v3
+        id: save-ivy-lib-cache
+        with:
+          path: lib/
+          key: ivy-lib-cache-v1-${{ hashFiles('ivy.xml') }}
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v3
