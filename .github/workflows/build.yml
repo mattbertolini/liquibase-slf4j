@@ -28,6 +28,7 @@ jobs:
 
       - uses: actions/cache/restore@v3
         id: restore-ivy-lib-cache
+        name: Restore Ivy Dependency Cache
         with:
           path: lib/
           key: ivy-lib-cache-v1-${{ hashFiles('ivy.xml') }}
@@ -42,6 +43,7 @@ jobs:
 
       - uses: actions/cache/save@v3
         id: save-ivy-lib-cache
+        name: Save Ivy Dependency Cache
         with:
           path: lib/
           key: ivy-lib-cache-v1-${{ hashFiles('ivy.xml') }}
