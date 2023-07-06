@@ -38,7 +38,7 @@ jobs:
         name: Ivy Dependency Cache
         with:
           path: |
-            "~/.ivy2/cache"
+            ~/.ivy2/cache/
             build/temp/resolutioncache/
           key: ivy-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('ivy.xml') }}
 
