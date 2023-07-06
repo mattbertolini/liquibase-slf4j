@@ -37,7 +37,9 @@ jobs:
         id: ivy-lib-cache
         name: Ivy Dependency Cache
         with:
-          path: lib/
+          path: |
+            lib/
+            build/temp/resolutioncache/
           key: ivy-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('ivy.xml') }}
 
       - name: Initialize Ant
