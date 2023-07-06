@@ -26,42 +26,28 @@ jobs:
           java-version: ${{ matrix.jdk-version }}
           distribution: 'temurin'
 
-      - uses: actions/cache/restore@v3
-        id: restore-ant-lib-cache
-        name: Restore Ant Library Cache
+      - uses: actions/cache@v3
+        id: ant-lib-cache
+        name: Ant Library Cache
         with:
           path: "~/.ant/lib/"
           key: ant-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('.github/scripts/init-ant.sh') }}
 
-      - uses: actions/cache/restore@v3
-        id: restore-ivy-lib-cache
-        name: Restore Ivy Dependency Cache
+      - uses: actions/cache@v3
+        id: ivy-lib-cache
+        name: Ivy Dependency Cache
         with:
           path: lib/
           key: ivy-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('ivy.xml') }}
 
       - name: Initialize Ant
-        if: steps.restore-ant-lib-cache.outputs.cache-hit != 'true'
+        if: steps.ant-lib-cache.outputs.cache-hit != 'true'
         run: ./.github/scripts/init-ant.sh
 
       - name: Run Ant Build
         run: |
           ant -version
           ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
-
-      - uses: actions/cache/save@v3
-        id: save-ant-lib-cache
-        name: Save Ant Library Cache
-        with:
-          path: "~/.ant/lib/"
-          key: ant-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('.github/scripts/init-ant.sh') }}
-
-      - uses: actions/cache/save@v3
-        id: save-ivy-lib-cache
-        name: Save Ivy Dependency Cache
-        with:
-          path: lib/
-          key: ivy-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('ivy.xml') }}
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v3
