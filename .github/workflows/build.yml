@@ -27,6 +27,13 @@ jobs:
           distribution: 'temurin'
 
       - uses: actions/cache/restore@v3
+        id: restore-ant-lib-cache
+        name: Restore Any Library Cache
+        with:
+          path: ${HOME}/.ant/lib/
+          key: ant-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('.github/scripts/init-ant.sh') }}
+
+      - uses: actions/cache/restore@v3
         id: restore-ivy-lib-cache
         name: Restore Ivy Dependency Cache
         with:
@@ -34,12 +41,20 @@ jobs:
           key: ivy-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('ivy.xml') }}
 
       - name: Initialize Ant
+        if: steps.restore-ant-lib-cache.outputs.cache-hit != 'true'
         run: ./.github/scripts/init-ant.sh
 
       - name: Run Ant Build
         run: |
           ant -version
           ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
+
+      - uses: actions/cache/save@v3
+        id: save-ant-lib-cache
+        name: Save Ant Library Cache
+        with:
+          path: ${HOME}/.ant/lib/
+          key: ant-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('.github/scripts/init-ant.sh') }}
 
       - uses: actions/cache/save@v3
         id: save-ivy-lib-cache
