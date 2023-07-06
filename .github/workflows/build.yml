@@ -50,7 +50,7 @@ jobs:
       - name: Run Ant Build
         run: |
           ant -version
-          ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build check
+          ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v3

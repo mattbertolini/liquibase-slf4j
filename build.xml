@@ -47,7 +47,7 @@
 
     <!-- Public targets -->
     <target name="assemble" description="Assembles the output of this project." depends="-assemble.-assemble"/>
-    <target name="build" description="Assembles and tests the project." depends="assemble, test"/>
+    <target name="build" description="Assembles and tests the project." depends="assemble, check"/>
     <target name="check" description="Runs all checks" depends="spotbugs, test"/>
     <target name="clean" description="Deletes the build and dist directories." depends="-clean.-clean"/>
     <target name="dependencies" description="Displays all the dependencies in this project." depends="-dependencies.-dependencies"/>
