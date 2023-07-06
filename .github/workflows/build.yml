@@ -30,7 +30,7 @@ jobs:
         id: restore-ant-lib-cache
         name: Restore Ant Library Cache
         with:
-          path: "${HOME}/.ant/lib/"
+          path: "~/.ant/lib/"
           key: ant-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('.github/scripts/init-ant.sh') }}
 
       - uses: actions/cache/restore@v3
@@ -53,7 +53,7 @@ jobs:
         id: save-ant-lib-cache
         name: Save Ant Library Cache
         with:
-          path: "${HOME}/.ant/lib/"
+          path: "~/.ant/lib/"
           key: ant-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('.github/scripts/init-ant.sh') }}
 
       - uses: actions/cache/save@v3
