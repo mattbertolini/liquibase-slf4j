@@ -40,7 +40,6 @@ jobs:
           path: |
             ~/.ivy2/cache/
             lib/
-            build/temp/resolutioncache/
           key: ivy-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('ivy.xml') }}
 
       - name: Initialize Ant
