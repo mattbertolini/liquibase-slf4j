@@ -16,10 +16,10 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="-test" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:jacoco="antlib:org.jacoco.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j">
-    <include file="${basedir}/buildsrc/properties.xml"/>
-    <include file="${basedir}/buildsrc/dependencies.xml"/>
-    <include file="${basedir}/buildsrc/compile.xml"/>
-    <include file="${basedir}/buildsrc/jacoco.xml"/>
+    <include file="${basedir}/antsrc/properties.xml"/>
+    <include file="${basedir}/antsrc/dependencies.xml"/>
+    <include file="${basedir}/antsrc/compile.xml"/>
+    <include file="${basedir}/antsrc/jacoco.xml"/>
 
     <property name="lib.junit-platform.dir" value="${lib.dir}/junit-platform"/>
     <property name="build.reports.unittest.dir" value="${build.dir}/reports/unittest"/>

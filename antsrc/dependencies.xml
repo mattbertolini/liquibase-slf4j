@@ -16,7 +16,7 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="-dependencies" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j">
-    <include file="${basedir}/buildsrc/properties.xml"/>
+    <include file="${basedir}/antsrc/properties.xml"/>
     
     <property name="lib.ivy.dir" value="${lib.dir}/ivy"/>
     <property name="ivy.retrieve.pattern" value="[artifact]-[revision](-[classifier]).[ext]"/>
@@ -33,7 +33,7 @@
             <fileset dir="${lib.ivy.dir}"/>
         </path>
         <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.classpath"/>
-        <ivy:configure file="${basedir}/buildsrc/ivy/ivysettings-ant.xml" override="true"/>
+        <ivy:configure file="${basedir}/antsrc/ivy/ivysettings-ant.xml" override="true"/>
         <macro:retrieve-deps conf="ivy"/>
         <property name="-init-ivy.run" value="true"/>
     </target>

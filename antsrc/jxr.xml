@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2020 Matt Bertolini
+ Copyright (c) 2012-2023 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -16,8 +16,8 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="-jxr" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j" xmlns:jxr="antlib:com.mattbertolini.jxr.ant">
-    <include file="${basedir}/buildsrc/properties.xml"/>
-    <include file="${basedir}/buildsrc/dependencies.xml"/>
+    <include file="${basedir}/antsrc/properties.xml"/>
+    <include file="${basedir}/antsrc/dependencies.xml"/>
 
     <property name="lib.jxr.dir" value="${lib.dir}/jxr"/>
     <property name="build.reports.xref.dir" value="${build.dir}/reports/jxr"/>

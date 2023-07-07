@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2020 Matt Bertolini
+ Copyright (c) 2012-2023 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -15,18 +15,18 @@
  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
-<project name="-jacoco" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j">
-    <include file="${basedir}/buildsrc/dependencies.xml"/>
+<project name="-antcontrib" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j">
+    <include file="${basedir}/antsrc/dependencies.xml"/>
 
-    <property name="lib.jacoco.dir" value="${lib.dir}/jacoco"/>
+    <property name="lib.antcontrib.dir" value="${lib.dir}/antcontrib"/>
 
-    <target name="-load-jacoco" depends="-dependencies.-init-ivy" unless="load-jacoco.run">
-        <macro:retrieve-deps conf="jacoco"/>
-        <path id="jacoco.classpath">
-            <fileset dir="${lib.jacoco.dir}"/>
+    <target name="-load-antcontrib" depends="-dependencies.-init-ivy" unless="-load-antcontrib.run">
+        <macro:retrieve-deps conf="antcontrib"/>
+        <path id="antcontrib.classpath">
+            <fileset dir="${lib.antcontrib.dir}"/>
         </path>
-        <taskdef resource="org/jacoco/ant/antlib.xml" classpathref="jacoco.classpath" uri="antlib:org.jacoco.ant"/>
-        <property name="load-jacoco.run" value="true"/>
+        <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="antcontrib.classpath" uri="antlib:net.sf.antcontrib"/>
+        <property name="-load-antcontrib.run" value="true"/>
     </target>
 
 </project>

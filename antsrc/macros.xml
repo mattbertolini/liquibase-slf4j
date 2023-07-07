@@ -16,7 +16,7 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="macros" basedir="../" xmlns="antlib:org.apache.tools.ant">
-    <include file="${basedir}/buildsrc/properties.xml"/>
+    <include file="${basedir}/antsrc/properties.xml"/>
 
     <macrodef name="javacompile" uri="antmacro:com.mattbertolini.liquibase.slf4j">
         <attribute name="srcdir"/>

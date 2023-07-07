@@ -16,9 +16,9 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="-compile" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j">
-    <include file="${basedir}/buildsrc/properties.xml"/>
-    <include file="${basedir}/buildsrc/macros.xml"/>
-    <include file="${basedir}/buildsrc/dependencies.xml"/>
+    <include file="${basedir}/antsrc/properties.xml"/>
+    <include file="${basedir}/antsrc/macros.xml"/>
+    <include file="${basedir}/antsrc/dependencies.xml"/>
 
     <property name="lib.compile.dir" value="${lib.dir}/compile"/>
     <property name="lib.compileonly.dir" value="${lib.dir}/compile-only"/>

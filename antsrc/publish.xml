@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2022 Matt Bertolini
+ Copyright (c) 2012-2023 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -16,9 +16,9 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="-publish" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:ivy="antlib:org.apache.ivy.ant">
-    <include file="${basedir}/buildsrc/properties.xml"/>
-    <include file="${basedir}/buildsrc/dependencies.xml"/>
-    <include file="${basedir}/buildsrc/assemble.xml"/>
+    <include file="${basedir}/antsrc/properties.xml"/>
+    <include file="${basedir}/antsrc/dependencies.xml"/>
+    <include file="${basedir}/antsrc/assemble.xml"/>
 
     <property file="${basedir}/build-publish.properties" />
 
@@ -30,7 +30,7 @@
     -->
 
     <target name="-init-ivy-publish-settings" depends="-dependencies.-init-ivy">
-        <ivy:settings id="publish-settings" file="${basedir}/buildsrc/ivy/ivysettings-publish.xml"/>
+        <ivy:settings id="publish-settings" file="${basedir}/antsrc/ivy/ivysettings-publish.xml"/>
     </target>
 
     <target name="-authenticate-maven-central">

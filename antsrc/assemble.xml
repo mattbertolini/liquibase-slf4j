@@ -16,11 +16,11 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="-assemble" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:bnd="antlib:aqute.bnd.ant">
-    <include file="${basedir}/buildsrc/properties.xml"/>
-    <include file="${basedir}/buildsrc/compile.xml"/>
-    <include file="${basedir}/buildsrc/dependencies.xml"/>
-    <include file="${basedir}/buildsrc/javadoc.xml"/>
-    <include file="${basedir}/buildsrc/bnd.xml"/>
+    <include file="${basedir}/antsrc/properties.xml"/>
+    <include file="${basedir}/antsrc/compile.xml"/>
+    <include file="${basedir}/antsrc/dependencies.xml"/>
+    <include file="${basedir}/antsrc/javadoc.xml"/>
+    <include file="${basedir}/antsrc/bnd.xml"/>
 
     <!-- Consistent modification time to use in jar files. This helps make the jar's reproducible. -->
     <property name="mod.time" value="1980-02-01T00:00:00Z"/>
@@ -37,7 +37,7 @@
                 <attribute name="Implementation-Version" value="${project.version}"/>
             </manifest>
         </jar>
-        <bnd:bndwrap failok="false" force="true" definitions="${basedir}/buildsrc/bnd/liquibase-slf4j.bnd" classpath="${toString:compile-main-classpath}" output="${dist.dir}/${main.jar.name}">
+        <bnd:bndwrap failok="false" force="true" definitions="${basedir}/antsrc/bnd/liquibase-slf4j.bnd" classpath="${toString:compile-main-classpath}" output="${dist.dir}/${main.jar.name}">
             <fileset file="${dist.dir}/${main.jar.name}"/>
         </bnd:bndwrap>
         <touch file="${dist.dir}/${main.jar.name}"/>
@@ -71,7 +71,7 @@
 
     <target name="-make-pom" depends="-compile.-build-main-classpath">
         <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${dist.dir}/${project.name}-${project.version}.pom"
-                     artifactpackaging="jar" templatefile="${basedir}/buildsrc/ivy/pom-template.xml" conf="compile">
+                     artifactpackaging="jar" templatefile="${basedir}/antsrc/ivy/pom-template.xml" conf="compile">
             <ivy:mapping conf="compile" scope="provided"/>
         </ivy:makepom>
     </target>

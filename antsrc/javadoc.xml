@@ -16,9 +16,9 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="-javadoc" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:ac="antlib:net.sf.antcontrib">
-    <include file="${basedir}/buildsrc/properties.xml"/>
-    <include file="${basedir}/buildsrc/antcontrib.xml"/>
-    <include file="${basedir}/buildsrc/compile.xml"/>
+    <include file="${basedir}/antsrc/properties.xml"/>
+    <include file="${basedir}/antsrc/antcontrib.xml"/>
+    <include file="${basedir}/antsrc/compile.xml"/>
 
     <target name="-javadoc" depends="-antcontrib.-load-antcontrib, -compile.-compile-main, -compile.-process-main-resources">
         <ac:outofdate>

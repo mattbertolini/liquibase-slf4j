@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2020 Matt Bertolini
+ Copyright (c) 2012-2023 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -16,10 +16,10 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="-spotbugs" basedir="../" xmlns="antlib:org.apache.tools.ant" xmlns:macro="antmacro:com.mattbertolini.liquibase.slf4j" xmlns:spotbugs="antlib:com.github.spotbugs">
-    <include file="${basedir}/buildsrc/properties.xml"/>
-    <include file="${basedir}/buildsrc/dependencies.xml"/>
-    <include file="${basedir}/buildsrc/compile.xml"/>
-    <include file="${basedir}/buildsrc/test.xml"/>
+    <include file="${basedir}/antsrc/properties.xml"/>
+    <include file="${basedir}/antsrc/dependencies.xml"/>
+    <include file="${basedir}/antsrc/compile.xml"/>
+    <include file="${basedir}/antsrc/test.xml"/>
 
     <property name="lib.spotbugs.dir" value="${lib.dir}/spotbugs"/>
     <property name="build.reports.spotbugs.dir" value="${build.dir}/reports/spotbugs"/>

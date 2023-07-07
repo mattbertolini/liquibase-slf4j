@@ -16,15 +16,15 @@
  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <project name="liquibase-slf4j" basedir="." default="build" xmlns="antlib:org.apache.tools.ant">
-    <include file="${basedir}/buildsrc/clean.xml"/>
-    <include file="${basedir}/buildsrc/compile.xml"/>
-    <include file="${basedir}/buildsrc/dependencies.xml"/>
-    <include file="${basedir}/buildsrc/assemble.xml"/>
-    <include file="${basedir}/buildsrc/test.xml"/>
-    <include file="${basedir}/buildsrc/javadoc.xml"/>
-    <include file="${basedir}/buildsrc/publish.xml"/>
-    <include file="${basedir}/buildsrc/spotbugs.xml"/>
-    <include file="${basedir}/buildsrc/jxr.xml"/>
+    <include file="${basedir}/antsrc/clean.xml"/>
+    <include file="${basedir}/antsrc/compile.xml"/>
+    <include file="${basedir}/antsrc/dependencies.xml"/>
+    <include file="${basedir}/antsrc/assemble.xml"/>
+    <include file="${basedir}/antsrc/test.xml"/>
+    <include file="${basedir}/antsrc/javadoc.xml"/>
+    <include file="${basedir}/antsrc/publish.xml"/>
+    <include file="${basedir}/antsrc/spotbugs.xml"/>
+    <include file="${basedir}/antsrc/jxr.xml"/>
 
     <fail message="JDK 11 or later required to build. Currently running with JDK ${java.version}">
         <condition>
