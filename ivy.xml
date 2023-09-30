@@ -45,25 +45,25 @@
         <artifact type="pom" ext="pom"/>
     </publications>
     <dependencies defaultconfmapping="*->default" defaultconf="compile">
-        <dependency org="org.slf4j" name="slf4j-api" rev="2.0.7"/>
-        <dependency org="org.liquibase" name="liquibase-core" rev="4.20.0"/>
-        <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.9.2" conf="test"/>
-        <dependency org="org.mockito" name="mockito-core" rev="5.1.1" conf="test"/>
-        <dependency org="org.slf4j" name="slf4j-nop" rev="2.0.7" conf="test" />
-        <dependency org="org.slf4j" name="slf4j-simple" rev="2.0.7" conf="bnd,spotbugs"/>
-        <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.9.2" conf="junit-platform"/>
-        <dependency org="org.junit.platform" name="junit-platform-launcher" rev="1.9.2" conf="junit-platform"/>
+        <dependency org="org.slf4j" name="slf4j-api" rev="2.0.9"/>
+        <dependency org="org.liquibase" name="liquibase-core" rev="4.23.2"/>
+        <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.10.0" conf="test"/>
+        <dependency org="org.mockito" name="mockito-core" rev="5.5.0" conf="test"/>
+        <dependency org="org.slf4j" name="slf4j-nop" rev="2.0.9" conf="test" />
+        <dependency org="org.slf4j" name="slf4j-simple" rev="2.0.9" conf="bnd,spotbugs"/>
+        <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.10.0" conf="junit-platform"/>
+        <dependency org="org.junit.platform" name="junit-platform-launcher" rev="1.10.0" conf="junit-platform"/>
         <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="antcontrib">
             <exclude module="ant"/>
         </dependency>
-        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.8.8" conf="jacoco"/>
+        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.8.10" conf="jacoco"/>
         <dependency org="com.github.spotbugs" name="spotbugs" rev="4.7.3" conf="spotbugs"/>
         <dependency org="com.github.spotbugs" name="spotbugs-ant" rev="4.7.3" conf="spotbugs"/>
-        <dependency org="com.mattbertolini" name="jxr-ant" rev="2.0.0" conf="jxr"/>
-        <dependency org="biz.aQute.bnd" name="biz.aQute.bnd.ant" rev="6.4.0" conf="bnd">
+        <dependency org="com.mattbertolini" name="jxr-ant" rev="2.1.0" conf="jxr"/>
+        <dependency org="biz.aQute.bnd" name="biz.aQute.bnd.ant" rev="6.4.1" conf="bnd">
             <exclude module="ant"/>
         </dependency>
         <dependency org="org.apache.ivy" name="ivy" rev="${lib.ivy.version}" conf="ivy"/>
-        <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.62" conf="ivy"/>
+        <dependency org="org.bouncycastle" name="bcpg-jdk15on" rev="1.70" conf="ivy"/>
     </dependencies>
 </ivy-module>
