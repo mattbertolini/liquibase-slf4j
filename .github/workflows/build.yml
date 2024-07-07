@@ -51,13 +51,13 @@ jobs:
           ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build
 
       - name: Archive Test Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: JUnit Test Results
           path: build/reports/unittest
 
       - name: Archive Code Coverage Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Code Coverage Report
           path: build/reports/coverage
