@@ -1,5 +1,4 @@
 name: build
-run-name: CI build
 
 on:
   push:
@@ -18,22 +17,22 @@ jobs:
         jdk-version: [11, 17]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Java JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.jdk-version }}
           distribution: 'temurin'
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         id: ant-lib-cache
         name: Ant Library Cache
         with:
           path: "~/.ant/lib/"
           key: ant-lib-cache-v1-jdk-${{ matrix.jdk-version }}-${{ hashFiles('.github/scripts/init-ant.sh') }}
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         id: ivy-lib-cache
         name: Ivy Dependency Cache
         with:
