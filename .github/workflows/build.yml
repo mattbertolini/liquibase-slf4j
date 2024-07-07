@@ -53,11 +53,11 @@ jobs:
       - name: Archive Test Results
         uses: actions/upload-artifact@v4
         with:
-          name: JUnit Test Results
+          name: JUnit Test Results - JDK ${{ matrix.jdk-version }}
           path: build/reports/unittest
 
       - name: Archive Code Coverage Report
         uses: actions/upload-artifact@v4
         with:
-          name: Code Coverage Report
+          name: Code Coverage Report - JDK ${{ matrix.jdk-version }}
           path: build/reports/coverage
