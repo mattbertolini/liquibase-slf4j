@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- Copyright (c) 2012-2023 Matt Bertolini
+ Copyright (c) 2012-2024 Matt Bertolini
 
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -45,22 +45,22 @@
         <artifact type="pom" ext="pom"/>
     </publications>
     <dependencies defaultconfmapping="*->default" defaultconf="compile">
-        <dependency org="org.slf4j" name="slf4j-api" rev="2.0.9"/>
-        <dependency org="org.liquibase" name="liquibase-core" rev="4.23.2"/>
-        <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.10.0" conf="test"/>
-        <dependency org="org.mockito" name="mockito-core" rev="5.5.0" conf="test"/>
-        <dependency org="org.slf4j" name="slf4j-nop" rev="2.0.9" conf="test" />
-        <dependency org="org.slf4j" name="slf4j-simple" rev="2.0.9" conf="bnd,spotbugs"/>
-        <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.10.0" conf="junit-platform"/>
-        <dependency org="org.junit.platform" name="junit-platform-launcher" rev="1.10.0" conf="junit-platform"/>
+        <dependency org="org.slf4j" name="slf4j-api" rev="2.0.13"/>
+        <dependency org="org.liquibase" name="liquibase-core" rev="4.28.0"/>
+        <dependency org="org.junit.jupiter" name="junit-jupiter-api" rev="5.10.3" conf="test"/>
+        <dependency org="org.mockito" name="mockito-core" rev="5.12.0" conf="test"/>
+        <dependency org="org.slf4j" name="slf4j-nop" rev="2.0.13" conf="test" />
+        <dependency org="org.slf4j" name="slf4j-simple" rev="2.0.13" conf="bnd,spotbugs"/>
+        <dependency org="org.junit.jupiter" name="junit-jupiter-engine" rev="5.10.3" conf="junit-platform"/>
+        <dependency org="org.junit.platform" name="junit-platform-launcher" rev="1.10.3" conf="junit-platform"/>
         <dependency org="ant-contrib" name="ant-contrib" rev="1.0b3" conf="antcontrib">
             <exclude module="ant"/>
         </dependency>
-        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.8.10" conf="jacoco"/>
+        <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.8.12" conf="jacoco"/>
         <dependency org="com.github.spotbugs" name="spotbugs" rev="4.8.6" conf="spotbugs"/>
         <dependency org="com.github.spotbugs" name="spotbugs-ant" rev="4.8.6" conf="spotbugs"/>
         <dependency org="com.mattbertolini" name="jxr-ant" rev="2.1.0" conf="jxr"/>
-        <dependency org="biz.aQute.bnd" name="biz.aQute.bnd.ant" rev="6.4.1" conf="bnd">
+        <dependency org="biz.aQute.bnd" name="biz.aQute.bnd.ant" rev="7.0.0" conf="bnd">
             <exclude module="ant"/>
         </dependency>
         <dependency org="org.apache.ivy" name="ivy" rev="${lib.ivy.version}" conf="ivy"/>
