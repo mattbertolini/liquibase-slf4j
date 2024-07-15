@@ -57,8 +57,8 @@
             <exclude module="ant"/>
         </dependency>
         <dependency org="org.jacoco" name="org.jacoco.ant" rev="0.8.10" conf="jacoco"/>
-        <dependency org="com.github.spotbugs" name="spotbugs" rev="4.7.3" conf="spotbugs"/>
-        <dependency org="com.github.spotbugs" name="spotbugs-ant" rev="4.7.3" conf="spotbugs"/>
+        <dependency org="com.github.spotbugs" name="spotbugs" rev="4.8.6" conf="spotbugs"/>
+        <dependency org="com.github.spotbugs" name="spotbugs-ant" rev="4.8.6" conf="spotbugs"/>
         <dependency org="com.mattbertolini" name="jxr-ant" rev="2.1.0" conf="jxr"/>
         <dependency org="biz.aQute.bnd" name="biz.aQute.bnd.ant" rev="6.4.1" conf="bnd">
             <exclude module="ant"/>
