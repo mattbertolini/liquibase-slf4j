@@ -102,9 +102,9 @@ version. It is recommended to upgrade to Liquibase 3.4.1 which addresses this is
 ### Build
 To build this project, clone the repo and run the ```ant``` command:
 ```
-$ git clone https://github.com/mattbertolini/liquibase-slf4j.git
-$ cd liquibase-slf4j
-$ ant
+git clone https://github.com/mattbertolini/liquibase-slf4j.git
+cd liquibase-slf4j
+ant
 ```
 
 The distributable jar files will be located in the ```dist``` folder. The build reports (unit test, coverage, etc.) 
@@ -112,7 +112,7 @@ will be located in the ```build/reports``` dir.
 
 To list all available tasks:
 ```
-$ ant -p
+ant -p
 ```
 
 ## Bugs
