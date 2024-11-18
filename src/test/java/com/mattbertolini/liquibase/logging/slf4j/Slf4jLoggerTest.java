@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Matt Bertolini
+ * Copyright (c) 2012-2024 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -28,6 +28,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 /**
@@ -86,6 +87,12 @@ class Slf4jLoggerTest {
         String message = "finest test";
         logger.log(Level.FINEST, message, null);
         verify(delegate).trace(message, (Throwable) null);
+    }
+
+    @Test
+    void doesNotLogWithOffLevel() {
+        logger.log(Level.OFF, "should not log", null);
+        verifyNoInteractions(delegate);
     }
 
     // Severe level
