@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Matt Bertolini
+ * Copyright (c) 2012-2024 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -17,6 +17,7 @@
 
 package com.mattbertolini.liquibase.logging.slf4j;
 
+import liquibase.logging.LogService;
 import liquibase.logging.Logger;
 import liquibase.logging.core.AbstractLogService;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,9 @@ import org.slf4j.LoggerFactory;
 import java.util.Properties;
 
 /**
- * Liquibase {@link liquibase.logging.LogService} that creates an SLF4J-backed logger.
+ * Liquibase {@link LogService} that creates an SLF4J-backed logger.
  */
-public class Slf4jLogService extends AbstractLogService {
+public class Slf4jLogService extends AbstractLogService implements LogService {
 
     private static final int DEFAULT_PRIORITY = 5;
     private static final String PRIORITY_PROPERTY_NAME = Slf4jLogService.class.getName() + ".priority";
