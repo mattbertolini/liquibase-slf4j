@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Matt Bertolini
+ * Copyright (c) 2012-2024 Matt Bertolini
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -60,12 +60,13 @@ import java.util.logging.Level;
  * @author Matt Bertolini
  * @see liquibase.logging.Logger
  */
-public class Slf4jLogger extends AbstractLogger {
+public class Slf4jLogger extends AbstractLogger implements liquibase.logging.Logger {
 
     private static final int TRACE_THRESHOLD = Level.FINEST.intValue();
     private static final int DEBUG_THRESHOLD = Level.FINE.intValue();
     private static final int INFO_THRESHOLD = Level.INFO.intValue();
     private static final int WARN_THRESHOLD = Level.WARNING.intValue();
+    private static final int ERROR_THRESHOLD = Level.SEVERE.intValue();
 
     private final Logger logger;
 
@@ -85,7 +86,7 @@ public class Slf4jLogger extends AbstractLogger {
             logger.info(message, e);
         } else if (levelValue <= WARN_THRESHOLD) {
             logger.warn(message, e);
-        } else {
+        } else if (levelValue <= ERROR_THRESHOLD) {
             logger.error(message, e);
         }
     }
