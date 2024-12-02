@@ -2,7 +2,7 @@
 Version 5.1.0<br/>
 Written by Matt Bertolini
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.mattbertolini/liquibase-slf4j.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.mattbertolini%22%20AND%20a:%22liquibase-slf4j%22)
+[![Maven Central](https://img.shields.io/maven-central/v/com.mattbertolini/liquibase-slf4j.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.mattbertolini/liquibase-slf4j)
 [![javadoc](https://javadoc.io/badge2/com.mattbertolini/liquibase-slf4j/javadoc.svg)](https://javadoc.io/doc/com.mattbertolini/liquibase-slf4j)
 [![Build Status](https://github.com/mattbertolini/liquibase-slf4j/actions/workflows/build.yml/badge.svg)](https://github.com/mattbertolini/liquibase-slf4j/actions/workflows/build.yml)
 
