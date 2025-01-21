@@ -121,6 +121,10 @@ unit tests to verify the problem is fixed.
 
 ## Release Notes
 
+** 5.2.0-SNAPSHOT - TBD **
+
+- Update to Ivy 2.5.3
+
 **5.1.0 - 2024-11-19**
 
 - Fix issue with JUL `Level.OFF` logging a message when no message should be logged ([#20](https://github.com/mattbertolini/liquibase-slf4j/issues/20)).
