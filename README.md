@@ -121,7 +121,7 @@ unit tests to verify the problem is fixed.
 
 ## Release Notes
 
-** 5.2.0-SNAPSHOT - TBD **
+**5.2.0-SNAPSHOT - TBD**
 
 - Update to Ivy 2.5.3
 
