@@ -47,9 +47,7 @@ jobs:
         run: ./.github/scripts/init-ant.sh
 
       - name: Run Ant Build
-        run: |
-          ant -version
-          ant -noinput -logger org.apache.tools.ant.NoBannerLogger clean build
+        run: ./.github/scripts/run-ant.sh clean build
 
       - name: Archive Test Results
         uses: actions/upload-artifact@v4
